@@ -28,11 +28,38 @@ function onResize() {
 
 function onKeyDown(e) {
     'use strict';
+    switch(e.keyCode) {
+        case 49:
+            camera.position.x = 50;
+            camera.position.y = 50;
+            camera.position.z = 50;
+            camera.lookAt(scene.position);
+            break;
+        case 50:
+            camera.position.x = 0;
+            camera.position.y = 0;
+            camera.position.z = Math.sqrt(Math.pow(50,2)*3);
+            camera.lookAt(scene.position);
+            break;
+        case 51:
+            camera.position.x = Math.sqrt(Math.pow(50,2)*3);
+            camera.position.y = 0;
+            camera.position.z = 0;
+            camera.lookAt(scene.position);
+            break;
+        case 52:
+            scene.traverse(function (node) {
+                if (node instanceof THREE.Mesh) {
+                    node.material.wireframe = !node.material.wireframe;
+                }
+            });
+            break;
+    }
 }
 
 function render() {
     'use strict';
-    ball.position.x += 0.1;
+    //ball.position.x += 0.1;
     renderer.render(scene, camera);
 }
 
@@ -70,7 +97,10 @@ function init() {
 
     scene.add(ball);
 
+    console.log(scene.position);
+
     window.addEventListener("resize", onResize);
+    window.addEventListener("keydown", onKeyDown);
 }
 
 function animate() {
