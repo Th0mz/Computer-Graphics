@@ -172,50 +172,50 @@ function init() {
     camera.position.z = 500;
     camera.lookAt(scene.position);
     
-    ball_1 = new Sphere(side_size/2, 10, 10);
+    ball_1 = new Sphere(side_size/2, 10, 10, 0x8F250C);
     ball_1.position.set(0.5 * side_size, 2.5 * side_size, 2.5 * side_size);
 
-    ball_2 = new Sphere(side_size, 10, 10, 0x005050);
+    ball_2 = new Sphere(side_size, 10, 10, 0x442220);
     ball_2.position.set(-3.0 * side_size, 4 * side_size, 4 * side_size);
 
-    ball_3 = new Sphere(side_size*1.5, 10, 10, 0xE6E6FA);
+    ball_3 = new Sphere(side_size*1.5, 10, 10, 0x809848);
     ball_3.position.set(-4.5 * side_size, 2.5 * side_size, 2.5 * side_size);
 
-    torus = new Torus(side_size*0.75, side_size/2, 12, 12 );
+    torus = new Torus(side_size*0.75, side_size/2, 12, 12, 0x9A6D38);
     torus.position.set(-6 * side_size, 4 * side_size, 3.5 * side_size);
 
     cube = new Cube(side_size);
     cube.position.set( 3.5 * side_size, 3.5 * side_size, 4.5 * side_size);
 
-    pyramid_1 = new Pyramid(side_size, 5 * side_size, 4);
+    pyramid_1 = new Pyramid(side_size, 5 * side_size, 4, 0xbc6c25);
     pyramid_1.position.set(0, 0, 0);
     pyramid_1.rotateZ(Math.PI * 0.5);
     pyramid_1.position.set(2.5 * side_size, 2.5 * side_size, -3.5 * side_size);
 
 
-    pyramid_2 = new Pyramid(1.5 * side_size, 3 * side_size, 4);
+    pyramid_2 = new Pyramid(1.5 * side_size, 3 * side_size, 4, 0xe7bc91);
     pyramid_2.position.set(0, 0, 0);
     pyramid_2.rotateX(Math.PI * 0.5);
     pyramid_2.position.set(3 * side_size, -2 * side_size, 2.5 * side_size);
 
-    cylinder = new Cylinder(0.5 * side_size, 4 * side_size, 32);
+    cylinder = new Cylinder(0.5 * side_size, 4 * side_size, 32, 0xa22c29);
     cylinder.position.set(0, 0, 0);
     cylinder.rotateX(Math.PI * 0.5);
     cylinder.position.set(2.5 * side_size, -0.5 * side_size, 0);
 
-    cone1 = new Cone(1 * side_size, 4 * side_size, 16);
+    cone1 = new Cone(1 * side_size, 4 * side_size, 16, 0x603808);
     cone1.rotateX(Math.PI/2);
     cone1.position.set(-2 * side_size, -3 * side_size, -1 * side_size);
 
-    cone2 = new Cone(1 * side_size, 1 * side_size, 16);
+    cone2 = new Cone(1 * side_size, 1 * side_size, 16, 0xa47148);
     cone2.rotateX(Math.PI/2);
     cone2.rotateZ(3 * (Math.PI/2));
     cone2.position.set(-0.5 * side_size, 0, 0);
 
-    cube2 = new Cube(2 * side_size);
+    cube2 = new Cube(2 * side_size, 0xffa62b);
     cube2.position.set(6 * side_size, 0, 0);
 
-    cylinder2 = new Cylinder(1 * side_size, 1 * side_size, 16);
+    cylinder2 = new Cylinder(1 * side_size, 1 * side_size, 16, 0x16697a);
     cylinder2.rotateX(Math.PI/2);
     cylinder2.position.set(6 * side_size, 0, 1.5 * side_size);
 
