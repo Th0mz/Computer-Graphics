@@ -97,20 +97,22 @@ function onKeyDown(e) {
     'use strict';
     switch(e.keyCode) {
         case 49:
-            camera.position.x = 65;
-            camera.position.y = 65;
-            camera.position.z = 65;
+            camera.position.x = 500;
+            camera.position.y = 500;
+            camera.position.z = 500;
             camera.lookAt(scene.position);
             break;
         case 50:
             camera.position.x = 0;
             camera.position.y = 0;
-            camera.position.z = Math.sqrt(Math.pow(70,2)*3);
+            //camera.position.z = Math.sqrt(Math.pow(70,2)*3);
+            camera.position.z = 500;
             camera.lookAt(scene.position);
             break;
         case 51:
             camera.position.x = 0;
-            camera.position.y = Math.sqrt(Math.pow(70,2)*3);
+            //camera.position.y = Math.sqrt(Math.pow(70,2)*3);
+            camera.position.y = 500;
             camera.position.z = 0;
             camera.lookAt(scene.position);
             break;
@@ -152,13 +154,9 @@ function init() {
                                            1000 );
 
 
-    //camera.position.x = 65;
-    //camera.position.y = 65;
-    //camera.position.z = 65;
-    //camera.lookAt(scene.position);
-    camera.position.x = 0;
-    camera.position.y = 0;
-    camera.position.z = Math.sqrt(Math.pow(70,2)*3);
+    camera.position.x = 500;
+    camera.position.y = 500;
+    camera.position.z = 500;
     camera.lookAt(scene.position);
     
     ball_1 = new Sphere(side_size/2, 10, 10);
