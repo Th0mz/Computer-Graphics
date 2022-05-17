@@ -9,8 +9,6 @@
 // TODO : dont use global variables
 var camera, scene, renderer;
 
-var geometry, material, mesh;
-
 var ball;
 var side_size = 30;
 
@@ -36,6 +34,49 @@ class Torus{
     
         return torus.add(mesh);
         }
+
+}
+
+class Cube {
+    constructor(edge_size , _color=0xEEAD2D, _wireframe=true){
+
+        var cube = new THREE.Object3D();
+        var material = new THREE.MeshBasicMaterial( { color: _color, wireframe: _wireframe } );
+        var geometry = new THREE.BoxGeometry( edge_size, edge_size, edge_size );
+        
+        var mesh = new THREE.Mesh(geometry, material);
+        
+        return cube.add(mesh)
+    }
+
+}
+
+class Pyramid {
+    constructor (radius, height, base_polygon , _color=0xADD8E6, _wireframe=true) {
+        
+        var pyramid = new THREE.Object3D();
+        var material = new THREE.MeshBasicMaterial( { color: _color, wireframe: _wireframe } );
+        var geometry = new THREE.ConeGeometry( radius, height, base_polygon);
+        
+        var mesh = new THREE.Mesh(geometry, material);
+        
+        return pyramid.add(mesh)
+
+    }
+}
+
+class Cylinder {
+    constructor (radius, height, base_polygon , _color=0x90EE90, _wireframe=true) {
+        
+        var cylinder = new THREE.Object3D();
+        var material = new THREE.MeshBasicMaterial( { color: _color, wireframe: _wireframe } );
+        var geometry = new THREE.CylinderGeometry( radius, radius, height, base_polygon);
+        
+        var mesh = new THREE.Mesh(geometry, material);
+        
+        return cylinder.add(mesh)
+
+    }
 
 }
 
@@ -92,7 +133,7 @@ function render() {
 
 function init() {
     'use strict';
-    var ball_1, ball_2, ball_3, torus;
+    var ball_1, ball_2, ball_3, torus, cube, pyramid_1, pyramid_2, cylinder;
 
     renderer = new THREE.WebGLRenderer({
         antialias: true
@@ -108,12 +149,16 @@ function init() {
                                            window.innerHeight /  2, 
                                            window.innerHeight / -2, 
                                            0.1, 
-                                           100 );
+                                           1000 );
 
 
-    camera.position.x = 65;
-    camera.position.y = 65;
-    camera.position.z = 65;
+    //camera.position.x = 65;
+    //camera.position.y = 65;
+    //camera.position.z = 65;
+    //camera.lookAt(scene.position);
+    camera.position.x = 0;
+    camera.position.y = 0;
+    camera.position.z = Math.sqrt(Math.pow(70,2)*3);
     camera.lookAt(scene.position);
     
     ball_1 = new Sphere(side_size/2, 10, 10);
@@ -128,10 +173,33 @@ function init() {
     torus = new Torus(side_size*0.75, side_size/2, 12, 12 );
     torus.position.set(-6 * side_size, 4 * side_size, 3.5 * side_size);
 
+    cube = new Cube(side_size);
+    cube.position.set( 3.5 * side_size, 3.5 * side_size, 4.5 * side_size);
+
+    pyramid_1 = new Pyramid(side_size, 5 * side_size, 4);
+    pyramid_1.position.set(0, 0, 0);
+    pyramid_1.rotateZ(Math.PI * 0.5);
+    pyramid_1.position.set(2.5 * side_size, 2.5 * side_size, -3.5 * side_size);
+
+
+    pyramid_2 = new Pyramid(1.5 * side_size, 3 * side_size, 4);
+    pyramid_2.position.set(0, 0, 0);
+    pyramid_2.rotateX(Math.PI * 0.5);
+    pyramid_2.position.set(3 * side_size, -2 * side_size, 2.5 * side_size);
+
+    cylinder = new Cylinder(0.5 * side_size, 4 * side_size, 32);
+    cylinder.position.set(0, 0, 0);
+    cylinder.rotateX(Math.PI * 0.5);
+    cylinder.position.set(2.5 * side_size, -0.5 * side_size, 0);
+
     scene.add(ball_1);
     scene.add(ball_2);
     scene.add(ball_3);
     scene.add(torus);
+    scene.add(cube);
+    scene.add(pyramid_1);
+    scene.add(pyramid_2);
+    scene.add(cylinder);
 
     console.log(scene.position);
 
