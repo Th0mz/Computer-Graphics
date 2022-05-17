@@ -12,7 +12,7 @@ var camera, scene, renderer;
 var geometry, material, mesh;
 
 var ball;
-var side_size = 10;
+var side_size = 30;
 
 class Sphere{
     constructor(radius, widthSegments, heightSegment ,_color=0xff0000, _wireframe=true){
@@ -117,16 +117,16 @@ function init() {
     camera.lookAt(scene.position);
     
     ball_1 = new Sphere(side_size/2, 10, 10);
-    ball_1.position.set(5, 25, 25);
+    ball_1.position.set(0.5 * side_size, 2.5 * side_size, 2.5 * side_size);
 
     ball_2 = new Sphere(side_size, 10, 10, 0x005050);
-    ball_2.position.set(-30,40,40);
+    ball_2.position.set(-3.0 * side_size, 4 * side_size, 4 * side_size);
 
     ball_3 = new Sphere(side_size*1.5, 10, 10, 0xE6E6FA);
-    ball_3.position.set(-45,25,25);
+    ball_3.position.set(-4.5 * side_size, 2.5 * side_size, 2.5 * side_size);
 
     torus = new Torus(side_size*0.75, side_size/2, 12, 12 );
-    torus.position.set(-60,40,35);
+    torus.position.set(-6 * side_size, 4 * side_size, 3.5 * side_size);
 
     scene.add(ball_1);
     scene.add(ball_2);
