@@ -75,11 +75,13 @@ function init() {
     scene = new THREE.Scene();
     scene.add(new THREE.AxisHelper(10));
 
+    camera = new THREE.OrthographicCamera( window.innerWidth  / -2, 
+                                           window.innerWidth  /  2, 
+                                           window.innerHeight /  2, 
+                                           window.innerHeight / -2, 
+                                           0.1, 
+                                           100 );
 
-    camera = new THREE.PerspectiveCamera(70,
-        window.innerWidth / window.innerHeight,
-        1,
-        1000);
 
     camera.position.x = 50;
     camera.position.y = 50;
@@ -89,7 +91,7 @@ function init() {
     ball = new THREE.Object3D();
 
     material = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
-    geometry = new THREE.SphereGeometry(4, 10, 10);
+    geometry = new THREE.SphereGeometry(30, 10, 10);
     mesh = new THREE.Mesh(geometry, material);
 
     ball.add(mesh);
