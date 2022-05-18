@@ -11,7 +11,7 @@ var camera, scene, renderer;
 var lastWireFrame = true, wireFrame = true;
 
 var ball;
-var side_size = 30;
+var side_size = 50;
 
 class Sphere{
     constructor(radius, widthSegments, heightSegment ,_color=0xff0000, _wireframe=true){
@@ -81,17 +81,6 @@ class Cylinder {
 
 }
 
-class Cone {
-    constructor (radius, height, radialSegments, _color=0xADD8E6, _wireframe=true) {
-        var cone = new THREE.Object3D();
-        var material = new THREE.MeshBasicMaterial({color: _color, wireframe: _wireframe});
-        const geometry = new THREE.ConeGeometry(radius, height, radialSegments);
-        var mesh = new THREE.Mesh(geometry, material);
-
-        return cone.add(mesh);
-    }
-}
-
 
 
 
@@ -120,13 +109,13 @@ function onKeyDown(e) {
             camera.position.x = 0;
             camera.position.y = 0;
             //camera.position.z = Math.sqrt(Math.pow(70,2)*3);
-            camera.position.z = 500;
+            camera.position.z = 1000;
             camera.lookAt(scene.position);
             break;
         case 51:
             camera.position.x = 0;
             //camera.position.y = Math.sqrt(Math.pow(70,2)*3);
-            camera.position.y = 500;
+            camera.position.y = 1000;
             camera.position.z = 0;
             camera.lookAt(scene.position);
             break;
@@ -170,7 +159,7 @@ function init() {
                                            window.innerHeight /  2, 
                                            window.innerHeight / -2, 
                                            0.1, 
-                                           1000 );
+                                           5000 );
 
 
     camera.position.x = 500;
@@ -209,11 +198,11 @@ function init() {
     cylinder.rotateX(Math.PI * 0.5);
     cylinder.position.set(2.5 * side_size, -0.5 * side_size, 0);
 
-    cone1 = new Cone(1 * side_size, 4 * side_size, 16, 0x603808);
+    cone1 = new Pyramid(1 * side_size, 4 * side_size, 16, 0x603808);
     cone1.rotateX(Math.PI/2);
     cone1.position.set(-2 * side_size, -3 * side_size, -1 * side_size);
 
-    cone2 = new Cone(1 * side_size, 1 * side_size, 16, 0xa47148);
+    cone2 = new Pyramid(1 * side_size, 1 * side_size, 16, 0xa47148);
     cone2.rotateX(Math.PI/2);
     cone2.rotateZ(3 * (Math.PI/2));
     cone2.position.set(-0.5 * side_size, 0, 0);
