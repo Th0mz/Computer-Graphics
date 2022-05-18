@@ -8,6 +8,8 @@
 
 // TODO : dont use global variables
 var camera, scene, renderer;
+var rotObj;
+
 
 var ball;
 var side_size = 50;
@@ -99,9 +101,9 @@ function onKeyDown(e) {
     'use strict';
     switch(e.keyCode) {
         case 49:
-            camera.position.x = 500;
-            camera.position.y = 500;
-            camera.position.z = 500;
+            camera.position.x = 1000;
+            camera.position.y = 0;
+            camera.position.z = 0;
             camera.lookAt(scene.position);
             break;
         case 50:
@@ -138,7 +140,6 @@ function render() {
 function init() {
     'use strict';
     var ball_1, ball_2, ball_3, torus, cube, cube2, pyramid_1, pyramid_2, cylinder, cylinder2, cone1, cone2;
-
     renderer = new THREE.WebGLRenderer({
         antialias: true
     });
@@ -156,9 +157,9 @@ function init() {
                                            5000 );
 
 
-    camera.position.x = 500;
-    camera.position.y = 500;
-    camera.position.z = 500;
+    camera.position.x = 0;
+    camera.position.y = 0;
+    camera.position.z = 1000;
     camera.lookAt(scene.position);
     
     ball_1 = new Sphere(side_size/2, 10, 10, 0x8F250C);
@@ -208,7 +209,9 @@ function init() {
     cylinder2.rotateX(Math.PI/2);
     cylinder2.position.set(6 * side_size, 0, 1.5 * side_size);
 
-
+    rotObj = new RotatingObject(-5.5, -1.5, -1.5)
+    scene.add(rotObj.cubeGroup)
+    
     scene.add(ball_1);
     scene.add(ball_2);
     scene.add(ball_3);
@@ -230,6 +233,7 @@ function init() {
 
 function animate() {
     'use strict';
+    rotObj.update();
     render();
     requestAnimationFrame(animate);
 }
