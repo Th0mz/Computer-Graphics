@@ -235,7 +235,11 @@ function init() {
 }
 
 function animate() {
-    'use strict';
     render();
-    requestAnimationFrame(animate);
+    'use strict';
+    setTimeout( function() {
+
+        requestAnimationFrame( animate );
+
+    }, 1000 / 60 );
 }
