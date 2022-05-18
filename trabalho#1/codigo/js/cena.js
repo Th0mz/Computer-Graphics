@@ -8,12 +8,9 @@
 
 // TODO : dont use global variables
 var camera, scene, renderer;
-<<<<<<< HEAD
 var rotObj;
 
-=======
 var lastWireFrame = true, wireFrame = true;
->>>>>>> 17d1dd497db182ef8958ba52c40226c83d0079af
 
 var ball;
 var side_size = 50;
@@ -219,7 +216,7 @@ function init() {
     cylinder2.position.set(6 * side_size, 0, 1.5 * side_size);
 
     rotObj = new RotatingObject(-5.5, -1.5, -1.5)
-    scene.add(rotObj.cubeGroup)
+    scene.add(rotObj.cubeGroup);
     
     scene.add(ball_1);
     scene.add(ball_2);
@@ -234,18 +231,13 @@ function init() {
     scene.add(cone1);
     scene.add(cone2);
 
-    console.log(scene.position);
-
     window.addEventListener("resize", onResize);
     window.addEventListener("keydown", onKeyDown);
 }
 
 function animate() {
-<<<<<<< HEAD
     'use strict';
-    rotObj.update();
-=======
->>>>>>> 17d1dd497db182ef8958ba52c40226c83d0079af
+    rotObj.rotateCube(0.01);
     render();
     'use strict';
     setTimeout( function() {
