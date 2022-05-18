@@ -8,6 +8,7 @@
 
 // TODO : dont use global variables
 var camera, scene, renderer;
+var lastWireFrame = true, wireFrame = true;
 
 var ball;
 var side_size = 30;
@@ -131,11 +132,8 @@ function onKeyDown(e) {
             break;
         case 52:
             //mudar isto para o update, n da traverse das cenas for do update
-            scene.traverse(function (node) {
-                if (node instanceof THREE.Mesh) {
-                    node.material.wireframe = !node.material.wireframe;
-                }
-            });
+            lastWireFrame = wireFrame;
+            wireFrame = !wireFrame;
             break;
     }
 }
@@ -143,6 +141,14 @@ function onKeyDown(e) {
 function render() {
     'use strict';
     //ball.position.x += 0.1;
+    if(lastWireFrame!=wireFrame){
+        scene.traverse(function (node) {
+        if (node instanceof THREE.Mesh) {
+            node.material.wireframe = !node.material.wireframe;
+        }
+        });
+    }
+    lastWireFrame = wireFrame;
     renderer.render(scene, camera);
 }
 
