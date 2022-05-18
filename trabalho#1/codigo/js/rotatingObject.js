@@ -30,14 +30,13 @@ class RotatingObject {
         this.cubeGroup = new THREE.Group();
         this.cubeGroup.add(cube)
         this.cubeGroup.add(this.cylinderGroup)
-
-        this.rot = 0
+        
+        this.rot = 0;
     }
 
     update () {
-        this.rot += 0.01;
-        this.cubeGroup.position.set(0, 0, 0);
-        this.cubeGroup.rotation.set(0, 0, this.rot);
+        //this.rot += 0.001
+        //this.cubeGroup.rotateZ(this.rot);
     }
 
     rotateCube (direction) {
