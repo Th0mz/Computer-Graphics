@@ -8,8 +8,12 @@
 
 // TODO : dont use global variables
 var camera, scene, renderer;
+<<<<<<< HEAD
 var rotObj;
 
+=======
+var lastWireFrame = true, wireFrame = true;
+>>>>>>> 17d1dd497db182ef8958ba52c40226c83d0079af
 
 var ball;
 var side_size = 50;
@@ -122,11 +126,8 @@ function onKeyDown(e) {
             break;
         case 52:
             //mudar isto para o update, n da traverse das cenas for do update
-            scene.traverse(function (node) {
-                if (node instanceof THREE.Mesh) {
-                    node.material.wireframe = !node.material.wireframe;
-                }
-            });
+            lastWireFrame = wireFrame;
+            wireFrame = !wireFrame;
             break;
     }
 }
@@ -134,6 +135,14 @@ function onKeyDown(e) {
 function render() {
     'use strict';
     //ball.position.x += 0.1;
+    if(lastWireFrame!=wireFrame){
+        scene.traverse(function (node) {
+        if (node instanceof THREE.Mesh) {
+            node.material.wireframe = !node.material.wireframe;
+        }
+        });
+    }
+    lastWireFrame = wireFrame;
     renderer.render(scene, camera);
 }
 
@@ -232,8 +241,16 @@ function init() {
 }
 
 function animate() {
+<<<<<<< HEAD
     'use strict';
     rotObj.update();
+=======
+>>>>>>> 17d1dd497db182ef8958ba52c40226c83d0079af
     render();
-    requestAnimationFrame(animate);
+    'use strict';
+    setTimeout( function() {
+
+        requestAnimationFrame( animate );
+
+    }, 1000 / 60 );
 }
