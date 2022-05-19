@@ -164,7 +164,7 @@ function onKeyDown(e) {
             rotObj.updateMovementY(1);
             break;
         case 40:
-            rotObj.updateMovementY(-1);
+            rotObj.updateMovementYInv(-1);
             break;
 
         case 37: // left and right
