@@ -108,49 +108,79 @@ function onKeyDown(e) {
             camera.position.z = 0;
             camera.lookAt(scene.position);
             break;
+
         case 50: // 2
             camera.position.x = 0;
             camera.position.y = 0;
-            //camera.position.z = Math.sqrt(Math.pow(70,2)*3);
             camera.position.z = 1000;
             camera.lookAt(scene.position);
             break;
+
         case 51: // 3
             camera.position.x = 0;
-            //camera.position.y = Math.sqrt(Math.pow(70,2)*3);
-            camera.position.y = 1000;
+            camera.position.y = -1000;
             camera.position.z = 0;
             camera.lookAt(scene.position);
             break;
+
         case 52: // 4
             //mudar isto para o update, n da traverse das cenas for do update
             lastWireFrame = wireFrame;
             wireFrame = !wireFrame;
             break;
+
         // TODO : check rotation directions
         case 113: //q or Q
         case 81:
             rotObj.updateCubeRotation(1);
             break;
+
         case 119: //w or W
         case 87:
             rotObj.updateCubeRotation(-1);
             break;
+
         case 97: //a or A
         case 65:
             rotObj.updateCylinderRotation(1);
             break;
+
         case 115: //s or S
         case 83:
             rotObj.updateCylinderRotation(-1);
             break;
+
         case 120: //x or X
         case 88:
             rotObj.updatePyramidRotation(1);
             break;
+
         case 122: //z or Z 
-            console.log("ola")
+        case 90:
             rotObj.updatePyramidRotation(-1);
+            break;
+
+        case 38: // up and down
+            rotObj.updateMovementY(1);
+            break;
+        case 40:
+            rotObj.updateMovementY(-1);
+            break;
+
+        case 37: // left and right
+            rotObj.updateMovementX(-1);
+            break;
+        case 39:
+            rotObj.updateMovementX(1);
+            break;    
+            
+        case 100: // d or D
+        case 68:
+            rotObj.updateMovementZ(-1);
+            break;
+        case 99: // c or C
+        case 67:
+            rotObj.updateMovementZ(1);
             break;
     }
 }
@@ -160,7 +190,7 @@ function onKeyUp(e){
     switch(e.keyCode) {
         case 113: // q or Q or w or W
         case 81:
-        case 90:
+        case 119:
         case 87: 
             rotObj.updateCubeRotation(0);
             break;
@@ -169,14 +199,31 @@ function onKeyUp(e){
         case 65:
         case 115:
         case 83:    
-        rotObj.updateCylinderRotation(0);
+            rotObj.updateCylinderRotation(0);
             break;
 
         case 120: //x or X or z or Z
         case 88:
         case 122:
         case 90:  
-        rotObj.updatePyramidRotation(0);
+            rotObj.updatePyramidRotation(0);
+            break;
+
+        case 38:
+        case 40:
+            rotObj.updateMovementY(0);
+            break;
+        
+        case 37:
+        case 39:
+            rotObj.updateMovementX(0);
+            break;
+
+        case 100:
+        case 68:
+        case 99:
+        case 67:
+            rotObj.updateMovementZ(0);
             break;
     }
 
@@ -217,8 +264,8 @@ function init() {
 
 
     camera.position.x = 0;
-    camera.position.y = 0;
-    camera.position.z = 1000;
+    camera.position.y = -1000;
+    camera.position.z = 0;
     camera.lookAt(scene.position);
     
     ball_1 = new Sphere(side_size/2, 10, 10, 0x8F250C);
@@ -269,7 +316,7 @@ function init() {
     cylinder2.position.set(6 * side_size, 0, 1.5 * side_size);
 
     rotObj = new RotatingObject(-5.5, -1.5, -1.5)
-    scene.add(rotObj.cubeGroup);
+    scene.add(rotObj.objectGroup);
     
     scene.add(ball_1);
     scene.add(ball_2);
