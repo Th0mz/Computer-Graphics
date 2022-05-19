@@ -12,7 +12,8 @@ var rotObj;
 
 var lastWireFrame = true, wireFrame = true;
 
-var ball;
+
+
 var side_size = 50;
 
 class Sphere{
@@ -101,32 +102,87 @@ function onResize() {
 function onKeyDown(e) {
     'use strict';
     switch(e.keyCode) {
-        case 49:
+        case 49: // 1
             camera.position.x = 1000;
             camera.position.y = 0;
             camera.position.z = 0;
             camera.lookAt(scene.position);
             break;
-        case 50:
+        case 50: // 2
             camera.position.x = 0;
             camera.position.y = 0;
             //camera.position.z = Math.sqrt(Math.pow(70,2)*3);
             camera.position.z = 1000;
             camera.lookAt(scene.position);
             break;
-        case 51:
+        case 51: // 3
             camera.position.x = 0;
             //camera.position.y = Math.sqrt(Math.pow(70,2)*3);
             camera.position.y = 1000;
             camera.position.z = 0;
             camera.lookAt(scene.position);
             break;
-        case 52:
+        case 52: // 4
             //mudar isto para o update, n da traverse das cenas for do update
             lastWireFrame = wireFrame;
             wireFrame = !wireFrame;
             break;
+        case 81: //Q
+        case 113: //q
+            rotObj.rotationData.cubeRotatingP = true;
+            break;
+        case 87: //W
+        case 119: //w
+            rotObj.rotationData.cubeRotatingN = true;
+            break;
+        case 65: //A
+        case 97: //a
+            rotObj.rotationData.cylinderRotatingP = true;
+            break;
+        case 83: //S
+        case 115: //s
+            rotObj.rotationData.cylinderRotatingN = true;
+            break;
+        case 88: //X
+        case 120: //x
+            rotObj.rotationData.pyramidRotatingP = true;
+            break;
+        case 90: //Z
+        case 122: //z
+            rotObj.rotationData.pyramidRotatingN = true;
+            break;
     }
+}
+
+function onKeyUp(e){
+    'use strict';
+    switch(e.keyCode) {
+        case 81: // Q
+        case 113: // q
+            rotObj.rotationData.cubeRotatingP = false;
+            break;
+        case 87: //W
+        case 119: //w
+            rotObj.rotationData.cubeRotatingN = false;
+            break;
+        case 65: //A
+        case 97: //a
+            rotObj.rotationData.cylinderRotatingP = false;
+            break;
+        case 83: //S
+        case 115: //s
+            rotObj.rotationData.cylinderRotatingN = false;
+            break;
+        case 88: //X
+        case 120: //x
+            rotObj.rotationData.pyramidRotatingP = false;
+            break;
+        case 90: //Z
+        case 122: //z
+            rotObj.rotationData.pyramidRotatingN = false;
+            break;
+    }
+
 }
 
 function render() {
@@ -153,7 +209,7 @@ function init() {
     document.body.appendChild(renderer.domElement);
 
     scene = new THREE.Scene();
-    scene.add(new THREE.AxisHelper(10));
+    scene.add(new THREE.AxisHelper(100));
 
     camera = new THREE.OrthographicCamera( window.innerWidth  / -2, 
                                            window.innerWidth  /  2, 
@@ -233,11 +289,30 @@ function init() {
 
     window.addEventListener("resize", onResize);
     window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
 }
 
 function animate() {
     'use strict';
-    rotObj.rotateCube(0.01);
+    if(rotObj.rotationData.cubeRotatingP) {
+        rotObj.rotateCube('Pos');
+    }
+    if(rotObj.rotationData.cubeRotatingN) {
+        rotObj.rotateCube('Neg');
+    }
+    if(rotObj.rotationData.cylinderRotatingP) {
+        rotObj.rotateCylinder('Pos');
+    }
+    if(rotObj.rotationData.cylinderRotatingN) {
+        rotObj.rotateCylinder('Neg');
+    }
+    if(rotObj.rotationData.pyramidRotatingP) {
+        rotObj.rotatePyramid('Pos');
+    }
+    if(rotObj.rotationData.pyramidRotatingN) {
+        rotObj.rotatePyramid('Neg');
+    }
+    
     render();
     'use strict';
     setTimeout( function() {
