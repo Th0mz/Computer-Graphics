@@ -137,7 +137,7 @@ function onKeyDown(e) {
 
         case 119: //w or W
         case 87:
-            rotObj.updateCubeRotation(-1);
+            rotObj.updateCubeRotationInv(-1);
             break;
 
         case 97: //a or A
@@ -147,7 +147,7 @@ function onKeyDown(e) {
 
         case 115: //s or S
         case 83:
-            rotObj.updateCylinderRotation(-1);
+            rotObj.updateCylinderRotationInv(-1);
             break;
 
         case 120: //x or X
@@ -157,7 +157,7 @@ function onKeyDown(e) {
 
         case 122: //z or Z 
         case 90:
-            rotObj.updatePyramidRotation(-1);
+            rotObj.updatePyramidRotationInv(-1);
             break;
 
         case 38: // up and down
@@ -168,7 +168,7 @@ function onKeyDown(e) {
             break;
 
         case 37: // left and right
-            rotObj.updateMovementX(-1);
+            rotObj.updateMovementXInv(-1);
             break;
         case 39:
             rotObj.updateMovementX(1);
@@ -176,7 +176,7 @@ function onKeyDown(e) {
             
         case 100: // d or D
         case 68:
-            rotObj.updateMovementZ(-1);
+            rotObj.updateMovementZInv(-1);
             break;
         case 99: // c or C
         case 67:
@@ -190,41 +190,55 @@ function onKeyUp(e){
     switch(e.keyCode) {
         case 113: // q or Q or w or W
         case 81:
+            rotObj.updateCubeRotation(0);
+            break;
         case 119:
         case 87: 
-            rotObj.updateCubeRotation(0);
+            rotObj.updateCubeRotationInv(0);
             break;
 
         case 97: //a or A or s or S
         case 65:
+            rotObj.updateCylinderRotation(0);
+            break;
         case 115:
         case 83:    
-            rotObj.updateCylinderRotation(0);
+            rotObj.updateCylinderRotationInv(0);
             break;
 
         case 120: //x or X or z or Z
         case 88:
-        case 122:
-        case 90:  
             rotObj.updatePyramidRotation(0);
             break;
 
+        case 122:
+        case 90:  
+            rotObj.updatePyramidRotationInv(0);
+            break;
+
         case 38:
-        case 40:
             rotObj.updateMovementY(0);
+            break;
+        case 40:
+            rotObj.updateMovementYInv(0);
             break;
         
         case 37:
+            rotObj.updateMovementXInv(0);
+            break;
         case 39:
             rotObj.updateMovementX(0);
             break;
 
         case 100:
         case 68:
+            rotObj.updateMovementZInv(0);
+            break;
         case 99:
         case 67:
             rotObj.updateMovementZ(0);
             break;
+            
     }
 
 }

@@ -1,4 +1,3 @@
-var vector;
 class RotatingObject {
     constructor (x, y, z) {
         this.speed = 0;
@@ -7,14 +6,20 @@ class RotatingObject {
         this.pyramidRotation = 0;
         this.rotationData = {
             cubeRotationDir:     0, cubeRotationSpeed:      0.01,
+            cubeRotationDirInv:     0,
             cylinderRotationDir: 0,  cylinderRotationSpeed: 0.02,
-            pyramidRotationDir:  0, pyramidRotationSpeed:   0.03
+            cylinderRotationDirInv: 0,
+            pyramidRotationDir:  0, pyramidRotationSpeed:   0.03,
+            pyramidRotationDirInv:  0
         };
 
         this.movementData = {
-            xDir : 0, 
+            xDir : 0,
+            xDirInv : 0,
             yDir : 0,
+            yDirInv : 0,
             zDir : 0,
+            zDirInv : 0,
             speed : 5
         };
 
@@ -50,36 +55,59 @@ class RotatingObject {
 
 
     update () {
-        this.cubeGroup.rotateZ(this.rotationData.cubeRotationSpeed * this.rotationData.cubeRotationDir);
-        this.cylinderGroup.rotateY(this.rotationData.cylinderRotationSpeed * this.rotationData.cylinderRotationDir);
-        this.pyramidGroup.rotateX(this.rotationData.pyramidRotationSpeed * this.rotationData.pyramidRotationDir);
+        this.cubeGroup.rotateZ(this.rotationData.cubeRotationSpeed * (this.rotationData.cubeRotationDir+this.rotationData.cubeRotationDirInv));
+        this.cylinderGroup.rotateY(this.rotationData.cylinderRotationSpeed * (this.rotationData.cylinderRotationDir+this.rotationData.cylinderRotationDirInv));
+        this.pyramidGroup.rotateX(this.rotationData.pyramidRotationSpeed * (this.rotationData.pyramidRotationDir+this.rotationData.pyramidRotationDirInv));
 
-        this.objectGroup.translateX(this.movementData.xDir * this.movementData.speed);
-        this.objectGroup.translateY(this.movementData.yDir * this.movementData.speed);
-        this.objectGroup.translateZ(this.movementData.zDir * this.movementData.speed);
+        this.objectGroup.translateX((this.movementData.xDir+this.movementData.xDirInv) * this.movementData.speed);
+        this.objectGroup.translateY((this.movementData.yDir+this.movementData.yDirInv) * this.movementData.speed);
+        this.objectGroup.translateZ((this.movementData.zDir+this.movementData.zDirInv) * this.movementData.speed);
     }
 
     updateMovementX (xDir) {
         this.movementData.xDir = xDir;
+    }
+    updateMovementXInv (xDirInv) {
+        this.movementData.xDirInv = xDirInv;
     }
 
     updateMovementY (yDir) {
         this.movementData.yDir = yDir;
     }
 
+    updateMovementYInv (yDirInv) {
+        this.movementData.yDirInv = yDirInv;
+    }
+
     updateMovementZ (zDir) {
         this.movementData.zDir = zDir;
     }
 
+    updateMovementZInv (zDirInv) {
+        this.movementData.zDirInv = zDirInv;
+    }
+
     updateCubeRotation (direction) {
         this.rotationData.cubeRotationDir = direction;
+    }
+    
+    updateCubeRotationInv (direction) {
+        this.rotationData.cubeRotationDirInv = direction;
     }
 
     updateCylinderRotation (direction) {
         this.rotationData.cylinderRotationDir = direction;
     }
 
+    updateCylinderRotationInv (direction) {
+        this.rotationData.cylinderRotationDirInv = direction;
+    }
+
     updatePyramidRotation (direction) {
         this.rotationData.pyramidRotationDir = direction;
+    }
+
+    updatePyramidRotationInv (direction) {
+        this.rotationData.pyramidRotationDirInv = direction;
     }
 }
