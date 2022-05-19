@@ -127,29 +127,30 @@ function onKeyDown(e) {
             lastWireFrame = wireFrame;
             wireFrame = !wireFrame;
             break;
-        case 81: //Q
-        case 113: //q
-            rotObj.rotationData.cubeRotatingP = true;
+        // TODO : check rotation directions
+        case 113: //q or Q
+        case 81:
+            rotObj.updateCubeRotation(1);
             break;
-        case 87: //W
-        case 119: //w
-            rotObj.rotationData.cubeRotatingN = true;
+        case 119: //w or W
+        case 87:
+            rotObj.updateCubeRotation(-1);
             break;
-        case 65: //A
-        case 97: //a
-            rotObj.rotationData.cylinderRotatingP = true;
+        case 97: //a or A
+        case 65:
+            rotObj.updateCylinderRotation(1);
             break;
-        case 83: //S
-        case 115: //s
-            rotObj.rotationData.cylinderRotatingN = true;
+        case 115: //s or S
+        case 83:
+            rotObj.updateCylinderRotation(-1);
             break;
-        case 88: //X
-        case 120: //x
-            rotObj.rotationData.pyramidRotatingP = true;
+        case 120: //x or X
+        case 88:
+            rotObj.updatePyramidRotation(1);
             break;
-        case 90: //Z
-        case 122: //z
-            rotObj.rotationData.pyramidRotatingN = true;
+        case 122: //z or Z 
+            console.log("ola")
+            rotObj.updatePyramidRotation(-1);
             break;
     }
 }
@@ -157,29 +158,25 @@ function onKeyDown(e) {
 function onKeyUp(e){
     'use strict';
     switch(e.keyCode) {
-        case 81: // Q
-        case 113: // q
-            rotObj.rotationData.cubeRotatingP = false;
+        case 113: // q or Q or w or W
+        case 81:
+        case 90:
+        case 87: 
+            rotObj.updateCubeRotation(0);
             break;
-        case 87: //W
-        case 119: //w
-            rotObj.rotationData.cubeRotatingN = false;
+
+        case 97: //a or A or s or S
+        case 65:
+        case 115:
+        case 83:    
+        rotObj.updateCylinderRotation(0);
             break;
-        case 65: //A
-        case 97: //a
-            rotObj.rotationData.cylinderRotatingP = false;
-            break;
-        case 83: //S
-        case 115: //s
-            rotObj.rotationData.cylinderRotatingN = false;
-            break;
-        case 88: //X
-        case 120: //x
-            rotObj.rotationData.pyramidRotatingP = false;
-            break;
-        case 90: //Z
-        case 122: //z
-            rotObj.rotationData.pyramidRotatingN = false;
+
+        case 120: //x or X or z or Z
+        case 88:
+        case 122:
+        case 90:  
+        rotObj.updatePyramidRotation(0);
             break;
     }
 
@@ -187,7 +184,7 @@ function onKeyUp(e){
 
 function render() {
     'use strict';
-    //ball.position.x += 0.1;
+
     if(lastWireFrame!=wireFrame){
         scene.traverse(function (node) {
         if (node instanceof THREE.Mesh) {
@@ -294,30 +291,10 @@ function init() {
 
 function animate() {
     'use strict';
-    if(rotObj.rotationData.cubeRotatingP) {
-        rotObj.rotateCube('Pos');
-    }
-    if(rotObj.rotationData.cubeRotatingN) {
-        rotObj.rotateCube('Neg');
-    }
-    if(rotObj.rotationData.cylinderRotatingP) {
-        rotObj.rotateCylinder('Pos');
-    }
-    if(rotObj.rotationData.cylinderRotatingN) {
-        rotObj.rotateCylinder('Neg');
-    }
-    if(rotObj.rotationData.pyramidRotatingP) {
-        rotObj.rotatePyramid('Pos');
-    }
-    if(rotObj.rotationData.pyramidRotatingN) {
-        rotObj.rotatePyramid('Neg');
-    }
-    
+    rotObj.update()
     render();
-    'use strict';
+
     setTimeout( function() {
-
         requestAnimationFrame( animate );
-
     }, 1000 / 60 );
 }

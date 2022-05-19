@@ -5,13 +5,12 @@ class RotatingObject {
         this.cubeRotation = 0;
         this.cylinderRotation = 0;
         this.pyramidRotation = 0;
-        this.rotationData = {cubeRotatingP: false, cubeRotatingN: false,
-                             cylinderRotatingP: false,  cylinderRotatingN: false,
-                             pyramidRotatingP: false, pyramidRotatingN: false};
+        this.rotationData = {cubeRotationDir:     0, cubeRotationSpeed:      0.01,
+                             cylinderRotationDir: 0,  cylinderRotationSpeed: 0.02,
+                             pyramidRotationDir:  0, pyramidRotationSpeed:   0.03};
         
 
 
-        
         //Pyramid and Group 1
         var pyramid = new Pyramid(0.5 * side_size, side_size, 4, 0x00ff00);
         pyramid.rotateZ(Math.PI * 0.5);
@@ -19,9 +18,6 @@ class RotatingObject {
         this.pyramidGroup = new THREE.Group();
         this.pyramidGroup.add(pyramid);
         this.pyramidGroup.position.set(side_size,0,-2*side_size);
-
-        console.log(pyramid.position);
-        console.log(this.pyramidGroup.position);
 
         //Cylinder and Group2 (Includes Group1)
         var cylinder = new Cylinder(0.5 * side_size, 4 * side_size, 32, 0x0000ff);
@@ -32,9 +28,6 @@ class RotatingObject {
         this.cylinderGroup.add(this.pyramidGroup);
         this.cylinderGroup.position.set(0, -2*side_size, 0);
 
-        console.log(cylinder.position);
-        console.log(this.cylinderGroup.position);
-
         //Cube and Group3 (Includes Group2)
         var cube = new Cube(3 * side_size, 0xff0000);
 
@@ -42,50 +35,26 @@ class RotatingObject {
         this.cubeGroup.add(cube);
         this.cubeGroup.add(this.cylinderGroup);
         this.cubeGroup.position.set(x * side_size, y * side_size, z * side_size);
-
-        
-
-        console.log(cube.position);
-        console.log(this.cubeGroup.position);
-
     }
 
 
     update () {
-                
-    }
-   // this.pyramidGroup.rotateX(-0.02);
-        //this.pyramid.rotateX(0.002);
-        //this.cylinder.rotateX(0.004);
-     //   
-
-    rotateCube (degree) {
-       
-        if(degree == 'Pos'){
-            this.cubeGroup.rotateZ(0.006);
-            //this.cubeGroup.rotateY(0.007);
-        } else {
-            this.cubeGroup.rotateZ(-0.006);
-            //this.cubeGroup.rotateY(0.007);
-        };
-        
+        this.cubeGroup.rotateZ(this.rotationData.cubeRotationSpeed * this.rotationData.cubeRotationDir);
+        this.cylinderGroup.rotateY(this.rotationData.cylinderRotationSpeed * this.rotationData.cylinderRotationDir);
+        this.pyramidGroup.rotateX(this.rotationData.pyramidRotationSpeed * this.rotationData.pyramidRotationDir);
     }
 
-    rotateCylinder (degree) {
+    updateCubeRotation (direction) {
+        this.rotationData.cubeRotationDir = direction;
+    }
+
+    updateCylinderRotation (direction) {
         //this.cylinderRotation = degree;
-        if( degree == 'Pos'){
-            this.cylinderGroup.rotateY(0.004);
-        } else {
-            this.cylinderGroup.rotateY(-0.004);
-        }
+        this.rotationData.cylinderRotationDir = direction;
     }
 
-    rotatePyramid (degree) {
+    updatePyramidRotation (direction) {
         //this.pyramidRotation = degree;
-        if (degree == 'Pos'){
-            this.pyramidGroup.rotateX(0.1);
-        } else {
-            this.pyramidGroup.rotateX(-0.1);
-        }
+        this.rotationData.pyramidRotationDir = direction;
     }
 }
