@@ -71,12 +71,18 @@ function createCylinder (x, y, z, diameter, height, base_polygon, _color, _wiref
 }
 
 function createCamera () {
-    camera = new THREE.OrthographicCamera( window.innerWidth  / -2, 
-                                           window.innerWidth  /  2, 
-                                           window.innerHeight /  2, 
-                                           window.innerHeight / -2, 
-                                           0.1, 
-                                           5000 );
+
+    viewSize = 700;
+    var aspectRatio = window.innerWidth / window.innerHeight;
+    originalAspect = window.innerWidth / window.innerHeight;
+
+    camera = new THREE.OrthographicCamera(-aspectRatio * viewSize / 2, 
+                                          aspectRatio * viewSize / 2,
+                                          viewSize / 2, 
+                                          -viewSize / 2,
+                                          0.1,
+                                          5000 );
+                                           
 
 
     // setup camera position
@@ -285,10 +291,6 @@ function init() {
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
-    viewSize = 700;
-    var aspectRatio = window.innerWidth / window.innerHeight;
-    originalAspect = window.innerWidth / window.innerHeight;
-    camera = new THREE.OrthographicCamera(-aspectRatio * viewSize / 2, aspectRatio * viewSize / 2, viewSize / 2, -viewSize / 2, 0.1, 5000);
     
     createScene();
     createCamera();
