@@ -68,6 +68,50 @@ function createCylinder (x, y, z, diameter, height, base_polygon, _color, _wiref
     return cylinder;
 }
 
+function createCamera () {
+    camera = new THREE.OrthographicCamera( window.innerWidth  / -2, 
+                                           window.innerWidth  /  2, 
+                                           window.innerHeight /  2, 
+                                           window.innerHeight / -2, 
+                                           0.1, 
+                                           5000 );
+
+
+    // setup camera position
+    camera.position.x = 0;
+    camera.position.y = -1000;
+    camera.position.z = 0;
+    camera.lookAt(scene.position);
+}
+
+function createScene () {
+    
+    scene = new THREE.Scene();
+    scene.add(new THREE.AxisHelper(100));
+
+    createSphere(0.5, 2.5, 2.5, 1, 0x8F250C);
+    createSphere(-3, 4, 4, 2, 0x442220);
+    createSphere(-4.5, 2.5, 2.5, 3, 0x809848);
+
+    createTorus(-6, 4, 3.5, 1.5, 1, 0x9A6D38);
+
+    createCube(3.5, 3.5, 4.5, 1, 0xEEAD2D);
+    createCube(6, 0, 0, 2, 0xffa62b);
+
+    createPyramid(2.5, 2.5, -3.5, 2, 5, 4, 0xbc6c25, true, 0, 0, Math.PI / 2);
+    createPyramid(3, -2, 2.5, 3, 3, 4, 0xe7bc91, true, Math.PI / 2);
+
+    // cone
+    createPyramid(-2, -3, -1, 2, 4, 16, 0x603808, true, Math.PI / 2);
+    createPyramid(-0.5, 0, 0, 2, 1, 16, 0xa47148, true, Math.PI / 2, 0, 3 * (Math.PI / 2));
+
+    createCylinder(2.5, -0.5, 0, 1, 4, 16, 0xa22c29, true, Math.PI / 2);
+    createCylinder(6, 0, 1.5, 2, 1, 16, 0x16697a, true, Math.PI / 2);
+
+    rotObj = new RotatingObject(-5.5, -1.5, -1.5)
+    scene.add(rotObj.objectGroup);
+}
+
 function onResize() {
     'use strict'
 
@@ -238,44 +282,8 @@ function init() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    scene = new THREE.Scene();
-    scene.add(new THREE.AxisHelper(100));
-
-    camera = new THREE.OrthographicCamera( window.innerWidth  / -2, 
-                                           window.innerWidth  /  2, 
-                                           window.innerHeight /  2, 
-                                           window.innerHeight / -2, 
-                                           0.1, 
-                                           5000 );
-
-
-    // setup camera position
-    camera.position.x = 0;
-    camera.position.y = -1000;
-    camera.position.z = 0;
-    camera.lookAt(scene.position);
-    
-    createSphere(0.5, 2.5, 2.5, 1, 0x8F250C);
-    createSphere(-3, 4, 4, 2, 0x442220);
-    createSphere(-4.5, 2.5, 2.5, 3, 0x809848);
-
-    createTorus(-6, 4, 3.5, 1.5, 1, 0x9A6D38);
-
-    createCube(3.5, 3.5, 4.5, 1, 0xEEAD2D);
-    createCube(6, 0, 0, 2, 0xffa62b);
-
-    createPyramid(2.5, 2.5, -3.5, 2, 5, 4, 0xbc6c25, true, 0, 0, Math.PI / 2);
-    createPyramid(3, -2, 2.5, 3, 3, 4, 0xe7bc91, true, Math.PI / 2);
-
-    // cone
-    createPyramid(-2, -3, -1, 2, 4, 16, 0x603808, true, Math.PI / 2);
-    createPyramid(-0.5, 0, 0, 2, 1, 16, 0xa47148, true, Math.PI / 2, 0, 3 * (Math.PI / 2));
-
-    createCylinder(2.5, -0.5, 0, 1, 4, 16, 0xa22c29, true, Math.PI / 2)
-    createCylinder(6, 0, 1.5, 2, 1, 16, 0x16697a, true, Math.PI / 2)
-    
-    rotObj = new RotatingObject(-5.5, -1.5, -1.5)
-    scene.add(rotObj.objectGroup);
+    createScene();
+    createCamera();
     
     window.addEventListener("resize", onResize);
     window.addEventListener("keydown", onKeyDown);
