@@ -24,16 +24,14 @@ class RotatingObject {
         };
 
         //Pyramid and Group 1
-        var pyramid = new Pyramid(0.5 * side_size, side_size, 4, 0xf4e285);
-        pyramid.rotateZ(Math.PI * 0.5);
+        var pyramid = createPyramid(0, 0, 0, 1, 1, 4, 0xf4e285, true, 0, 0, Math.PI / 2)
                 
         this.pyramidGroup = new THREE.Group();
         this.pyramidGroup.add(pyramid);
         this.pyramidGroup.position.set(side_size,0,-2*side_size);
 
         //Cylinder and Group2 (Includes Group1)
-        var cylinder = new Cylinder(0.5 * side_size, 4 * side_size, 32, 0x8cb369);
-        cylinder.rotateX(Math.PI/2);
+        var cylinder = createCylinder(0, 0, 0, 1, 4, 16, 0x8cb369, true, Math.PI / 2);
         
         this.cylinderGroup = new THREE.Group();
         this.cylinderGroup.add(cylinder);
@@ -41,7 +39,7 @@ class RotatingObject {
         this.cylinderGroup.position.set(0, -2*side_size, 0);
 
         //Cube and Group3 (Includes Group2)
-        var cube = new Cube(3 * side_size, 0xf4a259);
+        var cube = createCube(0, 0, 0, 3, 0xf4a259);
 
         this.cubeGroup = new THREE.Group();
         this.cubeGroup.add(cube);
