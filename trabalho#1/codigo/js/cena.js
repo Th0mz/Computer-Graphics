@@ -8,6 +8,8 @@
 
 var camera, scene, renderer;
 var rotObj;
+var originalAspect;
+var viewSize;
 
 var lastWireFrame = true, wireFrame = true;
 
@@ -114,13 +116,15 @@ function createScene () {
 
 function onResize() {
     'use strict'
-
+    var aspect = window.innerWidth / window.innerHeight;
+    var change = originalAspect / aspect;
+    var newSize = viewSize * change;
+    camera.left = -aspect * newSize / 2;
+    camera.right = aspect * newSize  / 2;
+    camera.top = newSize / 2;
+    camera.bottom = -newSize / 2;
+    camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-
-    if (window.innerHeight > 0 && window.innerWidth > 0) {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-    }
 
 }
 
@@ -281,9 +285,14 @@ function init() {
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
-
+    viewSize = 700;
+    var aspectRatio = window.innerWidth / window.innerHeight;
+    originalAspect = window.innerWidth / window.innerHeight;
+    camera = new THREE.OrthographicCamera(-aspectRatio * viewSize / 2, aspectRatio * viewSize / 2, viewSize / 2, -viewSize / 2, 0.1, 5000);
+    
     createScene();
     createCamera();
+
     
     window.addEventListener("resize", onResize);
     window.addEventListener("keydown", onKeyDown);
