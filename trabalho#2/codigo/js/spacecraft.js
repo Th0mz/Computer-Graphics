@@ -1,3 +1,6 @@
+var WIDTH = 0
+var HEIGHT = 1
+
 class Spacecraft {
     constructor (x, y, z, height) {
         // TODO : not using x, y, z 
@@ -19,36 +22,31 @@ class Spacecraft {
         var propulsor4 = new THREE.CapsuleGeometry(this.unit/2, this.unit*2);
         */
 
-        // var capsule = new THREE.CapsuleGeometry( 1, 1, 4, 8 );
-
-        var propulsor1 = createSphere(this.unit, 0, 0, this.unit, 0x00ff00) 
-        var propulsor2 = createSphere(-this.unit, 0, 0, this.unit, 0x00ff00)
-        var propulsor3 = createSphere(0, 0, -this.unit, this.unit, 0x00ff00)
-        var propulsor4 = createSphere(0, 0, this.unit, this.unit, 0x00ff00)
-
         //TODO check initial orientation, might have to change intial values
         // TODO : heirarquicamente, não há distinção em grupos deste objeto
         // já que ele se comporta como um todo
-        this.propulsorGroup = new THREE.Group();
-        this.propulsorGroup.add(propulsor1, propulsor2, propulsor3, propulsor4);
-        this.propulsorGroup.position.set(0, -4.5 * this.unit, 0);
 
+        var baseSize = [3 * this.unit, 6 * this.unit]
+        var midSize =  [2.5 * this.unit, 2 * this.unit]
+        var noseSize = [1.2 * this.unit, 1.5 * this.unit]
+        var propulsorSize = [1.1 * this.unit, 3 * this.unit]
 
-        var baseCylinder = createCylinder(0, 0, 0, 3 * this.unit,  7 * this.unit, 16, 0xff0000) 
-        
-        this.baseGroup = new THREE.Group();
-        this.baseGroup.add(baseCylinder);
-        this.baseGroup.add(this.propulsorGroup);
-        this.baseGroup.position.set(0, -4.5 * this.unit, 0);
+        var baseCylinder = createCylinder(0, 0, 0, baseSize[WIDTH], baseSize[HEIGHT], 16, 0xc1c1c1);
+        var midCylinder = createCylinder(0, baseSize[HEIGHT] / 2 + midSize[HEIGHT] / 2 , 0, midSize[WIDTH], midSize[HEIGHT], 16, 0xb8b8b8);
+        var noseCylinder = createCylinder(0, baseSize[HEIGHT] / 2 + midSize[HEIGHT] + noseSize[HEIGHT] / 2, 0, noseSize[WIDTH], noseSize[HEIGHT], 16, 0xde4730);
+        var propulsor1 = createCylinder(-baseSize[WIDTH] / 2, -baseSize[HEIGHT] / 2, 0, propulsorSize[WIDTH], propulsorSize[HEIGHT], 16, 0xde4730);
+        var propulsor2 = createCylinder(baseSize[WIDTH] / 2, -baseSize[HEIGHT] / 2, 0, propulsorSize[WIDTH], propulsorSize[HEIGHT], 16, 0xde4730);
+        var propulsor3 = createCylinder(0, -baseSize[HEIGHT] / 2, -baseSize[WIDTH] / 2, propulsorSize[WIDTH], propulsorSize[HEIGHT], 16, 0xde4730);
+        var propulsor4 = createCylinder(0, -baseSize[HEIGHT] / 2, baseSize[WIDTH] / 2, propulsorSize[WIDTH], propulsorSize[HEIGHT], 16, 0xde4730);
 
-
-        var noseCylinder = createCylinder(0, 0, 0, 3 * this.unit, 2 * this.unit, 16, 0x0000ff)
 
         this.spacecraftGroup = new THREE.Group();
+        this.spacecraftGroup.add(baseCylinder);
+        this.spacecraftGroup.add(midCylinder);
         this.spacecraftGroup.add(noseCylinder);
-        this.spacecraftGroup.add(this.baseGroup);
-        this.spacecraftGroup.position.set(0, 0, 4.5 * this.unit);
-        this.spacecraftGroup.rotateX(Math.PI/2);
+        this.spacecraftGroup.add(propulsor1, propulsor2, propulsor3, propulsor4);
+
+        this.spacecraftGroup.position.set(x * side_size, y * side_size, z * side_size);
 
         this.objectGroup = new THREE.Group();
         this.objectGroup.add(this.spacecraftGroup);

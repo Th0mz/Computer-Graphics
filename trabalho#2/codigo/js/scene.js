@@ -14,7 +14,7 @@ var spacecraft;
 
 var lastWireFrame = true, wireFrame = true;
 
-var side_size = 50;
+var side_size = 10;
 const R = 50;
 
 function createCamera () {
@@ -34,8 +34,8 @@ function createCamera () {
 
     // setup camera position
     camera.position.x = 0;
-    camera.position.y = -1000;
-    camera.position.z = 0;
+    camera.position.y = 0;
+    camera.position.z = 1000;
     camera.lookAt(scene.position);
 }
 
@@ -44,9 +44,9 @@ function createScene () {
     scene = new THREE.Scene();
     scene.add(new THREE.AxisHelper(100));
 
-    //createSphere(0, 0, 0, 4, 0x006994);
+    createSphere(0, 0, 0, 2*R, 0x006994);
 
-    spacecraft = new Spacecraft(0, 0, 0, R/11);
+    spacecraft = new Spacecraft(-1.2 * R, 0, 0, R/11);
     scene.add(spacecraft.spacecraftGroup);
 }
 
