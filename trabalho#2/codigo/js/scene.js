@@ -10,9 +10,12 @@ var camera, scene, renderer;
 var originalAspect;
 var viewSize;
 
+var spacecraft;
+
 var lastWireFrame = true, wireFrame = true;
 
 var side_size = 50;
+const R = 50;
 
 function createObject (x, y, z, geometry, _color, rotX=0, rotY=0, rotZ=0, _wireframe=true) {
     var object = new THREE.Object3D();
@@ -97,6 +100,9 @@ function createScene () {
     scene.add(new THREE.AxisHelper(100));
 
     createSphere(0, 0, 0, 4, 0x006994);
+
+    spacecraft = new Spacecraft(0, 0, 0, R/11);
+    scene.add(spacecraft.spacecraftGroup);
 }
 
 function onResize() {
