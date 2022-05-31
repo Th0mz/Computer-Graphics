@@ -69,6 +69,8 @@ function createScene () {
     var startingTheta = Math.random() * (2* Math.PI)
     spacecraft = new Spacecraft(-1.2 * R, startingPhi, startingTheta, R/11);
     scene.add(spacecraft.spacecraftGroup);
+
+    new Debris(100);
 }
 
 function onResize() {
