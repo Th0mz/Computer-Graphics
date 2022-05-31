@@ -15,7 +15,7 @@ var spacecraft;
 var lastWireFrame = true, wireFrame = true;
 
 var side_size = 10;
-const R = 50;
+const R = 30;
 
 function createCamera () {
 
@@ -73,6 +73,13 @@ function onKeyDown(e) {
         case 40:
             spacecraft.movePhi();
             break;
+
+        case 37: // left and right
+            spacecraft.moveTheta();
+            break;
+        case 39:
+            spacecraft.moveThetaInv();
+            break;
     }
 }
 
@@ -84,6 +91,13 @@ function onKeyUp(e){
             break;
         case 40:
             spacecraft.stopPhi();
+            break;
+
+        case 37: // left and right
+            spacecraft.stopTheta();
+            break;
+        case 39:
+            spacecraft.stopThetaInv();
             break;
     }
 
