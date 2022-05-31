@@ -6,37 +6,56 @@
 *
 */
 
-var camera, scene, renderer;
+// Cameras
+var mainCamera;
+var frontalCamera, perspectiveCamera;
+
+var scene, renderer;
+
+// Camera resize variables
 var originalAspect;
 var viewSize;
 
+// Scene objects properties
 var spacecraft;
-
-var lastWireFrame = true, wireFrame = true;
-
 var side_size = 10;
 const R = 30;
 
-function createCamera () {
+function createCameras () {
 
     viewSize = 700;
     var aspectRatio = window.innerWidth / window.innerHeight;
     originalAspect = window.innerWidth / window.innerHeight;
 
-    camera = new THREE.OrthographicCamera(-aspectRatio * viewSize / 2, 
+    // Frontal Camera
+    frontalCamera = new THREE.OrthographicCamera(-aspectRatio * viewSize / 2, 
                                           aspectRatio * viewSize / 2,
                                           viewSize / 2, 
                                           -viewSize / 2,
                                           0.1,
                                           5000 );
-                                           
 
+    frontalCamera.position.set(0, 0, 1000);
+    frontalCamera.lookAt(scene.position);
 
-    // setup camera position
-    camera.position.x = 0;
-    camera.position.y = 0;
-    camera.position.z = 1000;
-    camera.lookAt(scene.position);
+    // Perspective Camera
+    // TODO : must be perspective camera
+    perspectiveCamera = new THREE.OrthographicCamera(-aspectRatio * viewSize / 2, 
+                                          aspectRatio * viewSize / 2,
+                                          viewSize / 2, 
+                                          -viewSize / 2,
+                                          0.1,
+                                          5000 );
+
+    perspectiveCamera.position.set(500, 500, 500);
+    perspectiveCamera.lookAt(scene.position);
+
+    // Spacecraft Camera
+    // TODO : remove this
+    spacecraft.createCamera()
+    
+    // Set main camera
+    mainCamera = perspectiveCamera;
 }
 
 function createScene () {
@@ -44,9 +63,11 @@ function createScene () {
     scene = new THREE.Scene();
     scene.add(new THREE.AxisHelper(100));
 
-    createSphere(0, 0, 0, 2*R, 0x006994);
+    createSphere(0, 0, 0, 2*R, 0x006994, false);
 
-    spacecraft = new Spacecraft(-1.2 * R, 0, 0, R/11);
+    var startingPhi = Math.random() * (2* Math.PI)
+    var startingTheta = Math.random() * (2* Math.PI)
+    spacecraft = new Spacecraft(-1.2 * R, startingPhi, startingTheta, R/11);
     scene.add(spacecraft.spacecraftGroup);
 }
 
@@ -55,11 +76,11 @@ function onResize() {
     var aspect = window.innerWidth / window.innerHeight;
     var change = originalAspect / aspect;
     var newSize = viewSize * change;
-    camera.left = -aspect * newSize / 2;
-    camera.right = aspect * newSize  / 2;
-    camera.top = newSize / 2;
-    camera.bottom = -newSize / 2;
-    camera.updateProjectionMatrix();
+    frontalCamera.left = -aspect * newSize / 2;
+    frontalCamera.right = aspect * newSize  / 2;
+    frontalCamera.top = newSize / 2;
+    frontalCamera.bottom = -newSize / 2;
+    frontalCamera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 
 }
@@ -67,18 +88,28 @@ function onResize() {
 function onKeyDown(e) {
     'use strict';
     switch(e.keyCode) {
+        // TODO : cant make associations in onKeyDown
+        case 49 : // number 1
+            mainCamera = frontalCamera
+            break;
+        case 50 : // number 2
+            mainCamera = perspectiveCamera
+            break;
+        case 51 : // number 3
+            mainCamera = spacecraft.getCamera()
+            break;
         case 38: // up and down
-            spacecraft.movePhiInv();
+            spacecraft.movePhi();
             break;
         case 40:
-            spacecraft.movePhi();
+            spacecraft.movePhiInv();
             break;
 
         case 37: // left and right
-            spacecraft.moveTheta();
+            spacecraft.moveThetaInv();
             break;
         case 39:
-            spacecraft.moveThetaInv();
+            spacecraft.moveTheta();
             break;
     }
 }
@@ -87,17 +118,17 @@ function onKeyUp(e){
     'use strict';
     switch(e.keyCode) {
         case 38: // up and down
-            spacecraft.stopPhiInv();
+            spacecraft.stopPhi();
             break;
         case 40:
-            spacecraft.stopPhi();
+            spacecraft.stopPhiInv();
             break;
 
         case 37: // left and right
-            spacecraft.stopTheta();
+            spacecraft.stopThetaInv();
             break;
         case 39:
-            spacecraft.stopThetaInv();
+            spacecraft.stopTheta();
             break;
     }
 
@@ -105,7 +136,7 @@ function onKeyUp(e){
 
 function render() {
     'use strict';
-    renderer.render(scene, camera);
+    renderer.render(scene, mainCamera);
 }
 
 function init() {
@@ -118,7 +149,7 @@ function init() {
     document.body.appendChild(renderer.domElement);
     
     createScene();
-    createCamera();
+    createCameras();
 
     
     window.addEventListener("resize", onResize);
@@ -128,16 +159,6 @@ function init() {
 
 function animate() {
     'use strict';
-
-    // wireframe
-    if(lastWireFrame != wireFrame){
-        scene.traverse(function (node) {
-        if (node instanceof THREE.Mesh) {
-            node.material.wireframe = !node.material.wireframe;
-        }
-        });
-    }
-    lastWireFrame = wireFrame;
 
     spacecraft.update();
     render();

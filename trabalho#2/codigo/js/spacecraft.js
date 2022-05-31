@@ -2,29 +2,18 @@ var WIDTH = 0
 var HEIGHT = 1
 
 class Spacecraft {
-    constructor (x, y, z, height) {
-        // TODO : not using x, y, z 
+    constructor (radius, phi, theta, height) {
         this.unit = height/11;
         this.height = height;
         this.speed = 0;
-
+        
         this.movementData = {
             phiDir : 0, phiDirInv : 0,
             thetaDir : 0, thetaDirInv : 0,
             speed : 1
         };
         
-        /*
-        var propulsor1 = new THREE.CapsuleGeometry(this.unit/2, this.unit*2);
-        var propulsor2 = new THREE.CapsuleGeometry(this.unit/2, this.unit*2);
-        var propulsor3 = new THREE.CapsuleGeometry(this.unit/2, this.unit*2);
-        var propulsor4 = new THREE.CapsuleGeometry(this.unit/2, this.unit*2);
-        */
-
-        //TODO check initial orientation, might have to change intial values
-        // TODO : heirarquicamente, não há distinção em grupos deste objeto
-        // já que ele se comporta como um todo
-
+        // spacecraft primitives definition
         var baseSize = [3 * this.unit, 6 * this.unit]
         var midSize =  [2.5 * this.unit, 2 * this.unit]
         var noseSize = [1.2 * this.unit, 1.5 * this.unit]
@@ -40,46 +29,33 @@ class Spacecraft {
 
         this.components = [baseCylinder, midCylinder, noseCylinder, propulsor1, propulsor2, propulsor3, propulsor4];
 
+        // spacecraft camera  
+        this.camera = null
+
+        // group spacecraft primitives 
         this.spacecraftGroup = new THREE.Group();
         this.spacecraftGroup.add(baseCylinder);
         this.spacecraftGroup.add(midCylinder);
         this.spacecraftGroup.add(noseCylinder);
         this.spacecraftGroup.add(propulsor1, propulsor2, propulsor3, propulsor4);
 
-        this.spacecraftGroup.position.set(x * side_size, y * side_size, z * side_size);
+        this.spherical = new THREE.Spherical(radius * side_size, phi, theta);
+        this.spacecraftGroup.position.setFromSpherical(this.spherical);
 
         this.objectGroup = new THREE.Group();
         this.objectGroup.add(this.spacecraftGroup);
         this.objectGroup.position.set(0, 0, 0);
-
-        this.spherical = new THREE.Spherical(0,0,0);
-        this.spherical.setFromVector3(this.spacecraftGroup.position);
 
     }
 
 
     update () {
         
-        /* Use JS built in Vector class for defining the direction
-           of the spaceship (functions like a normal vector) */
-        /* x_transl = (this.movementData.phiDir+this.movementData.phiDirInv);
-        y_transl = (this.movementData.thetaDir+this.movementData.thetaDirInv);
-        z_transl = (this.movementData.zDir+this.movementData.zDirInv);
-        num_dim_transl = Math.abs(x_transl)+Math.abs(y_transl)+Math.abs(z_transl);
-
-        if (num_dim_transl > 1) {
-            x_transl = Math.sqrt(x_transl / num_dim_transl);
-            y_transl = Math.sqrt(y_transl / num_dim_transl);
-            z_transl = Math.sqrt(z_transl / num_dim_transl);
-        }
-
-        this.objectGroup.translateX( x_transl * this.movementData.speed);
-        this.objectGroup.translateY( y_transl * this.movementData.speed);
-        this.objectGroup.translateZ( z_transl * this.movementData.speed); */
-
         var phiMovement = this.movementData.phiDir + this.movementData.phiDirInv;
         var thetaMovement = this.movementData.thetaDir + this.movementData.thetaDirInv;
 
+        // TODO : normalizar speed da nave (velociadade angular deve
+        //        ser constante)
         this.spherical.set(this.spherical.radius, this.spherical.phi + phiMovement*this.movementData.speed/100, 
                                 this.spherical.theta + thetaMovement*this.movementData.speed/100);
         this.spacecraftGroup.position.setFromSpherical(this.spherical);
@@ -109,6 +85,18 @@ class Spacecraft {
 
     whichQuadrant() {
         return Math.floor(this.spherical.phi/(Math.PI/2));
+    }
+
+    createCamera () {
+        // TODO : must be perspective camera
+        this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
+
+        this.camera.position.set(-5 * side_size, side_size, 0);
+        this.camera.lookAt(scene.position);
+        this.spacecraftGroup.add(this.camera)
+    }
+    getCamera () {
+        return this.camera;
     }
 
 }

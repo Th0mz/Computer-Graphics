@@ -16,7 +16,7 @@ function createObject (x, y, z, geometry, _color, rotX=0, rotY=0, rotZ=0, _wiref
 function createSphere (x, y, z, diameter, _color, _wireframe=true) {
     
     var geometry = new THREE.SphereGeometry((diameter / 2) * side_size, 32, 16);
-    var sphere = createObject(x, y, z, geometry, _color);
+    var sphere = createObject(x, y, z, geometry, _color, 0, 0, 0, _wireframe);
 
     return sphere;
 }
@@ -24,7 +24,7 @@ function createSphere (x, y, z, diameter, _color, _wireframe=true) {
 function createTorus (x, y, z, diameter_external, diameter_internal, _color, _wireframe=true, rotX = 0, rotY = 0, rotZ = 0) {
     
     var geometry = new THREE.TorusGeometry((diameter_external / 2) * side_size, (diameter_internal / 2) * side_size, 12, 12);
-    var torus = createObject(x, y, z, geometry, _color, rotX, rotY, rotZ);
+    var torus = createObject(x, y, z, geometry, _color, rotX, rotY, rotZ, _wireframe);
 
     return torus;
 }
@@ -32,7 +32,7 @@ function createTorus (x, y, z, diameter_external, diameter_internal, _color, _wi
 function createCube(x, y, z, size, _color, _wireframe=true) {
 
     var geometry = new THREE.BoxGeometry(size * side_size, size * side_size, size * side_size);
-    var cube = createObject(x, y, z, geometry, _color);
+    var cube = createObject(x, y, z, geometry, _color, 0, 0, 0, _wireframe);
 
     return cube;
 }
@@ -40,7 +40,7 @@ function createCube(x, y, z, size, _color, _wireframe=true) {
 function createPyramid(x, y, z, diameter, height, base_polygon,  _color, _wireframe=true, rotX = 0, rotY = 0, rotZ = 0) {
     
     var geometry = new THREE.ConeGeometry((diameter / 2) * side_size, height * side_size, base_polygon);
-    var pyramid = createObject(x, y, z, geometry, _color, rotX, rotY, rotZ);
+    var pyramid = createObject(x, y, z, geometry, _color, rotX, rotY, rotZ, _wireframe);
     
     return pyramid;
 }
@@ -48,7 +48,7 @@ function createPyramid(x, y, z, diameter, height, base_polygon,  _color, _wirefr
 function createCylinder (x, y, z, diameter, height, base_polygon, _color, _wireframe=true, rotX = 0, rotY = 0, rotZ = 0) {
     
     var geometry = new THREE.CylinderGeometry( (diameter / 2) * side_size, (diameter / 2) * side_size, height * side_size, base_polygon);
-    var cylinder = createObject(x, y, z, geometry, _color, rotX, rotY, rotZ);
+    var cylinder = createObject(x, y, z, geometry, _color, rotX, rotY, rotZ, _wireframe);
     
     return cylinder;
 }
