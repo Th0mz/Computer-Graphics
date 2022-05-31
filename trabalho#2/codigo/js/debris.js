@@ -29,7 +29,7 @@ class Debris {
             spherical.set(1.2*R * side_size, Math.random()*phi_max, Math.random()*theta_max);
             debris.position.setFromSpherical(spherical);
 
-            let sphereBoundry = new THREE.Sphere(debris.position, C);
+            let sphereBoundry = new THREE.Sphere(debris.position, Math.sqrt(2*Math.pow(C,2)) * side_size);
 
             this.placeInQuadrant(debris, sphereBoundry, spherical);
 
@@ -43,7 +43,7 @@ class Debris {
             spherical.set(1.2*R * side_size, Math.random()*phi_max, Math.random()*theta_max);
             debris.position.setFromSpherical(spherical);
 
-            let sphereBoundry = new THREE.Sphere(debris.position, C);
+            let sphereBoundry = new THREE.Sphere(debris.position, C*side_size);
 
             this.placeInQuadrant(debris, sphereBoundry, spherical);
 
@@ -57,7 +57,7 @@ class Debris {
             spherical.set(1.2*R * side_size, Math.random()*phi_max, Math.random()*theta_max);
             debris.position.setFromSpherical(spherical);
 
-            let sphereBoundry = new THREE.Sphere(debris.position, C);
+            let sphereBoundry = new THREE.Sphere(debris.position, C*side_size);
 
             this.placeInQuadrant(debris, sphereBoundry, spherical);
 
