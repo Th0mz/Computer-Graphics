@@ -67,12 +67,24 @@ function onResize() {
 function onKeyDown(e) {
     'use strict';
     switch(e.keyCode) {
+        case 38: // up and down
+            spacecraft.movePhiInv();
+            break;
+        case 40:
+            spacecraft.movePhi();
+            break;
     }
 }
 
 function onKeyUp(e){
     'use strict';
     switch(e.keyCode) {
+        case 38: // up and down
+            spacecraft.stopPhiInv();
+            break;
+        case 40:
+            spacecraft.stopPhi();
+            break;
     }
 
 }
@@ -113,9 +125,21 @@ function animate() {
     }
     lastWireFrame = wireFrame;
 
+    spacecraft.update();
     render();
 
     setTimeout( function() {
         requestAnimationFrame( animate );
     }, 1000 / 60 );
 }
+
+
+/* function detectCollision(spacecraftObj, debrisObj) {
+    for (debris_i in array_debris[spacecraft.whichQuadrant()]) {
+        if(spacecraft.doCollide(debris_i.collisionRadius, debris_i.x, debris_i.y, debris_i.z)) {
+            scene.remove(debris_i);
+            array_debris[spacecraft.whichQuadrant()] = array_debris[spacecraft.whichQuadrant()]
+            .filter(obj => obj != debris_i);
+        }
+    }
+} */

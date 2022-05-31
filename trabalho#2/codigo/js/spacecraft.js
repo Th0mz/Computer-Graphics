@@ -9,10 +9,9 @@ class Spacecraft {
         this.speed = 0;
 
         this.movementData = {
-            xDir : 0, xDirInv : 0,
-            yDir : 0, yDirInv : 0,
-            zDir : 0, zDirInv : 0,
-            speed : 5
+            phiDir : 0, phiDirInv : 0,
+            thetaDir : 0, thetaDirInv : 0,
+            speed : 1
         };
         
         /*
@@ -39,6 +38,7 @@ class Spacecraft {
         var propulsor3 = createCylinder(0, -baseSize[HEIGHT] / 2, -baseSize[WIDTH] / 2, propulsorSize[WIDTH], propulsorSize[HEIGHT], 16, 0xde4730);
         var propulsor4 = createCylinder(0, -baseSize[HEIGHT] / 2, baseSize[WIDTH] / 2, propulsorSize[WIDTH], propulsorSize[HEIGHT], 16, 0xde4730);
 
+        this.components = [baseCylinder, midCylinder, noseCylinder, propulsor1, propulsor2, propulsor3, propulsor4];
 
         this.spacecraftGroup = new THREE.Group();
         this.spacecraftGroup.add(baseCylinder);
@@ -51,6 +51,10 @@ class Spacecraft {
         this.objectGroup = new THREE.Group();
         this.objectGroup.add(this.spacecraftGroup);
         this.objectGroup.position.set(0, 0, 0);
+
+        this.spherical = new THREE.Spherical(0,0,0);
+        this.spherical.setFromVector3(this.spacecraftGroup.position);
+
     }
 
 
@@ -58,8 +62,8 @@ class Spacecraft {
         
         /* Use JS built in Vector class for defining the direction
            of the spaceship (functions like a normal vector) */
-        x_transl = (this.movementData.xDir+this.movementData.xDirInv);
-        y_transl = (this.movementData.yDir+this.movementData.yDirInv);
+        /* x_transl = (this.movementData.phiDir+this.movementData.phiDirInv);
+        y_transl = (this.movementData.thetaDir+this.movementData.thetaDirInv);
         z_transl = (this.movementData.zDir+this.movementData.zDirInv);
         num_dim_transl = Math.abs(x_transl)+Math.abs(y_transl)+Math.abs(z_transl);
 
@@ -71,25 +75,40 @@ class Spacecraft {
 
         this.objectGroup.translateX( x_transl * this.movementData.speed);
         this.objectGroup.translateY( y_transl * this.movementData.speed);
-        this.objectGroup.translateZ( z_transl * this.movementData.speed);
+        this.objectGroup.translateZ( z_transl * this.movementData.speed); */
+
+        var phiMovement = this.movementData.phiDir + this.movementData.phiDirInv;
+        var thetaMovement = this.movementData.thetaDir + this.movementData.thetaDirInv;
+
+        this.spherical.set(this.spherical.radius, this.spherical.phi + phiMovement*this.movementData.speed/100, 
+                                this.spherical.theta + thetaMovement*this.movementData.speed/100);
+        this.spacecraftGroup.position.setFromSpherical(this.spherical);
     }
 
-    moveX () { this.movementData.xDir = 1; }
-    stopX () { this.movementData.xDir = 0; }
+    movePhi () { this.movementData.phiDir = 1; }
+    stopPhi () { this.movementData.phiDir = 0; }
 
-    moveXInv () { this.movementData.xDirInv = -1; }
-    stopXInv () { this.movementData.xDirInv = 0; }
+    movePhiInv () { this.movementData.phiDirInv = -1; }
+    stopPhiInv () { this.movementData.phiDirInv = 0; }
 
-    moveY () { this.movementData.yDir = 1; }
-    stopY () { this.movementData.yDir = 0; }
+    moveTheta () { this.movementData.thetaDir = 1; }
+    stopTheta () { this.movementData.thetaDir = 0; }
 
-    moveYInv () { this.movementData.yDirInv = -1; }
-    stopYInv () { this.movementData.yDirInv = 0; }
+    moveThetaInv () { this.movementData.thetaDirInv = -1; }
+    stopThetaInv () { this.movementData.thetaDirInv = 0; }
 
-    moveZ () { this.movementData.zDir = 1; }
-    stopZ () { this.movementData.zDir = 0; }
+    doCollide(radius, x, y, z) {
+        for (component in components){
+            if((radius+(component.getAttribute(height)/2))**2 >= (x-component.position.x)**2 + 
+                            (y-component.position.y)**2 + (z-component.position.z)**2) {
+                                return true;
+            }
+        }
+        return false;
+    }
 
-    moveZInv () { this.movementData.zDirInv = -1; }
-    stopZInv () { this.movementData.zDirInv = 0; }
+    whichQuadrant() {
+        return Math.floor(this.spherical.phi/(Math.PI/2));
+    }
 
 }
