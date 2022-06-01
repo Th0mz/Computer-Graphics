@@ -40,14 +40,12 @@ function createCameras () {
 
     // Perspective Camera
     // TODO : must be perspective camera
-    perspectiveCamera = new THREE.OrthographicCamera(-aspectRatio * viewSize / 2, 
-                                          aspectRatio * viewSize / 2,
-                                          viewSize / 2, 
-                                          -viewSize / 2,
-                                          0.1,
-                                          5000 );
+    perspectiveCamera = new THREE.PerspectiveCamera(70,
+        window.innerWidth / window.innerHeight,
+        1,
+        1000);
 
-    perspectiveCamera.position.set(500, 500, 500);
+    perspectiveCamera.position.set(400, 400, 400);
     perspectiveCamera.lookAt(scene.position);
 
     // Spacecraft Camera
@@ -86,6 +84,13 @@ function onResize() {
     frontalCamera.updateProjectionMatrix();
 
     // Perspective Camera Resize
+    if (window.innerHeight > 0 && window.innerWidth > 0) {
+        perspectiveCamera.aspect = window.innerWidth / window.innerHeight;
+        perspectiveCamera.updateProjectionMatrix();
+
+        spacecraft.getCamera().aspect= window.innerWidth / window.innerHeight;
+        spacecraft.getCamera().updateProjectionMatrix();
+    }
 
     // Spaceship Camera Resize
 

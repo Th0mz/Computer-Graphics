@@ -104,7 +104,7 @@ class Spacecraft {
 
     createCamera () {
         // TODO : must be perspective camera
-        this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
+        this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
 
         this.camera.position.set(0, -2 * side_size, -5 * side_size);
         this.camera.lookAt(scene.position);
