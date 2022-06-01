@@ -56,9 +56,24 @@ class Spacecraft {
 
         // TODO : normalizar speed da nave (velociadade angular deve
         //        ser constante)
+        var prevPosition = this.toCartesianCoordinates(this.spherical.radius, this.spherical.phi, this.spherical.theta);
         this.spherical.set(this.spherical.radius, this.spherical.phi + phiMovement*this.movementData.speed/100, 
                                 this.spherical.theta + thetaMovement*this.movementData.speed/100);
+        var currPosition = this.toCartesianCoordinates(this.spherical.radius, this.spherical.phi, this.spherical.theta);
         this.spacecraftGroup.position.setFromSpherical(this.spherical);
+        
+        var lookAtPosition = prevPosition.sub(currPosition);
+        this.spacecraftGroup.lookAt(lookAtPosition);
+
+
+    }
+
+    toCartesianCoordinates (radius, phi, theta) {
+        var x = radius * Math.sin(phi) * Math.cos(theta);
+        var y = radius * Math.sin(phi) * Math.sin(theta);
+        var z = radius * Math.cos(phi);
+
+        return new THREE.Vector3(x, y, z);
     }
 
     movePhi () { this.movementData.phiDir = 1; }
@@ -91,7 +106,7 @@ class Spacecraft {
         // TODO : must be perspective camera
         this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
 
-        this.camera.position.set(-5 * side_size, side_size, 0);
+        this.camera.position.set(0, -2 * side_size, -5 * side_size);
         this.camera.lookAt(scene.position);
         this.spacecraftGroup.add(this.camera)
     }

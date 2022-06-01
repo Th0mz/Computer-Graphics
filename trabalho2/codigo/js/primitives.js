@@ -21,14 +21,6 @@ function createSphere (x, y, z, diameter, _color, _wireframe=true) {
     return sphere;
 }
 
-function createTorus (x, y, z, diameter_external, diameter_internal, _color, _wireframe=true, rotX = 0, rotY = 0, rotZ = 0) {
-    
-    var geometry = new THREE.TorusGeometry((diameter_external / 2) * side_size, (diameter_internal / 2) * side_size, 12, 12);
-    var torus = createObject(x, y, z, geometry, _color, rotX, rotY, rotZ, _wireframe);
-
-    return torus;
-}
-
 function createCube(x, y, z, size, _color, _wireframe=true) {
 
     var geometry = new THREE.BoxGeometry(size * side_size, size * side_size, size * side_size);
