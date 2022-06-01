@@ -37,6 +37,14 @@ function createPyramid(x, y, z, diameter, height, base_polygon,  _color, _wirefr
     return pyramid;
 }
 
+function createCapsule (x, y, z, diameter, height, _color, _wireframe, rotX = 0, rotY = 0, rotZ = 0) {
+    
+    var geometry = new THREE.CapsuleGeometry( (diameter / 2) * side_size, height * side_size, 10, 10 ); 
+    var capsule = createObject(x, y, z, geometry, _color, rotX, rotY, rotZ, _wireframe);
+    
+    return capsule;
+}
+
 function createCylinder (x, y, z, diameter, height, base_polygon, _color, _wireframe=true, rotX = 0, rotY = 0, rotZ = 0) {
     
     var geometry = new THREE.CylinderGeometry( (diameter / 2) * side_size, (diameter / 2) * side_size, height * side_size, base_polygon);
