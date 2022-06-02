@@ -62,12 +62,8 @@ function createScene () {
 
     createSphere(0, 0, 0, 2*R, 0x006994, false);
 
-    // TODO : remove comments
-    //var startingPhi = Math.random() * (2* Math.PI);
-    //var startingTheta = Math.random() * (2* Math.PI);
-
-    var startingPhi = -Math.PI/2;
-    var startingTheta = 0;
+    var startingPhi = Math.random() * (2* Math.PI);
+    var startingTheta = Math.random() * (2* Math.PI);
 
     spacecraft = new Spacecraft(-1.2 * R, startingPhi, startingTheta, R/11);
     scene.add(spacecraft.objectGroup);

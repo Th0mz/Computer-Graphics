@@ -1,5 +1,10 @@
-var WIDTH = 0
-var HEIGHT = 1
+var WIDTH = 0;
+var HEIGHT = 1;
+
+var forward_angle = 0;
+var backward_angle = Math.PI;
+var left_angle = -Math.PI / 2;
+var right_angle = Math.PI / 2;
 
 class Spacecraft {
     constructor (radius, phi, theta, height) {
@@ -15,19 +20,17 @@ class Spacecraft {
         
         // spacecraft primitives definition
         var baseSize = [3 * this.unit, 6 * this.unit]
-        var midSize =  [2.5 * this.unit, 2 * this.unit]
-        var noseSize = [1.2 * this.unit, 1.5 * this.unit]
+        var noseSize =  [3 * this.unit, 3.5 * this.unit]
         var propulsorSize = [1.1 * this.unit, 3 * this.unit]
 
         var baseCylinder = createCylinder(0, 0, 0, baseSize[WIDTH], baseSize[HEIGHT], 16, 0xc1c1c1);
-        var midCylinder = createCylinder(0, baseSize[HEIGHT] / 2 + midSize[HEIGHT] / 2 , 0, midSize[WIDTH], midSize[HEIGHT], 16, 0xb8b8b8);
-        var noseCylinder = createCylinder(0, baseSize[HEIGHT] / 2 + midSize[HEIGHT] + noseSize[HEIGHT] / 2, 0, noseSize[WIDTH], noseSize[HEIGHT], 16, 0xde4730);
+        var nose = createPyramid(0, baseSize[HEIGHT] / 2 + noseSize[HEIGHT] / 2 , 0, noseSize[WIDTH], noseSize[HEIGHT], 32, 0xde4730)
         var propulsor1 = createCapsule(-baseSize[WIDTH] / 2, -baseSize[HEIGHT] / 2, 0, propulsorSize[WIDTH], propulsorSize[HEIGHT], 0xde4730);
         var propulsor2 = createCapsule(baseSize[WIDTH] / 2, -baseSize[HEIGHT] / 2, 0, propulsorSize[WIDTH], propulsorSize[HEIGHT], 0xde4730);
         var propulsor3 = createCapsule(0, -baseSize[HEIGHT] / 2, -baseSize[WIDTH] / 2, propulsorSize[WIDTH], propulsorSize[HEIGHT], 0xde4730);
         var propulsor4 = createCapsule(0, -baseSize[HEIGHT] / 2, baseSize[WIDTH] / 2, propulsorSize[WIDTH], propulsorSize[HEIGHT], 0xde4730);
 
-        this.components = [baseCylinder, midCylinder, noseCylinder, propulsor1, propulsor2, propulsor3, propulsor4];
+        this.components = [baseCylinder, nose, propulsor1, propulsor2, propulsor3, propulsor4];
 
         // spacecraft camera  
         this.camera = null
@@ -35,8 +38,7 @@ class Spacecraft {
         // group spacecraft primitives 
         this.spacecraftGroup = new THREE.Group();
         this.spacecraftGroup.add(baseCylinder);
-        this.spacecraftGroup.add(midCylinder);
-        this.spacecraftGroup.add(noseCylinder);
+        this.spacecraftGroup.add(nose);
         this.spacecraftGroup.add(propulsor1, propulsor2, propulsor3, propulsor4);
         this.spacecraftGroup.add(new THREE.AxesHelper(100));
         this.spacecraftGroup.position.set(0, 0, 0);
@@ -67,16 +69,69 @@ class Spacecraft {
                                 this.spherical.theta + thetaMovement*this.movementData.speed/100);
         this.lookAtGroup.position.setFromSpherical(this.spherical);
         
-        if (this.spherical.phi % Math.PI >= 0 && this.spherical.phi % Math.PI <= 0.01) {
-            this.lookAtGroup.rotateZ(Math.PI);
-            this.spacecraftGroup.rotateZ(Math.PI);
+        // set the spaceship looking direction to its velocity vector
+        // FORWARD
+        if (phiMovement == -1) {
+            // FORWARD RIGHT
+            if (thetaMovement == 1) {
+                console.log("forward right");
+                this.spacecraftGroup.rotation.set(0, 0, forward_angle + right_angle / 2);
 
-            console.log("oleeeee");
-        } else if (this.spherical.phi % Math.PI >= -Math.PI && this.spherical.phi % Math.PI <= -Math.PI + 0.01) {
-            this.spacecraftGroup.rotateZ(Math.PI);
-            console.log("olaaaaaaaa");
+            // FORWARD LEFT
+            } else if (thetaMovement == -1) {
+                console.log("forward left");
+                this.spacecraftGroup.rotation.set(0, 0, forward_angle + left_angle / 2);
+
+            } else {
+                console.log("forward");
+                this.spacecraftGroup.rotation.set(0, 0, forward_angle);
+            }
+        
+        // BACKWARD
+        } else if (phiMovement == 1) {
+            // BACKWARD RIGHT
+            if (thetaMovement == 1) {
+                console.log("backward right");
+                this.spacecraftGroup.rotation.set(0, 0, backward_angle - right_angle / 2);
+
+            // BACKWARD LEFT
+            } else if (thetaMovement == -1) {
+                console.log("backward left");
+                this.spacecraftGroup.rotation.set(0, 0, backward_angle - left_angle / 2);
+
+            } else {
+                console.log("backward");
+                this.spacecraftGroup.rotation.set(0, 0, backward_angle);
+            }
+        
+        // LEFT
+        } else if (thetaMovement == -1) {
+            console.log("left");
+            this.spacecraftGroup.rotation.set(0, 0, left_angle);
+        
+        // RIGHT
+        } else if (thetaMovement == 1) {
+            console.log("right");
+            this.spacecraftGroup.rotation.set(0, 0, right_angle);
         }
 
+        // north and south poles the spacecraft rotates by PI so
+        // in order to cancel this rotation another PI is added on top
+        //
+        // TODO : isto funciona mas sem o código para a nave olhar no
+        //        entido da direção
+        
+        if ((this.spherical.phi % Math.PI >= 0 && this.spherical.phi % Math.PI <= 0.01) 
+        || (this.spherical.phi % Math.PI >= -Math.PI && this.spherical.phi % Math.PI <= -Math.PI + 0.01)) {
+            console.log("rotated"); 
+            var aux = forward_angle;
+            forward_angle = backward_angle;
+            backward_angle = aux;
+            this.spacecraftGroup.rotation.set(0, 0, this.spacecraftGroup.rotation.z + Math.PI);
+        } 
+
+        // y and x axis are always tangent to 
+        // the spaceship trajectory
         this.lookAtGroup.lookAt(new THREE.Vector3(0, 0, 0));
     }
 
