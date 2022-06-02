@@ -18,6 +18,7 @@ var viewSize;
 
 // Scene objects properties
 var spacecraft;
+var debris;
 var side_size = 10;
 const R = 30;
 
@@ -66,13 +67,13 @@ function createScene () {
     //var startingPhi = Math.random() * (2* Math.PI);
     //var startingTheta = Math.random() * (2* Math.PI);
 
-    var startingPhi = -Math.PI/2;
-    var startingTheta = 0;
+    var startingPhi = Math.random() * Math.PI;
+    var startingTheta = Math.random() * (2* Math.PI);
 
     spacecraft = new Spacecraft(-1.2 * R, startingPhi, startingTheta, R/11);
     scene.add(spacecraft.objectGroup);
 
-    new Debris(100);
+    debris = new Debris(100);
 }
 
 function onResize() {
@@ -115,10 +116,10 @@ function onKeyDown(e) {
             mainCamera = spacecraft.getCamera()
             break;
         case 38: // up and down
-            spacecraft.movePhiInv();
+            spacecraft.movePhi();
             break;
         case 40:
-            spacecraft.movePhi();
+            spacecraft.movePhiInv();
             break;
 
         case 37: // left and right
@@ -134,10 +135,10 @@ function onKeyUp(e){
     'use strict';
     switch(e.keyCode) {
         case 38: // up and down
-            spacecraft.stopPhiInv();
+            spacecraft.stopPhi();
             break;
         case 40:
-            spacecraft.stopPhi();
+            spacecraft.stopPhiInv();
             break;
 
         case 37: // left and right
@@ -177,6 +178,7 @@ function animate() {
     'use strict';
 
     spacecraft.update();
+    actionCollision();
     render();
 
     setTimeout( function() {
@@ -185,12 +187,19 @@ function animate() {
 }
 
 
-/* function detectCollision(spacecraftObj, debrisObj) {
-    for (debris_i in array_debris[spacecraft.whichQuadrant()]) {
-        if(spacecraft.doCollide(debris_i.collisionRadius, debris_i.x, debris_i.y, debris_i.z)) {
-            scene.remove(debris_i);
-            array_debris[spacecraft.whichQuadrant()] = array_debris[spacecraft.whichQuadrant()]
-            .filter(obj => obj != debris_i);
+function actionCollision() {
+    if(debris.quadrant[spacecraft.whichQuadrant()] === undefined) {
+        return ;
+    }
+    let size = debris.quadrant[spacecraft.whichQuadrant()].length;
+
+    for (let i = 0; i < size; i++) {
+        let d = debris.quadrant[spacecraft.whichQuadrant()][i];
+        if(spacecraft.doCollide(d.bo.radius, d.bo.center.x, d.bo.center.y, d.bo.center.z)) {
+            scene.remove(d.deb);
+            console.log("to delete");
+            debris.quadrant[spacecraft.whichQuadrant()] = debris.quadrant[spacecraft.whichQuadrant()]
+            .filter(obj => obj != d.deb);
         }
     }
-} */
+}

@@ -27,8 +27,7 @@ class Spacecraft {
         var propulsor3 = createCapsule(0, -baseSize[HEIGHT] / 2, -baseSize[WIDTH] / 2, propulsorSize[WIDTH], propulsorSize[HEIGHT], 0xde4730);
         var propulsor4 = createCapsule(0, -baseSize[HEIGHT] / 2, baseSize[WIDTH] / 2, propulsorSize[WIDTH], propulsorSize[HEIGHT], 0xde4730);
 
-        this.components = [baseCylinder, midCylinder, noseCylinder, propulsor1, propulsor2, propulsor3, propulsor4];
-
+        this.sphereBoundry = new THREE.Sphere(new THREE.Vector3(0,0,0), (height/2)*side_size);
         // spacecraft camera  
         this.camera = null
 
@@ -41,16 +40,16 @@ class Spacecraft {
         this.spacecraftGroup.add(new THREE.AxesHelper(100));
         this.spacecraftGroup.position.set(0, 0, 0);
 
-
         this.lookAtGroup = new THREE.Group();
         this.lookAtGroup.add(this.spacecraftGroup);
         this.lookAtGroup.add(new THREE.AxesHelper(100));
 
         this.spherical = new THREE.Spherical(radius * side_size, phi, theta);
-        this.lookAtGroup.position.setFromSpherical(this.spherical);
+        this.spacecraftGroup.position.setFromSpherical(this.spherical);
+        this.sphereBoundry.center.setFromSpherical(this.spherical);
         
         this.objectGroup = new THREE.Group();
-        this.objectGroup.add(this.lookAtGroup);
+        this.objectGroup.add(this.spacecraftGroup);
         this.objectGroup.position.set(0, 0, 0);
 
     }
@@ -63,9 +62,20 @@ class Spacecraft {
 
         // TODO : normalizar speed da nave (velociadade angular deve
         //        ser constante)
-        this.spherical.set(this.spherical.radius, this.spherical.phi + phiMovement*this.movementData.speed/100, 
-                                this.spherical.theta + thetaMovement*this.movementData.speed/100);
-        this.lookAtGroup.position.setFromSpherical(this.spherical);
+
+        var next_phi = this.spherical.phi + phiMovement*this.movementData.speed/100;
+        var next_theta = this.spherical.theta + thetaMovement*this.movementData.speed/100;
+
+        if (next_theta >= 2*Math.PI) { next_theta = next_theta - (2*Math.PI); }
+        if (next_theta < 0) { next_theta = 2*Math.PI + next_theta; }
+
+        if (next_phi >= 2*Math.PI) { next_phi = next_phi - (2*Math.PI) }
+        if(next_phi < 0) { next_phi = 2*Math.PI + next_phi; }
+
+
+        this.spherical.set(this.spherical.radius, next_phi, next_theta);
+        this.spacecraftGroup.position.setFromSpherical(this.spherical);
+        this.sphereBoundry.center.setFromSpherical(this.spherical);
         
         if (this.spherical.phi % Math.PI >= 0 && this.spherical.phi % Math.PI <= 0.01) {
             this.lookAtGroup.rotateZ(Math.PI);
@@ -77,7 +87,7 @@ class Spacecraft {
             console.log("olaaaaaaaa");
         }
 
-        this.lookAtGroup.lookAt(new THREE.Vector3(0, 0, 0));
+        this.spacecraftGroup.lookAt(new THREE.Vector3(0, 0, 0));
     }
 
     toCartesianCoordinates (radius, phi, theta) {
@@ -101,17 +111,17 @@ class Spacecraft {
     stopThetaInv () { this.movementData.thetaDirInv = 0; }
 
     doCollide(radius, x, y, z) {
-        for (component in components){
-            if((radius+(component.getAttribute(height)/2))**2 >= (x-component.position.x)**2 + 
-                            (y-component.position.y)**2 + (z-component.position.z)**2) {
-                                return true;
-            }
-        }
-        return false;
+        return (radius+(this.sphereBoundry.radius))**2 >= (x-this.sphereBoundry.center.x)**2 + 
+        (y-this.sphereBoundry.center.y)**2 + (z-this.sphereBoundry.center.z)**2;
     }
 
     whichQuadrant() {
-        return Math.floor(this.spherical.phi/(Math.PI/2));
+        if (this.spherical.phi <= Math.PI) {
+            return Math.floor(this.spherical.phi / (Math.PI/4));  
+        } else {
+            return Math.floor((Math.PI-(this.spherical.phi-Math.PI)) / (Math.PI/4));
+        }
+        
     }
 
     createCamera () {
