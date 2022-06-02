@@ -1,8 +1,8 @@
 var WIDTH = 0;
 var HEIGHT = 1;
 
-var forward_angle = 0;
-var backward_angle = Math.PI;
+var forward_angle = Math.PI;
+var backward_angle = 0;
 var left_angle = -Math.PI / 2;
 var right_angle = Math.PI / 2;
 
@@ -49,11 +49,12 @@ class Spacecraft {
         this.lookAtGroup.add(new THREE.AxesHelper(100));
 
         this.spherical = new THREE.Spherical(radius * side_size, phi, theta);
-        this.spacecraftGroup.position.setFromSpherical(this.spherical);
+        this.lookAtGroup.position.setFromSpherical(this.spherical);
+
         this.sphereBoundry.center.setFromSpherical(this.spherical);
         
         this.objectGroup = new THREE.Group();
-        this.objectGroup.add(this.spacecraftGroup);
+        this.objectGroup.add(this.lookAtGroup);
         this.objectGroup.position.set(0, 0, 0);
 
     }
@@ -78,7 +79,7 @@ class Spacecraft {
 
 
         this.spherical.set(this.spherical.radius, next_phi, next_theta);
-        this.spacecraftGroup.position.setFromSpherical(this.spherical);
+        this.lookAtGroup.position.setFromSpherical(this.spherical);
         this.sphereBoundry.center.setFromSpherical(this.spherical);
         
         // set the spaceship looking direction to its velocity vector
@@ -87,12 +88,12 @@ class Spacecraft {
             // FORWARD RIGHT
             if (thetaMovement == 1) {
                 console.log("forward right");
-                this.spacecraftGroup.rotation.set(0, 0, forward_angle + right_angle / 2);
+                this.spacecraftGroup.rotation.set(0, 0, forward_angle - right_angle / 2);
 
             // FORWARD LEFT
             } else if (thetaMovement == -1) {
                 console.log("forward left");
-                this.spacecraftGroup.rotation.set(0, 0, forward_angle + left_angle / 2);
+                this.spacecraftGroup.rotation.set(0, 0, forward_angle - left_angle / 2);
 
             } else {
                 console.log("forward");
@@ -104,12 +105,12 @@ class Spacecraft {
             // BACKWARD RIGHT
             if (thetaMovement == 1) {
                 console.log("backward right");
-                this.spacecraftGroup.rotation.set(0, 0, backward_angle - right_angle / 2);
+                this.spacecraftGroup.rotation.set(0, 0, backward_angle + right_angle / 2);
 
             // BACKWARD LEFT
             } else if (thetaMovement == -1) {
                 console.log("backward left");
-                this.spacecraftGroup.rotation.set(0, 0, backward_angle - left_angle / 2);
+                this.spacecraftGroup.rotation.set(0, 0, backward_angle + left_angle / 2);
 
             } else {
                 console.log("backward");
