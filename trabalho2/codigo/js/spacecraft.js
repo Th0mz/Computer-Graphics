@@ -37,14 +37,20 @@ class Spacecraft {
         this.spacecraftGroup.add(baseCylinder);
         this.spacecraftGroup.add(midCylinder);
         this.spacecraftGroup.add(noseCylinder);
-        this.spacecraftGroup.add(new THREE.AxesHelper(100));
         this.spacecraftGroup.add(propulsor1, propulsor2, propulsor3, propulsor4);
+        this.spacecraftGroup.add(new THREE.AxesHelper(100));
+        this.spacecraftGroup.position.set(0, 0, 0);
+
+
+        this.lookAtGroup = new THREE.Group();
+        this.lookAtGroup.add(this.spacecraftGroup);
+        this.lookAtGroup.add(new THREE.AxesHelper(100));
 
         this.spherical = new THREE.Spherical(radius * side_size, phi, theta);
-        this.spacecraftGroup.position.setFromSpherical(this.spherical);
-
+        this.lookAtGroup.position.setFromSpherical(this.spherical);
+        
         this.objectGroup = new THREE.Group();
-        this.objectGroup.add(this.spacecraftGroup);
+        this.objectGroup.add(this.lookAtGroup);
         this.objectGroup.position.set(0, 0, 0);
 
     }
@@ -57,21 +63,21 @@ class Spacecraft {
 
         // TODO : normalizar speed da nave (velociadade angular deve
         //        ser constante)
-        var prevPosition = this.toCartesianCoordinates(this.spherical.radius, this.spherical.phi, this.spherical.theta);
         this.spherical.set(this.spherical.radius, this.spherical.phi + phiMovement*this.movementData.speed/100, 
                                 this.spherical.theta + thetaMovement*this.movementData.speed/100);
-        var currPosition = this.toCartesianCoordinates(this.spherical.radius, this.spherical.phi, this.spherical.theta);
-        this.spacecraftGroup.position.setFromSpherical(this.spherical);
+        this.lookAtGroup.position.setFromSpherical(this.spherical);
         
-        var lookAtPosition = prevPosition.sub(currPosition);
-
         if (this.spherical.phi % Math.PI >= 0 && this.spherical.phi % Math.PI <= 0.01) {
+            this.lookAtGroup.rotateZ(Math.PI);
+            this.spacecraftGroup.rotateZ(Math.PI);
+
             console.log("oleeeee");
         } else if (this.spherical.phi % Math.PI >= -Math.PI && this.spherical.phi % Math.PI <= -Math.PI + 0.01) {
+            this.spacecraftGroup.rotateZ(Math.PI);
             console.log("olaaaaaaaa");
         }
 
-        this.spacecraftGroup.lookAt(lookAtPosition);
+        this.lookAtGroup.lookAt(new THREE.Vector3(0, 0, 0));
     }
 
     toCartesianCoordinates (radius, phi, theta) {
@@ -114,7 +120,7 @@ class Spacecraft {
 
         this.camera.position.set(0, -3 * side_size, -5 * side_size);
         this.camera.lookAt(scene.position);
-        this.spacecraftGroup.add(this.camera)
+        this.spacecraftGroup.add(this.camera);
     }
     getCamera () {
         return this.camera;

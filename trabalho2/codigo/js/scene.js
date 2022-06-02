@@ -53,7 +53,7 @@ function createCameras () {
     spacecraft.createCamera()
     
     // Set main camera
-    mainCamera = perspectiveCamera;
+    mainCamera = frontalCamera;
 }
 
 function createScene () {
@@ -62,10 +62,15 @@ function createScene () {
 
     createSphere(0, 0, 0, 2*R, 0x006994, false);
 
-    var startingPhi = Math.random() * (2* Math.PI)
-    var startingTheta = Math.random() * (2* Math.PI)
+    // TODO : remove comments
+    //var startingPhi = Math.random() * (2* Math.PI);
+    //var startingTheta = Math.random() * (2* Math.PI);
+
+    var startingPhi = -Math.PI/2;
+    var startingTheta = 0;
+
     spacecraft = new Spacecraft(-1.2 * R, startingPhi, startingTheta, R/11);
-    scene.add(spacecraft.spacecraftGroup);
+    scene.add(spacecraft.objectGroup);
 
     new Debris(100);
 }
