@@ -37,6 +37,7 @@ class Spacecraft {
         this.spacecraftGroup.add(baseCylinder);
         this.spacecraftGroup.add(midCylinder);
         this.spacecraftGroup.add(noseCylinder);
+        this.spacecraftGroup.add(new THREE.AxesHelper(100));
         this.spacecraftGroup.add(propulsor1, propulsor2, propulsor3, propulsor4);
 
         this.spherical = new THREE.Spherical(radius * side_size, phi, theta);
@@ -63,9 +64,14 @@ class Spacecraft {
         this.spacecraftGroup.position.setFromSpherical(this.spherical);
         
         var lookAtPosition = prevPosition.sub(currPosition);
+
+        if (this.spherical.phi % Math.PI >= 0 && this.spherical.phi % Math.PI <= 0.01) {
+            console.log("oleeeee");
+        } else if (this.spherical.phi % Math.PI >= -Math.PI && this.spherical.phi % Math.PI <= -Math.PI + 0.01) {
+            console.log("olaaaaaaaa");
+        }
+
         this.spacecraftGroup.lookAt(lookAtPosition);
-
-
     }
 
     toCartesianCoordinates (radius, phi, theta) {
@@ -106,7 +112,7 @@ class Spacecraft {
         // TODO : must be perspective camera
         this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
 
-        this.camera.position.set(0, -2 * side_size, -5 * side_size);
+        this.camera.position.set(0, -3 * side_size, -5 * side_size);
         this.camera.lookAt(scene.position);
         this.spacecraftGroup.add(this.camera)
     }

@@ -83,7 +83,7 @@ function onResize() {
     frontalCamera.bottom = -newSize / 2;
     frontalCamera.updateProjectionMatrix();
 
-    // Perspective Camera Resize
+    // Perspective Cameras Resize
     if (window.innerHeight > 0 && window.innerWidth > 0) {
         perspectiveCamera.aspect = window.innerWidth / window.innerHeight;
         perspectiveCamera.updateProjectionMatrix();
@@ -91,8 +91,6 @@ function onResize() {
         spacecraft.getCamera().aspect= window.innerWidth / window.innerHeight;
         spacecraft.getCamera().updateProjectionMatrix();
     }
-
-    // Spaceship Camera Resize
 
     renderer.setSize(window.innerWidth, window.innerHeight);
 
