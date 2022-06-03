@@ -41,12 +41,12 @@ class Spacecraft {
         this.spacecraftGroup.add(baseCylinder);
         this.spacecraftGroup.add(nose);
         this.spacecraftGroup.add(propulsor1, propulsor2, propulsor3, propulsor4);
-        this.spacecraftGroup.add(new THREE.AxesHelper(100));
+        
         this.spacecraftGroup.position.set(0, 0, 0);
 
         this.lookAtGroup = new THREE.Group();
         this.lookAtGroup.add(this.spacecraftGroup);
-        this.lookAtGroup.add(new THREE.AxesHelper(100));
+        
 
         this.spherical = new THREE.Spherical(radius * side_size, phi, theta);
         this.lookAtGroup.position.setFromSpherical(this.spherical);
@@ -67,9 +67,10 @@ class Spacecraft {
 
         // TODO : normalizar speed da nave (velociadade angular deve
         //        ser constante)
-
-        var next_phi = this.spherical.phi + phiMovement*this.movementData.speed/100;
-        var next_theta = this.spherical.theta + thetaMovement*this.movementData.speed/100;
+        
+        var speed = (phiMovement!=0 && thetaMovement!=0) ? (this.movementData.speed/100)/2 : this.movementData.speed/100;
+        var next_phi = this.spherical.phi + phiMovement*speed;
+        var next_theta = this.spherical.theta + thetaMovement*speed;
 
         if (next_theta >= 2*Math.PI) { next_theta = next_theta - (2*Math.PI); }
         if (next_theta < 0) { next_theta = 2*Math.PI + next_theta; }
