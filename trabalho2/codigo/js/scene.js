@@ -23,6 +23,9 @@ var debris;
 var side_size = 10;
 const R = 30;
 
+// Global clock
+var clock = new THREE.Clock();
+
 function createCameras () {
 
     viewSize = 800;
@@ -41,7 +44,6 @@ function createCameras () {
     frontalCamera.lookAt(scene.position);
 
     // Perspective Camera
-    // TODO : must be perspective camera
     perspectiveCamera = new THREE.PerspectiveCamera(70,
         window.innerWidth / window.innerHeight,
         1,
@@ -51,7 +53,6 @@ function createCameras () {
     perspectiveCamera.lookAt(scene.position);
 
     // Spacecraft Camera
-    // TODO : remove this
     spacecraft.createCamera()
     
     // Set main camera
@@ -101,7 +102,6 @@ function onResize() {
 function onKeyDown(e) {
     'use strict';
     switch(e.keyCode) {
-        // TODO : cant make associations in onKeyDown
         case 49 : // number 1
             mainCamera = frontalCamera
             break;
@@ -174,7 +174,10 @@ function init() {
 function animate() {
     'use strict';
 
-    spacecraft.update(); 
+    var delta_time = clock.getDelta();
+    console.log(delta_time);
+
+    spacecraft.update(delta_time); 
     //new position is always valid so a validatePosition() would be always True
     actionCollision();
     render();

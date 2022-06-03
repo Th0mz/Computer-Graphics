@@ -1,6 +1,7 @@
 var WIDTH = 0;
 var HEIGHT = 1;
 
+var flipped = 1
 var forward_angle = Math.PI;
 var backward_angle = 0;
 var left_angle = -Math.PI / 2;
@@ -15,7 +16,7 @@ class Spacecraft {
         this.movementData = {
             phiDir : 0, phiDirInv : 0,
             thetaDir : 0, thetaDirInv : 0,
-            speed : 1
+            speed : 50
         };
         
         // spacecraft primitives definition
@@ -23,7 +24,7 @@ class Spacecraft {
         var noseSize =  [3 * this.unit, 3.5 * this.unit]
         var propulsorSize = [1.1 * this.unit, 3 * this.unit]
 
-        var baseCylinder = createCylinder(0, 0, 0, baseSize[WIDTH], baseSize[HEIGHT], 16, 0xc1c1c1);
+        var base = createCylinder(0, 0, 0, baseSize[WIDTH], baseSize[HEIGHT], 16, 0xc1c1c1);
         var nose = createPyramid(0, baseSize[HEIGHT] / 2 + noseSize[HEIGHT] / 2 , 0, noseSize[WIDTH], noseSize[HEIGHT], 32, 0xde4730)
         var propulsor1 = createCapsule(-baseSize[WIDTH] / 2, -baseSize[HEIGHT] / 2, 0, propulsorSize[WIDTH], propulsorSize[HEIGHT], 0xde4730);
         var propulsor2 = createCapsule(baseSize[WIDTH] / 2, -baseSize[HEIGHT] / 2, 0, propulsorSize[WIDTH], propulsorSize[HEIGHT], 0xde4730);
@@ -38,7 +39,7 @@ class Spacecraft {
 
         // group spacecraft primitives 
         this.spacecraftGroup = new THREE.Group();
-        this.spacecraftGroup.add(baseCylinder);
+        this.spacecraftGroup.add(base);
         this.spacecraftGroup.add(nose);
         this.spacecraftGroup.add(propulsor1, propulsor2, propulsor3, propulsor4);
         
@@ -60,17 +61,14 @@ class Spacecraft {
     }
 
 
-    update () {
+    update (delta_time) {
         
         var phiMovement = this.movementData.phiDir + this.movementData.phiDirInv;
         var thetaMovement = this.movementData.thetaDir + this.movementData.thetaDirInv;
 
-        // TODO : normalizar speed da nave (velociadade angular deve
-        //        ser constante)
-        
         var speed = (phiMovement!=0 && thetaMovement!=0) ? Math.sqrt(Math.pow((this.movementData.speed/100), 2)/2) : this.movementData.speed/100;
-        var next_phi = this.spherical.phi + phiMovement*speed;
-        var next_theta = this.spherical.theta + thetaMovement*speed;
+        var next_phi = this.spherical.phi + phiMovement*speed*delta_time;
+        var next_theta = this.spherical.theta + thetaMovement*speed*delta_time;
 
         if (next_theta >= 2*Math.PI) { next_theta = next_theta - (2*Math.PI); }
         if (next_theta < 0) { next_theta = 2*Math.PI + next_theta; }
@@ -88,11 +86,11 @@ class Spacecraft {
         if (phiMovement == -1) {
             // FORWARD RIGHT
             if (thetaMovement == 1) {
-                this.spacecraftGroup.rotation.set(0, 0, forward_angle - right_angle / 2);
+                this.spacecraftGroup.rotation.set(0, 0, forward_angle - flipped * right_angle / 2);
 
             // FORWARD LEFT
             } else if (thetaMovement == -1) {
-                this.spacecraftGroup.rotation.set(0, 0, forward_angle - left_angle / 2);
+                this.spacecraftGroup.rotation.set(0, 0, forward_angle - flipped * left_angle / 2);
 
             } else {
                 this.spacecraftGroup.rotation.set(0, 0, forward_angle);
@@ -102,11 +100,11 @@ class Spacecraft {
         } else if (phiMovement == 1) {
             // BACKWARD RIGHT
             if (thetaMovement == 1) {
-                this.spacecraftGroup.rotation.set(0, 0, backward_angle + right_angle / 2);
+                this.spacecraftGroup.rotation.set(0, 0, backward_angle + flipped * right_angle / 2);
 
             // BACKWARD LEFT
             } else if (thetaMovement == -1) {
-                this.spacecraftGroup.rotation.set(0, 0, backward_angle + left_angle / 2);
+                this.spacecraftGroup.rotation.set(0, 0, backward_angle + flipped * left_angle / 2);
 
             } else {
                 this.spacecraftGroup.rotation.set(0, 0, backward_angle);
@@ -124,8 +122,6 @@ class Spacecraft {
         // north and south poles the spacecraft rotates by PI so
         // in order to cancel this rotation another PI is added on top
         //
-        // TODO : isto funciona mas sem o código para a nave olhar no
-        //        entido da direção
         
         if ((this.spherical.phi % Math.PI >= 0 && this.spherical.phi % Math.PI <= 0.01) 
         || (this.spherical.phi % Math.PI >= -Math.PI && this.spherical.phi % Math.PI <= -Math.PI + 0.01)) {
@@ -133,6 +129,7 @@ class Spacecraft {
             var aux = forward_angle;
             forward_angle = backward_angle;
             backward_angle = aux;
+            flipped = flipped * -1;
             this.spacecraftGroup.rotation.set(0, 0, this.spacecraftGroup.rotation.z + Math.PI);
         } 
 
@@ -197,7 +194,6 @@ class Spacecraft {
     }
 
     createCamera () {
-        // TODO : must be perspective camera
         this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
 
         this.camera.position.set(0, -3 * side_size, -5 * side_size);
