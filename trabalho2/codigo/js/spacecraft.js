@@ -175,12 +175,33 @@ class Spacecraft {
     }
 
     whichQuadrant() {
-        if (this.spherical.phi <= Math.PI) {
-            return Math.floor(this.spherical.phi / (Math.PI/4));  
-        } else {
-            return Math.floor((Math.PI-(this.spherical.phi-Math.PI)) / (Math.PI/4));
+        //1 radian -> angle for which the length of the arc equals the length of the radius
+        //radians for the spacecraft = height/radius
+        let radians = this.height / R;
+
+        if (this.spherical.phi <= Math.PI) { //standard calculation
+            var standard = Math.floor(this.spherical.phi / (Math.PI/4));
+            var marginBelow = Math.floor((this.spherical.phi-radians) / (Math.PI/4));
+            var marginAbove = Math.floor((this.spherical.phi+radians) / (Math.PI/4));
+            if(standard != marginBelow) {
+                return [standard, marginBelow];
+            } else if(standard != marginAbove) {
+                return [standard,marginAbove];
+            } else {
+                return [standard];
+            }
+        } else { //calculation when the spacecraft has passed one of the poles
+            var standard = Math.floor((Math.PI-(this.spherical.phi-Math.PI)) / (Math.PI/4));
+            var marginBelow = Math.floor((Math.PI-((this.spherical.phi+radians)-Math.PI)) / (Math.PI/4));
+            var marginAbove = Math.floor((Math.PI-((this.spherical.phi-radians)-Math.PI)) / (Math.PI/4));
+            if(standard != marginBelow) {
+                return [standard, marginBelow];
+            } else if(standard != marginAbove) {
+                return [standard,marginAbove];
+            } else {
+                return [standard];
+            }
         }
-        
     }
 
     createCamera () {

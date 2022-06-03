@@ -18,6 +18,7 @@ var viewSize;
 
 // Scene objects properties
 var spacecraft;
+var planet;
 var debris;
 var side_size = 10;
 const R = 30;
@@ -60,12 +61,7 @@ function createCameras () {
 function createScene () {
     
     scene = new THREE.Scene();
-   
-    createGlobe(0, 0, 0, 2*R, 0x006994, false);
-
-    // TODO : remove comments
-    //var startingPhi = Math.random() * (2* Math.PI);
-    //var startingTheta = Math.random() * (2* Math.PI);
+    planet = createGlobe(0, 0, 0, 2*R, 0x006994, false);
 
     var startingPhi = Math.random() * Math.PI;
     var startingTheta = Math.random() * (2* Math.PI);
@@ -191,16 +187,20 @@ function animate() {
 
 function actionCollision() {
     var quadrant = spacecraft.whichQuadrant();
-    if(debris.quadrant[quadrant] === undefined) {
-        return ;
-    }
-    let size = debris.quadrant[quadrant].length;
-
-    for (let i = 0; i < size; i++) {
-        let d = debris.quadrant[quadrant][i];
-        if(spacecraft.doCollide(d.bo.radius, d.bo.center.x, d.bo.center.y, d.bo.center.z)) {
-            size = processCollision(d, quadrant, size);
+    //quadrant is generally one number in an array
+    //might be two numbers in an array next to quadrants boundaries
+    for(q of quadrant){
+        if(debris.quadrant[q] === undefined) {
+            return ;
         }
+        let size = debris.quadrant[q].length;
+
+        for (let i = 0; i < size; i++) {
+            let d = debris.quadrant[q][i];
+            if(spacecraft.doCollide(d.bo.radius, d.bo.center.x, d.bo.center.y, d.bo.center.z)) {
+                size = processCollision(d, q, size);
+            }
+        }    
     }
 }
 
