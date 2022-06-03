@@ -61,7 +61,7 @@ function createScene () {
     
     scene = new THREE.Scene();
 
-    createSphere(0, 0, 0, 2*R, 0x006994, false);
+    createGlobe(0, 0, 0, 2*R, 0x006994, false);
 
     // TODO : remove comments
     //var startingPhi = Math.random() * (2* Math.PI);
@@ -188,18 +188,19 @@ function animate() {
 
 
 function actionCollision() {
-    if(debris.quadrant[spacecraft.whichQuadrant()] === undefined) {
+    var quadrant = spacecraft.whichQuadrant();
+    if(debris.quadrant[quadrant] === undefined) {
         return ;
     }
-    let size = debris.quadrant[spacecraft.whichQuadrant()].length;
+    let size = debris.quadrant[quadrant].length;
 
     for (let i = 0; i < size; i++) {
-        let d = debris.quadrant[spacecraft.whichQuadrant()][i];
+        let d = debris.quadrant[quadrant][i];
         if(spacecraft.doCollide(d.bo.radius, d.bo.center.x, d.bo.center.y, d.bo.center.z)) {
             scene.remove(d.deb);
-            console.log("to delete");
-            debris.quadrant[spacecraft.whichQuadrant()] = debris.quadrant[spacecraft.whichQuadrant()]
-            .filter(obj => obj != d.deb);
+            debris.quadrant[quadrant] = debris.quadrant[quadrant]
+            .filter(obj => obj.deb != d.deb);
+            size = size - 1;
         }
     }
 }

@@ -31,7 +31,7 @@ class Spacecraft {
         var propulsor4 = createCapsule(0, -baseSize[HEIGHT] / 2, baseSize[WIDTH] / 2, propulsorSize[WIDTH], propulsorSize[HEIGHT], 0xde4730);
 
 
-        this.sphereBoundry = new THREE.Sphere(new THREE.Vector3(0,0,0), (height/2)*side_size);
+        this.sphereBoundry = new THREE.Sphere(new THREE.Vector3(0,0,0), Math.sqrt(Math.pow(3/2,2)*Math.pow(height/2,2))*side_size);
 
         // spacecraft camera  
         this.camera = null

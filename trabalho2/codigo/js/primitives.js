@@ -13,6 +13,24 @@ function createObject (x, y, z, geometry, _color, rotX=0, rotY=0, rotZ=0, _wiref
     return object;
 }
 
+function createGlobe (x, y, z, diameter, _color, _wireframe=true) {
+    var geometry = new THREE.SphereGeometry((diameter / 2) * side_size, 32, 16);
+
+    var texture = new THREE.TextureLoader().load('assets/2k_mars.jpg');
+
+    var object = new THREE.Object3D();
+    var material = new THREE.MeshBasicMaterial({ map: texture, wireframe: _wireframe });
+    var mesh = new THREE.Mesh(geometry, material);
+
+    object.add(mesh);
+    object.rotateX(0);
+    object.rotateY(0);
+    object.rotateZ(0);
+    object.position.set(x * side_size, y * side_size, z * side_size);
+    
+    scene.add(object);
+}
+
 function createSphere (x, y, z, diameter, _color, _wireframe=true) {
     
     var geometry = new THREE.SphereGeometry((diameter / 2) * side_size, 32, 16);
