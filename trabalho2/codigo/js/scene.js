@@ -61,7 +61,6 @@ function createCameras () {
 function createScene () {
     
     scene = new THREE.Scene();
-
     planet = createGlobe(0, 0, 0, 2*R, 0x006994, false);
 
     var startingPhi = Math.random() * Math.PI;
@@ -157,7 +156,8 @@ function init() {
     'use strict';
     
     renderer = new THREE.WebGLRenderer({
-        antialias: true
+        antialias: true,
+        alpha : true
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
