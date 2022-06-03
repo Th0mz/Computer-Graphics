@@ -68,7 +68,7 @@ class Spacecraft {
         // TODO : normalizar speed da nave (velociadade angular deve
         //        ser constante)
         
-        var speed = (phiMovement!=0 && thetaMovement!=0) ? (this.movementData.speed/100)/2 : this.movementData.speed/100;
+        var speed = (phiMovement!=0 && thetaMovement!=0) ? Math.sqrt(Math.pow((this.movementData.speed/100), 2)/2) : this.movementData.speed/100;
         var next_phi = this.spherical.phi + phiMovement*speed;
         var next_theta = this.spherical.theta + thetaMovement*speed;
 
@@ -88,16 +88,13 @@ class Spacecraft {
         if (phiMovement == -1) {
             // FORWARD RIGHT
             if (thetaMovement == 1) {
-                console.log("forward right");
                 this.spacecraftGroup.rotation.set(0, 0, forward_angle - right_angle / 2);
 
             // FORWARD LEFT
             } else if (thetaMovement == -1) {
-                console.log("forward left");
                 this.spacecraftGroup.rotation.set(0, 0, forward_angle - left_angle / 2);
 
             } else {
-                console.log("forward");
                 this.spacecraftGroup.rotation.set(0, 0, forward_angle);
             }
         
@@ -105,27 +102,22 @@ class Spacecraft {
         } else if (phiMovement == 1) {
             // BACKWARD RIGHT
             if (thetaMovement == 1) {
-                console.log("backward right");
                 this.spacecraftGroup.rotation.set(0, 0, backward_angle + right_angle / 2);
 
             // BACKWARD LEFT
             } else if (thetaMovement == -1) {
-                console.log("backward left");
                 this.spacecraftGroup.rotation.set(0, 0, backward_angle + left_angle / 2);
 
             } else {
-                console.log("backward");
                 this.spacecraftGroup.rotation.set(0, 0, backward_angle);
             }
         
         // LEFT
         } else if (thetaMovement == -1) {
-            console.log("left");
             this.spacecraftGroup.rotation.set(0, 0, left_angle);
         
         // RIGHT
         } else if (thetaMovement == 1) {
-            console.log("right");
             this.spacecraftGroup.rotation.set(0, 0, right_angle);
         }
 
@@ -137,7 +129,7 @@ class Spacecraft {
         
         if ((this.spherical.phi % Math.PI >= 0 && this.spherical.phi % Math.PI <= 0.01) 
         || (this.spherical.phi % Math.PI >= -Math.PI && this.spherical.phi % Math.PI <= -Math.PI + 0.01)) {
-            console.log("rotated"); 
+            //console.log("rotated"); 
             var aux = forward_angle;
             forward_angle = backward_angle;
             backward_angle = aux;
