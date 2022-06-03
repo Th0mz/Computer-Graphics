@@ -29,6 +29,8 @@ function createGlobe (x, y, z, diameter, _color, _wireframe=true) {
     object.position.set(x * side_size, y * side_size, z * side_size);
     
     scene.add(object);
+
+    return object;
 }
 
 function createSphere (x, y, z, diameter, _color, _wireframe=true) {
