@@ -182,7 +182,8 @@ function init() {
 function animate() {
     'use strict';
 
-    spacecraft.update();
+    spacecraft.update(); 
+    //new position is always valid so a validatePosition() would be always True
     actionCollision();
     render();
 
@@ -202,10 +203,13 @@ function actionCollision() {
     for (let i = 0; i < size; i++) {
         let d = debris.quadrant[quadrant][i];
         if(spacecraft.doCollide(d.bo.radius, d.bo.center.x, d.bo.center.y, d.bo.center.z)) {
-            scene.remove(d.deb);
-            debris.quadrant[quadrant] = debris.quadrant[quadrant]
-            .filter(obj => obj.deb != d.deb);
-            size = size - 1;
+            size = processCollision(d, quadrant, size);
         }
     }
+}
+
+function processCollision(debrisInCollison, quadrant, size) {
+    scene.remove(debrisInCollison.deb);
+    debris.quadrant[quadrant] = debris.quadrant[quadrant].filter(obj => obj.deb != debrisInCollison.deb);
+    return size - 1;
 }
