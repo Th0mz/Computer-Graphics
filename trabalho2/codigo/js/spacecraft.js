@@ -66,7 +66,9 @@ class Spacecraft {
         var phiMovement = this.movementData.phiDir + this.movementData.phiDirInv;
         var thetaMovement = this.movementData.thetaDir + this.movementData.thetaDirInv;
 
-        var speed = (phiMovement!=0 && thetaMovement!=0) ? Math.sqrt(Math.pow((this.movementData.speed/100), 2)/2) : this.movementData.speed/100;
+        //calculate the "hypotenuse" on a spherical surface
+        var speed = (phiMovement!=0 && thetaMovement!=0) ? Math.acos(Math.sqrt(Math.cos(this.movementData.speed/100))) : this.movementData.speed/100;
+        
         var next_phi = this.spherical.phi + phiMovement*speed*delta_time;
         var next_theta = this.spherical.theta + thetaMovement*speed*delta_time;
 
