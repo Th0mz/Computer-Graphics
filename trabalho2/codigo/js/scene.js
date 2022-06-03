@@ -60,12 +60,7 @@ function createCameras () {
 function createScene () {
     
     scene = new THREE.Scene();
-    const loader = new THREE.TextureLoader();
-    loader.load('assets/maxresdefault.jpg' , function(texture)
-                {
-                scene.background = texture;  
-                });
-
+   
     createGlobe(0, 0, 0, 2*R, 0x006994, false);
 
     // TODO : remove comments
@@ -165,7 +160,8 @@ function init() {
     'use strict';
     
     renderer = new THREE.WebGLRenderer({
-        antialias: true
+        antialias: true,
+        alpha : true
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
