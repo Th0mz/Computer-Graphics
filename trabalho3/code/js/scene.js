@@ -49,10 +49,14 @@ function createScene () {
     
     scene = new THREE.Scene();
     scene.add(new THREE.AxesHelper(10));
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(0,50, -5);
+    const directionalLight = new THREE.DirectionalLight(0x404040, 1);
+    directionalLight.position.set(0,50, 15);
     scene.add(directionalLight);
     const directionalLightHelper = new THREE.DirectionalLightHelper( directionalLight ); scene.add( directionalLightHelper )
+
+    //temporary
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    scene.add(ambientLight)
 
     new Stage;
     new OrigamiParrot;

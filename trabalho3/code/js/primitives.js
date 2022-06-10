@@ -1,6 +1,6 @@
 function createObject (x, y, z, geometry, _color, rotX=0, rotY=0, rotZ=0, _wireframe=true) {
     var object = new THREE.Object3D();
-    var material = new THREE.MeshBasicMaterial({ color: _color, wireframe: _wireframe });
+    var material = new THREE.MeshStandardMaterial({ color: _color, wireframe: _wireframe });
     var mesh = new THREE.Mesh(geometry, material);
 
     object.add(mesh);

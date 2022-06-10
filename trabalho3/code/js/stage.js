@@ -33,13 +33,13 @@ class Stage{
         
 
         //lights
-        this.actualLight = new THREE.SpotLight( 0xffffff, 20, 0, Math.PI/12, 0, 1);
+        this.actualLight = new THREE.SpotLight( 0xffffff, 0.6, 0, Math.PI/9, 0, 1);
 
         var position_aux = new THREE.Vector3(0,0,0);
         spotlightOneSphere.getWorldPosition(position_aux);
 
         this.actualLight.position.set(position_aux.x, position_aux.y, position_aux.z);
-        this.actualLight.target.position.set(0, 10, 0);
+        this.actualLight.target.position.set(0, 13, 0);
         this.actualLight.target.updateMatrixWorld();
         scene.add(this.actualLight);
 

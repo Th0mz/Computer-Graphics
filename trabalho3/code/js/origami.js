@@ -65,7 +65,7 @@ class OrigamiParrot{
         geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( positions, 3 ) );
         geometry.computeVertexNormals();
 
-        const object = new THREE.Mesh( geometry, new THREE.MeshNormalMaterial() );
+        const object = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
         object.position.set(0 , 0 , 0);
         scene.add(object);
         
