@@ -12,7 +12,7 @@ class OrigamiParrot{
 
             //Tail
             -10, 10, -5,    
-            0, 12, 1,  
+            0, 12, -3.75,  
             -2, 15, -4,
             
             //Mid-section
@@ -54,9 +54,63 @@ class OrigamiParrot{
             //Claw
             0.5, 13, -4,
             1.25, 8, -3.87813,
-            4.75, 8, -3.87813
+            4.75, 8, -3.87813,
 
-            //TODO FINISH OTHER SIDE AND ADD MATERIALS
+            //Tail
+            -10, 10, -5, 
+            -2, 15, -4,   
+            0.25, 12, -6, 
+
+            //Mid-section
+            -2, 15, -4,
+            0.5, 19, -4,
+            0.75, 11, -6.2,
+            //and
+            0.75, 11, -6.2,
+            0.5, 19, -4,
+            6.75, 13, -8.19048,
+            //and
+            0.5, 19, -4,
+            7, 19.25, -6.59286,
+            6.75, 13, -8.19048,
+
+            //Neck
+            7, 19.25, -6.59286,
+            0.25, 19, -4,
+            4, 25, -4,
+            //and    
+            4, 25, -4,
+            7.25, 26, -5.92543,
+            7, 19.25, -6.59286,
+
+            //Beak
+            8.25, 24.9, -4,
+            4, 25, -4,
+            7.25, 26, -5.92543,
+
+            //Leg
+            0.5, 13, -5.5,
+            0.5, 19, -4,
+            6.75, 13, -8.19048,
+            //and
+            6.75, 13, -8.19048,
+            1.5, 8 , -7.18048,
+            0.5, 13, -5.5,
+
+            //Claw
+            0.5, 13, -5.5,
+            5, 8, -7.18048,
+            1.5, 8 , -7.18048
+ 
+
+
+
+            //TODO ADD MATERIALS
+
+            
+            
+            
+            
             
 
           
@@ -65,7 +119,7 @@ class OrigamiParrot{
         geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( positions, 3 ) );
         geometry.computeVertexNormals();
 
-        const object = new THREE.Mesh( geometry, new THREE.MeshStandardMaterial() );
+        const object = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial() );
         object.position.set(0 , 0 , 0);
         scene.add(object);
         
