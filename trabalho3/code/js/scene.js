@@ -18,14 +18,14 @@ var viewSize;
 
 // Scene objects properties
 var side_size = 10;
-const R = 30;
+
 
 // Global clock
 var clock = new THREE.Clock();
 
 function createCameras () {
 
-    viewSize = 800;
+    viewSize = 60;
     var aspectRatio = window.innerWidth / window.innerHeight;
     originalAspect = window.innerWidth / window.innerHeight;
 
@@ -35,9 +35,9 @@ function createCameras () {
                                           viewSize / 2, 
                                           -viewSize / 2,
                                           0.1,
-                                          5000 );
+                                          500 );
 
-    frontalCamera.position.set(0, 0, 1000);
+    frontalCamera.position.set(0, 0,  50);
     frontalCamera.lookAt(scene.position);
 
     // Set main camera
@@ -47,9 +47,11 @@ function createCameras () {
 function createScene () {
     
     scene = new THREE.Scene();
-    var sphere = createSphere(0, 0, 0, 100, 0x00ff00);
-    
-    scene.add(sphere);
+    scene.add(new THREE.AxesHelper(10));
+
+    new Stage;
+    new OrigamiParrot;
+ 
 }
 
 function onResize() {

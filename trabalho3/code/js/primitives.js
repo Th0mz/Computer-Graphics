@@ -49,6 +49,14 @@ function createCube(x, y, z, size, _color, _wireframe=true) {
     return cube;
 }
 
+function createRectangle(x, y, z,  width, height, depth, _color, _wireframe=true) {
+
+    var geometry = new THREE.BoxGeometry(width, height , depth);
+    var rectangle = createObject(x, y, z, geometry, _color, 0, 0, 0, _wireframe);
+
+    return rectangle;
+}
+
 function createPyramid(x, y, z, diameter, height, base_polygon,  _color, _wireframe=true, rotX = 0, rotY = 0, rotZ = 0) {
     
     var geometry = new THREE.ConeGeometry((diameter / 2) , height , base_polygon);
