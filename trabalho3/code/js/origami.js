@@ -67,6 +67,7 @@ class OrigamiParrot{
 
         const object = new THREE.Mesh( geometry, new THREE.MeshNormalMaterial() );
         scene.add(object);
+    
 
     }
 
