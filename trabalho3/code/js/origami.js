@@ -4,15 +4,17 @@
 class OrigamiParrot{
 
     constructor() {
+        this.movementData = {speed: 0.01, posDir: 0, negDir: 0};
 
         var geometry = new THREE.BufferGeometry();
+        geometry.clearGroups();
 
         var positions = [
             // ##### One side ####
 
             //Tail
             -10, 10, -5,    
-            0, 12, -3.75,  
+            0, 12, -3.5,  
             -2, 15, -4,
             
             //Mid-section
@@ -56,6 +58,7 @@ class OrigamiParrot{
             1.25, 8, -3.87813,
             4.75, 8, -3.87813,
 
+            //#Other Side
             //Tail
             -10, 10, -5, 
             -2, 15, -4,   
@@ -103,28 +106,132 @@ class OrigamiParrot{
             1.5, 8 , -7.18048
  
 
-
-
-            //TODO ADD MATERIALS
-
-            
-            
-            
-            
-            
-
           
         ];
 
-        geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( positions, 3 ) );
+        var uvs = new Float32Array([
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+            0.0, 0.0,
+            1.0, 0.0,
+            1.0, 1.0,
+
+          ])
+
+        //TODO ADD MATERIALS
+        var texture = new THREE.TextureLoader().load('assets/origami_pattern.png');
+
+        var material_list = [
+            new THREE.MeshLambertMaterial({color: 0xffffff,  side: THREE.DoubleSide}),
+            new THREE.MeshLambertMaterial({color: 0x999999, map: texture,  side: THREE.DoubleSide}),
+            new THREE.MeshPhongMaterial({color: 0x555555,  side: THREE.DoubleSide}),
+            new THREE.MeshPhongMaterial({color: 0x999999, map: texture,  side: THREE.DoubleSide}),
+        ];
+
+        geometry.addGroup(0, positions.length/3, 2);
+        console.log(geometry)
+        
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
         geometry.computeVertexNormals();
 
-        const object = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial() );
-        object.position.set(0 , 0 , 0);
-        scene.add(object);
-        
-    
+        this.object = new THREE.Mesh( geometry, material_list );
+        this.object.position.set(0 , 0 , 0);
+        scene.add(this.object);
+        console.log(this.object)
+        //object.geometry.groups[0].materialIndex = 1;
+        //console.log(object)
+        this.group = new THREE.Group();
+        this.group.add(this.object);
+        scene.add(this.group);
 
+       
+            
+
+    }
+
+    update(){
+
+        this.group.rotateY(this.movementData.speed * (this.movementData.posDir + this.movementData.negDir));
+
+    }
+
+    updatePosRotation(value){
+        this.movementData.posDir = value;
+    }
+
+    updateNegRotation(value){
+        this.movementData.negDir = value;
     }
 
 }

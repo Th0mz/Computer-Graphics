@@ -19,6 +19,7 @@ var viewSize;
 
 // Scene objects properties
 var side_size = 10;
+var completeObject;
 
 
 // Global clock
@@ -38,7 +39,7 @@ function createCameras () {
                                           0.1,
                                           500 );
 
-    frontalCamera.position.set(0, 0,  -50);
+    frontalCamera.position.set(0, 0,  50);
     frontalCamera.lookAt(scene.position);
 
     // Set main camera
@@ -49,17 +50,17 @@ function createScene () {
     
     scene = new THREE.Scene();
     scene.add(new THREE.AxesHelper(10));
-    const directionalLight = new THREE.DirectionalLight(0x404040, 1);
+    const directionalLight = new THREE.DirectionalLight(0x404040, 0.5);
     directionalLight.position.set(0,50, 15);
     scene.add(directionalLight);
     const directionalLightHelper = new THREE.DirectionalLightHelper( directionalLight ); scene.add( directionalLightHelper )
 
     //temporary
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-    scene.add(ambientLight)
+    //const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    //scene.add(ambientLight)
 
     new Stage;
-    new OrigamiParrot;
+    completeObject = new OrigamiParrot;
  
 }
 
@@ -83,12 +84,28 @@ function onResize() {
 function onKeyDown(e) {
     'use strict';
     switch(e.keyCode) {
+        case 84: //T
+        case 116: //t
+            completeObject.updatePosRotation(1);
+            break;
+        case 89: //Y
+        case 121: //y
+            completeObject.updateNegRotation(-1);
+            break;
     }
 }
 
 function onKeyUp(e){
     'use strict';
     switch(e.keyCode) {
+        case 84: //T
+        case 116: //t
+            completeObject.updatePosRotation(0);
+            break;
+        case 89: //Y
+        case 121: //y
+            completeObject.updateNegRotation(0);
+            break;
     }
 
 }
@@ -119,8 +136,9 @@ function init() {
 
 function animate() {
     'use strict';
-
+    
     var delta_time = clock.getDelta();
+    completeObject.update();
     render();
 
     setTimeout( function() {
