@@ -27,18 +27,27 @@ class Stage{
         this.spotlightOne = new THREE.Group();
         this.spotlightOne.add(spotlightOneBase);
         this.spotlightOne.add(spotlightOneSphere);
+        this.spotlightOne.position.set(0, 3.75 + 0.875, 21);
+        scene.add(this.spotlightOne);
+        this.spotlightOne.rotateX(Math.PI/7)
         
 
         //lights
-        this.actualLight = new THREE.SpotLight( 0x999999, 1, 0, Math.PI/6, 0, 1);
-        this.actualLight.position.set(0,0,-3.5);
+        this.actualLight = new THREE.SpotLight( 0xffffff, 20, 0, Math.PI/12, 0, 1);
+
+        var position_aux = new THREE.Vector3(0,0,0);
+        spotlightOneSphere.getWorldPosition(position_aux);
+
+        this.actualLight.position.set(position_aux.x, position_aux.y, position_aux.z);
+        this.actualLight.target.position.set(0, 10, 0);
+        this.actualLight.target.updateMatrixWorld();
         scene.add(this.actualLight);
+
+        const spotLightHelper = new THREE.SpotLightHelper( this.actualLight ); scene.add( spotLightHelper );
+
         
-        this.spotlightOne.add(this.actualLight);
-        this.spotlightOne.position.set(0, 3.75 + 0.875, 21);
-        scene.add(this.spotlightOne);
-        
-        this.spotlightOne.rotateX(Math.PI/7)
+        console.log(this.actualLight)
+        console.log(this.spotlightOne)
 
     }
 }

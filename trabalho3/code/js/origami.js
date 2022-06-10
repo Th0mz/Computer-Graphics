@@ -66,7 +66,9 @@ class OrigamiParrot{
         geometry.computeVertexNormals();
 
         const object = new THREE.Mesh( geometry, new THREE.MeshNormalMaterial() );
+        object.position.set(0 , 0 , 0);
         scene.add(object);
+        
     
 
     }
