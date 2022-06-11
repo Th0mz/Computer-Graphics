@@ -4,7 +4,7 @@
 class OrigamiParrot{
 
     constructor() {
-        this.movementData = {speed: 0.03, posDir: 0, negDir: 0};
+        this.movementData = {speed: 2, posDir: 0, negDir: 0};
 
         var geometry = new THREE.BufferGeometry();
         geometry.clearGroups();
@@ -207,7 +207,6 @@ class OrigamiParrot{
 
         geometry.addGroup(0, 16*3, 1);
         geometry.addGroup(16*3, 2*3, 0);
-        console.log(geometry)
         
         geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
         geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
@@ -215,22 +214,14 @@ class OrigamiParrot{
 
         this.object = new THREE.Mesh( geometry, material_list );
         this.object.position.set(0 , 9 , 0);
-        scene.add(this.object);
-        console.log(this.object)
         //object.geometry.groups[0].materialIndex = 1;
-        //console.log(object)
         this.group = new THREE.Group();
         this.group.add(this.object);
-        scene.add(this.group);
-
-       
-            
 
     }
 
-    update(){
-
-        this.group.rotateY(this.movementData.speed * (this.movementData.posDir + this.movementData.negDir));
+    update(delta_time){
+        this.group.rotateY(this.movementData.speed * delta_time * (this.movementData.posDir + this.movementData.negDir));
 
     }
 

@@ -10,8 +10,7 @@ class Stage{
         var geometry = new THREE.PlaneGeometry(45,1);
         //geometry.rotateX(Math.PI*0.00);
         var material = new THREE.MeshBasicMaterial({color: 0x787878, side: THREE.DoubleSide});
-        var plane = new THREE.Mesh(geometry, material);
-        scene.add(plane);
+        this.plane = new THREE.Mesh(geometry, material);
 
 
 
@@ -28,7 +27,6 @@ class Stage{
         this.spotlightOne.add(spotlightOneBase);
         this.spotlightOne.add(spotlightOneSphere);
         this.spotlightOne.position.set(0, 3.75 + 0.875, 21);
-        scene.add(this.spotlightOne);
         this.spotlightOne.rotateX(Math.PI/7)
         
 
@@ -43,13 +41,8 @@ class Stage{
         this.actualLight.castShadow = false;
         this.actualLight.target.updateMatrixWorld();
 
-        scene.add(this.actualLight);
-
+        // TODO remover o sportLightHelper
         const spotLightHelper = new THREE.SpotLightHelper( this.actualLight ); scene.add( spotLightHelper );
-
         
-        console.log(this.actualLight)
-        console.log(this.spotlightOne)
-
     }
 }

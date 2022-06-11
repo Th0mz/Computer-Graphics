@@ -9,25 +9,29 @@
 
 // Cameras
 var mainCamera;
-var frontalCamera;
+var lastCamera;
+var frontalCamera, pauseCamera;
+// TODO : pauseCamera é isto que eles querem dizer com 
+// "segunda projecção ortogonal e um segundo viewport"
 
 var scene, renderer;
 
 // Camera resize variables
 var originalAspect;
-var viewSize;
+var viewSize = 45;
 
 // Scene objects properties
-var side_size = 10;
 var completeObject;
-
 
 // Global clock
 var clock = new THREE.Clock();
+var pause = false;
+var pauseFunctionality = false;
+
+var reset = false;
 
 function createCameras () {
 
-    viewSize = 45;
     var aspectRatio = window.innerWidth / window.innerHeight;
     originalAspect = window.innerWidth / window.innerHeight;
 
@@ -42,6 +46,17 @@ function createCameras () {
     frontalCamera.position.set(0, 0,  50);
     frontalCamera.lookAt(scene.position);
 
+    // Pause camera
+    pauseCamera = new THREE.OrthographicCamera(-aspectRatio * viewSize / 2, 
+                                            aspectRatio * viewSize / 2,
+                                            viewSize / 2, 
+                                            -viewSize / 2,
+                                            0.1,
+                                            500 );
+
+    pauseCamera.position.set(0, 0, 50);
+    pauseCamera.lookAt(0, 0, 100);
+
     // Set main camera
     mainCamera = frontalCamera;
 }
@@ -50,18 +65,31 @@ function createScene () {
     
     scene = new THREE.Scene();
     scene.add(new THREE.AxesHelper(10));
+
+    // Lights
     const directionalLight = new THREE.DirectionalLight(0x404040, 0.5);
     directionalLight.position.set(0,50, 15);
     scene.add(directionalLight);
     const directionalLightHelper = new THREE.DirectionalLightHelper( directionalLight ); scene.add( directionalLightHelper )
 
     //temporary
-    //const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-    //scene.add(ambientLight)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    scene.add(ambientLight)
 
-    new Stage;
-    completeObject = new OrigamiParrot;
+    // Objects
+    var stage = new Stage;
+    scene.add(stage.actualLight);
+    scene.add(stage.spotlightOne);
+    scene.add(stage.plane);
  
+    completeObject = new OrigamiParrot;
+    scene.add(completeObject.group);
+
+    // Pause prompt
+    // TODO : este retangulo tem de dar resize com o ecra 
+    var aspectRatio = window.innerWidth / window.innerHeight;
+    createRectangle(0, 0, 200, aspectRatio * viewSize, viewSize, 20, 0xffffff, false, 'assets/pause_screen.png');
+
 }
 
 function onResize() {
@@ -84,6 +112,7 @@ function onResize() {
 function onKeyDown(e) {
     'use strict';
     switch(e.keyCode) {
+        // Origami rotation
         case 84: //T
         case 116: //t
             completeObject.updatePosRotation(1);
@@ -92,6 +121,7 @@ function onKeyDown(e) {
         case 121: //y
             completeObject.updateNegRotation(-1);
             break;
+
     }
 }
 
@@ -105,6 +135,19 @@ function onKeyUp(e){
         case 89: //Y
         case 121: //y
             completeObject.updateNegRotation(0);
+            break;
+
+        // Pause
+        case 83: //S
+            pause = !pause;
+
+            // TODO : verificar se se pode fazer este if na função de callback
+            if (pause) { pauseFunctionality = true; clock.running = false; } 
+            else { clock.start(); mainCamera = lastCamera; }
+
+            break;
+        case 82: //R
+            if (pause) { reset = true; }
             break;
     }
 
@@ -136,12 +179,31 @@ function init() {
 
 function animate() {
     'use strict';
-    
-    var delta_time = clock.getDelta();
-    completeObject.update();
-    render();
+    if (!pause) {
+        var delta_time = clock.getDelta();
+        completeObject.update(delta_time);
+        render();
+    } else {
+        if (pauseFunctionality) {
+            lastCamera = mainCamera;
+            mainCamera = pauseCamera;
+
+            render();
+            pauseFunctionality = false;
+        }
+
+        if (reset) {
+            doReset();
+        }
+    }
 
     setTimeout( function() {
         requestAnimationFrame( animate );
     }, 1000 / 60 );
+}
+
+// TODO 
+function doReset () {
+    reset = false;
+    throw "doReset not implemented yet";
 }
