@@ -108,11 +108,25 @@ class OrigamiParrot{
             -6, 0, 3,
             -3, 0, 2.5,
 
+            //UNDER SIDE
+            -9.3, 5.5, 0,
+            -2, 4, 0,
+            -6, 0, 2.95,
+            //and
+            -6, 0, 2.95,
+            -2, 4, 0,
+            -3.8, 0, 2.5,
+
+
             //Other side
             //MID SECTION WHITE
             -3.7, 4.3, -0.15,
             -6, 0, -3,
             -3, 0, -2.5,
+
+            
+
+
             
         ];
 
@@ -199,14 +213,14 @@ class OrigamiParrot{
         var texture = new THREE.TextureLoader().load('assets/origami_pattern.png');
 
         var material_list = [
-            new THREE.MeshLambertMaterial({color: 0xffffff,  side: THREE.DoubleSide}),
+            new THREE.MeshLambertMaterial({color: 0xffffff,  side: THREE.FrontSide}),
             new THREE.MeshLambertMaterial({color: 0x22ff10, /*map: texture, */ side: THREE.DoubleSide}),
             new THREE.MeshPhongMaterial({color: 0x999999,  side: THREE.DoubleSide}),
             new THREE.MeshPhongMaterial({color: 0x999999, map: texture,  side: THREE.DoubleSide}),
         ];
 
         geometry.addGroup(0, 16*3, 1);
-        geometry.addGroup(16*3, 2*3, 0);
+        geometry.addGroup(16*3, 4*3, 0);
         console.log(geometry)
         
         geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
