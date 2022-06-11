@@ -12,20 +12,32 @@ class OrigamiParrot{
         var positions = [
 
             //########### GROUP ONE (HAS TEXTURE) #############
+            
             // ##### One side ####
-
             //TAIL GREEN
             -9.3, 5.5, 0,
             -6, 0, 3,
-            //-3.7, 4.3, 0,
             0, 0, 2,
             //and
             0, 0, 2,
             3.4, 2.5, 0,
             -9.3, 5.5, 0,
 
+            // ### Other side ###
+            //TAIL GREEN
+            -6, 0, -3,
+            -9.3, 5.5, 0,
+            0, 0, -2,
+            //and
+            3.4, 2.5, 0,
+            0, 0, -2,
+            -9.3, 5.5, 0,
+
+
             
 
+
+            //side one
             //MID SECTON GREEN
             -3.7, 4.3, 0.15,
             0, 0, 2,
@@ -55,17 +67,18 @@ class OrigamiParrot{
             1.6, 9.8, 1.03,
             6, 7, 0,
 
+            //UNDER SIDE GREEN 
+            -2, 3.75, 0,
+            3.4, 2.5, 0,
+            0, 0, 2,
+            //AND
+            -2, 3.75, 0,
+            0, 0, 2,
+            -3.8, 0, 2.5,
+
             // ##### OTHER side ####
 
-            //TAIL GREEN
-            -9.3, 5.5, 0,
-            -6, 0, -3,
-            //-3.7, 4.3, 0,
-            0, 0, -2,
-            //and
-            0, 0, -2,
-            3.4, 2.5, 0,
-            -9.3, 5.5, 0,
+            
 
             
 
@@ -98,6 +111,16 @@ class OrigamiParrot{
             1.6, 9.8, -1.03,
             6, 7, 0,
 
+            //UNDER SIDE GREEN
+            -2, 3.75, 0,
+            0, 0, -2,
+            3.4, 2.5, 0,
+            
+            //AND
+            -2, 3.75, 0,
+            -3.8, 0, -2.5,
+            0, 0, -2,
+            
 
             
 
@@ -110,22 +133,28 @@ class OrigamiParrot{
 
             //UNDER SIDE
             -9.3, 5.5, 0,
-            -2, 4, 0,
-            -6, 0, 2.95,
+            -2, 3.75, 0,
+            -6, 0, 3,
             //and
-            -6, 0, 2.95,
-            -2, 4, 0,
+            -6, 0, 3,
+            -2, 3.75, 0,
             -3.8, 0, 2.5,
 
 
             //Other side
             //MID SECTION WHITE
-            -3.7, 4.3, -0.15,
             -6, 0, -3,
+            -3.7, 4.3, -0.15,
             -3, 0, -2.5,
 
-            
-
+            //UNDER SIDE
+            -2, 3.75, 0,
+            -9.3, 5.5, 0,
+            -6, 0, -3,
+            //and
+            -2, 3.75, 0,
+            -6, 0, -3,
+            -3.8, 0, -2.5,
 
             
         ];
@@ -215,12 +244,14 @@ class OrigamiParrot{
         var material_list = [
             new THREE.MeshLambertMaterial({color: 0xffffff,  side: THREE.FrontSide}),
             new THREE.MeshLambertMaterial({color: 0x22ff10, /*map: texture, */ side: THREE.DoubleSide}),
+            new THREE.MeshLambertMaterial({color: 0x22ff10, /*map: texture, */ side: THREE.FrontSide}),
             new THREE.MeshPhongMaterial({color: 0x999999,  side: THREE.DoubleSide}),
             new THREE.MeshPhongMaterial({color: 0x999999, map: texture,  side: THREE.DoubleSide}),
         ];
 
-        geometry.addGroup(0, 16*3, 1);
-        geometry.addGroup(16*3, 4*3, 0);
+        geometry.addGroup(0, 4*3, 2);
+        geometry.addGroup(4*3, 16*3, 1);
+        geometry.addGroup(20*3, 6*3, 0);
         console.log(geometry)
         
         geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
