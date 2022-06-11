@@ -4,7 +4,7 @@
 class OrigamiParrot{
 
     constructor() {
-        this.movementData = {speed: 0.01, posDir: 0, negDir: 0};
+        this.movementData = {speed: 0.03, posDir: 0, negDir: 0};
 
         var geometry = new THREE.BufferGeometry();
         geometry.clearGroups();
@@ -76,7 +76,7 @@ class OrigamiParrot{
             //AND
             -3.7, 4.3, 0,
             -3, 0, -2.5, 
-            0, 0, 2,
+            0, 0, -2,
 
             //NECK LOWER
             0, 0, -2,

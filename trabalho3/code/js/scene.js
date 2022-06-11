@@ -27,7 +27,7 @@ var clock = new THREE.Clock();
 
 function createCameras () {
 
-    viewSize = 65;
+    viewSize = 45;
     var aspectRatio = window.innerWidth / window.innerHeight;
     originalAspect = window.innerWidth / window.innerHeight;
 
