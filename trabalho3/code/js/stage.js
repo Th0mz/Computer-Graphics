@@ -40,7 +40,9 @@ class Stage{
 
         this.actualLight.position.set(position_aux.x, position_aux.y, position_aux.z);
         this.actualLight.target.position.set(0, 19, 0);
+        this.actualLight.castShadow = false;
         this.actualLight.target.updateMatrixWorld();
+
         scene.add(this.actualLight);
 
         const spotLightHelper = new THREE.SpotLightHelper( this.actualLight ); scene.add( spotLightHelper );

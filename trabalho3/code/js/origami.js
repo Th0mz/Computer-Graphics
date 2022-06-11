@@ -14,108 +14,105 @@ class OrigamiParrot{
             //########### GROUP ONE (HAS TEXTURE) #############
             // ##### One side ####
 
-            //Tail
-            -16, 10, 0,    
-            -1.25, 11.5, 2.9,  
-            -4, 15, 0,
-            
-            //Mid-section
-            -4, 15, 0,
-            -1.5, 11, 3.25,
-            -1.5, 19, 0,
+            //TAIL GREEN
+            -9.3, 5.5, 0,
+            -6, 0, 3,
+            //-3.7, 4.3, 0,
+            0, 0, 2,
             //and
-            -1.5, 19, 0,
-            -1.5, 11, 3.25,
-            7, 13, 7.9625,
-            //and
-            -1.5, 19, 0,
-            7, 13, 7.9625,
-            7.5, 19.25, 5.74844,
+            0, 0, 2,
+            3.4, 2.5, 0,
+            -9.3, 5.5, 0,
 
             
 
-            //Leg
-            7, 13, 7.9625,
-            -1.5, 19, 0,
-            -1.5, 13,  0.5,
+            //MID SECTON GREEN
+            -3.7, 4.3, 0.15,
+            0, 0, 2,
+            3.4, 2.5, 0, 
+            //AND
+            -3.7, 4.3, 0,
+            -3, 0, 2.5, 
+            0, 0, 2,
+
+            //NECK LOWER
+            0, 0, 2,
+            3.4, 2.5, 0,
+            0, 2, 2.5,
+
+            //NECK UPPER
+            0, 2, 2.5,
+            3.4, 2.5, 0,
+            3, 10, 0,
+            //AND
+            0, 2, 2.5,
+            3, 10, 0,
+            1.6, 9.8, 1.03,
+
+
+            //HEAD
+            3, 10, 0,
+            1.6, 9.8, 1.03,
+            6, 7, 0,
+
+            // ##### OTHER side ####
+
+            //TAIL GREEN
+            -9.3, 5.5, 0,
+            -6, 0, -3,
+            //-3.7, 4.3, 0,
+            0, 0, -2,
             //and
-            7, 13, 7.9625,
-            -1.5, 13,  0.5,
-            0, 8, 2.23358,
+            0, 0, -2,
+            3.4, 2.5, 0,
+            -9.3, 5.5, 0,
 
- 
-            //Claw
-            -1.5, 13, 0.5,
-            0, 8, 2.23358,
-            4.5, 8, 2.23358,
-
-            // ##### Other side ####
-
-            //Tail
-            -16, 10, 0,   
-            -4, 15, 0, 
-            -1.25, 11.5, -2.9,  
             
-            
-            //Mid-section
-            -4, 15, 0,
-            -1.5, 19, 0,
-            -1.5, 11, -3.25,
-            
-            //and
-            -1.5, 11, -3.25,
-            -1.5, 19, 0,
-            7, 13, -7.9625,
-            //and
-            7, 13, -7.9625,
-            -1.5, 19, 0,
-            7.5, 19.25, -5.74844,
 
-            //Leg
-            -1.5, 19, 0,
-            7, 13, -7.9625,
-            -1.5, 13,  -0.5,
-            //and
-            -1.5, 13,  -0.5,
-            7, 13, -7.9625,
-            0, 8, -2.23358,
+            //MID SECTON GREEN
+            -3.7, 4.3, -0.15,
+            0, 0, -2,
+            3.4, 2.5, 0, 
+            //AND
+            -3.7, 4.3, 0,
+            -3, 0, -2.5, 
+            0, 0, 2,
 
-            //Claw
-            0, 8, -2.23358,
-            -1.5, 13, -0.5,
-            4.5, 8, -2.23358,
+            //NECK LOWER
+            0, 0, -2,
+            3.4, 2.5, 0,
+            0, 2, -2.5,
+
+            //NECK UPPER
+            0, 2, -2.5,
+            3.4, 2.5, 0,
+            3, 10, 0,
+            //AND
+            0, 2, -2.5,
+            3, 10, 0,
+            1.6, 9.8, -1.03,
+
+
+            //HEAD
+            3, 10, 0,
+            1.6, 9.8, -1.03,
+            6, 7, 0,
+
+
+            
 
             //########### GROUP TWO (BACK OF PAPER AKA WHITE) #############
 
-            //####### one side ####
-            //Neck
-            -1.75, 19, 0,
-            7.5, 19.25, 5.74844,
-            4.75, 29, 0,
-            //and
-            4.75, 29, 0,
-            7.5, 19.25, 5.74844,
-            7.75, 30, 1.48653,
+            //MID SECTION WHITE
+            -3.7, 4.3, 0.15,
+            -6, 0, 3,
+            -3, 0, 2.5,
 
-            //Beak
-            4.75, 29, 0,
-            10, 28, 0,
-            7.75, 30, 1.48653,
-
-            //####### other side ####
-            //Neck
-            7.5, 19.25, -5.74844,
-            -1.75, 19, 0,
-            4.75, 29, 0,
-            //and
-            7.5, 19.25, -5.74844,
-            4.75, 29, 0,
-            7.75, 30, -1.48653,
-
-            //Beak
-            10, 28, 0,
-            4.75, 29, 0,
-            7.75, 30, -1.48653,
+            //Other side
+            //MID SECTION WHITE
+            -3.7, 4.3, -0.15,
+            -6, 0, -3,
+            -3, 0, -2.5,
             
         ];
 
@@ -203,13 +200,13 @@ class OrigamiParrot{
 
         var material_list = [
             new THREE.MeshLambertMaterial({color: 0xffffff,  side: THREE.DoubleSide}),
-            new THREE.MeshLambertMaterial({color: 0x999999, map: texture,  side: THREE.DoubleSide}),
+            new THREE.MeshLambertMaterial({color: 0x22ff10, /*map: texture, */ side: THREE.DoubleSide}),
             new THREE.MeshPhongMaterial({color: 0x999999,  side: THREE.DoubleSide}),
             new THREE.MeshPhongMaterial({color: 0x999999, map: texture,  side: THREE.DoubleSide}),
         ];
 
-        geometry.addGroup(0, 14*3, 3);
-        geometry.addGroup(14*3, 6*3, 2);
+        geometry.addGroup(0, 16*3, 1);
+        geometry.addGroup(16*3, 2*3, 0);
         console.log(geometry)
         
         geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
@@ -217,7 +214,7 @@ class OrigamiParrot{
         geometry.computeVertexNormals();
 
         this.object = new THREE.Mesh( geometry, material_list );
-        this.object.position.set(0 , 0 , 0);
+        this.object.position.set(0 , 9 , 0);
         scene.add(this.object);
         console.log(this.object)
         //object.geometry.groups[0].materialIndex = 1;
