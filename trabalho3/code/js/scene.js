@@ -27,7 +27,7 @@ var clock = new THREE.Clock();
 
 function createCameras () {
 
-    viewSize = 60;
+    viewSize = 65;
     var aspectRatio = window.innerWidth / window.innerHeight;
     originalAspect = window.innerWidth / window.innerHeight;
 
@@ -56,8 +56,8 @@ function createScene () {
     const directionalLightHelper = new THREE.DirectionalLightHelper( directionalLight ); scene.add( directionalLightHelper )
 
     //temporary
-    //const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-    //scene.add(ambientLight)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    scene.add(ambientLight)
 
     new Stage;
     completeObject = new OrigamiParrot;
