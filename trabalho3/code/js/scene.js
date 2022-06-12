@@ -9,7 +9,7 @@
 
 // Cameras
 var mainCamera;
-var frontalCamera;
+var frontalCamera, perspectiveCamera;
 
 var scene, renderer;
 
@@ -23,6 +23,7 @@ var completeObject;
 var initialObject;
 
 var stage;
+var directionalLight;
 
 // Global clock
 var clock = new THREE.Clock();
@@ -44,6 +45,15 @@ function createCameras () {
     frontalCamera.position.set(0, 2.5,  50);
     frontalCamera.lookAt(scene.position);
 
+    // Perspective Camera
+    perspectiveCamera = new THREE.PerspectiveCamera(70,
+        window.innerWidth / window.innerHeight,
+        1,
+        1000);
+
+    perspectiveCamera.position.set(-20, 50, 50);
+    perspectiveCamera.lookAt(scene.position);
+
     // Set main camera
     mainCamera = frontalCamera;
 }
@@ -52,10 +62,10 @@ function createScene () {
     
     scene = new THREE.Scene();
     scene.add(new THREE.AxesHelper(10));
-    const directionalLight = new THREE.DirectionalLight(0x404040, 1);
+    directionalLight = new THREE.DirectionalLight(0x404040, 1);
     directionalLight.position.set(10,50, 15);
     scene.add(directionalLight);
-    const directionalLightHelper = new THREE.DirectionalLightHelper( directionalLight ); scene.add( directionalLightHelper )
+    directionalLightHelper = new THREE.DirectionalLightHelper( directionalLight ); scene.add( directionalLightHelper )
 
     //temporary
     //const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
@@ -80,6 +90,15 @@ function onResize() {
     frontalCamera.bottom = -newSize / 2;
     frontalCamera.updateProjectionMatrix();
 
+    // Perspective Cameras Resize
+    if (window.innerHeight > 0 && window.innerWidth > 0) {
+        perspectiveCamera.aspect = window.innerWidth / window.innerHeight;
+        perspectiveCamera.updateProjectionMatrix();
+
+        spacecraft.getCamera().aspect= window.innerWidth / window.innerHeight;
+        spacecraft.getCamera().updateProjectionMatrix();
+    }
+
     renderer.setSize(window.innerWidth, window.innerHeight);
 
 }
@@ -88,6 +107,16 @@ function onKeyDown(e) {
     'use strict';
     switch(e.keyCode) {
 
+        case 49 : // number 1
+            mainCamera = frontalCamera
+            break;
+        case 50 : // number 2
+            mainCamera = perspectiveCamera
+            break;
+        case 68: //D
+        case 100: //d
+            directionalLight.visible = !directionalLight.visible;
+            break;
         case 90: //Z
         case 122: //z
             stage.toggleLeft();
