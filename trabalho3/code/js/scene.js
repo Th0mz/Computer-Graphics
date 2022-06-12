@@ -95,13 +95,10 @@ function createScene () {
 
     // Objects
     stage = new Stage;
-    scene.add(stage.actualLight);
-    scene.add(stage.actualLightTwo);
-    scene.add(stage.actualLightThree);
 
-    scene.add(stage.spotlightOne);
-    scene.add(stage.spotlightTwo);
-    scene.add(stage.spotlightThree);
+    scene.add(stage.spotlightOne.object);
+    scene.add(stage.spotlightTwo.object);
+    scene.add(stage.spotlightThree.object);
 
     scene.add(stage.plane);
 
