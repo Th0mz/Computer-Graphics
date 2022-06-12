@@ -208,6 +208,7 @@ function init() {
     window.addEventListener("resize", onResize);
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup", onKeyUp);
+    //TODO callback para o VR com a stereo camera?
 }
 
 function animate() {
