@@ -3,7 +3,6 @@ function createObject (x, y, z, geometry, _color, rotX=0, rotY=0, rotZ=0, _wiref
     var materialData = { color: _color, wireframe: _wireframe }
     
     if (texturePath != null) {
-        console.log(texturePath);
         var texture = new THREE.TextureLoader().load(texturePath);
         materialData["map"] = texture;
     }
