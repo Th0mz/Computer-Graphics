@@ -61,9 +61,9 @@ function createScene () {
     scene.add(ambientLight)
 
     new Stage;
-    //completeObject = new OrigamiSwan;
     initialObject = new OrigamiInitial;
- 
+    completeObject = new OrigamiSwan;
+     
 }
 
 function onResize() {
@@ -157,7 +157,7 @@ function animate() {
     
     var delta_time = clock.getDelta();
     initialObject.update();
-    //completeObject.update();
+    completeObject.update();
     render();
 
     setTimeout( function() {

@@ -71,12 +71,13 @@ class OrigamiInitial{
         geometry.computeVertexNormals();
 
         this.object = new THREE.Mesh( geometry, material_list );
-        this.object.position.set(0 , 8 , 0);
-        scene.add(this.object);
+        this.object.position.set(15, 8 , 0);
+        
+
         this.group = new THREE.Group();
         this.group.add(this.object);
+        this.group.position.set(0, 0, 0);
         scene.add(this.group);
-
        
             
 
@@ -84,7 +85,7 @@ class OrigamiInitial{
 
     update(){
 
-        this.group.rotateY(this.movementData.speed * (this.movementData.posDir + this.movementData.negDir));
+        this.object.rotateY(this.movementData.speed * (this.movementData.posDir + this.movementData.negDir));
 
     }
 
