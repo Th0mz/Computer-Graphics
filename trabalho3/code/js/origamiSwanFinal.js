@@ -250,7 +250,7 @@ class OrigamiSwan{
         geometry.computeVertexNormals();
 
         this.object = new THREE.Mesh( geometry, material_list );
-        this.object.position.set(-15 , 8 , 0);
+        this.object.position.set(23 , 8 , 0);
         console.log(this.object)
         //object.geometry.groups[0].materialIndex = 1;
         //console.log(object)

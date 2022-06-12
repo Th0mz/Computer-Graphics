@@ -71,7 +71,7 @@ class OrigamiInitial{
         geometry.computeVertexNormals();
 
         this.object = new THREE.Mesh( geometry, material_list );
-        this.object.position.set(15, 8 , 0);
+        this.object.position.set(-23, 8 , 0);
         
 
         this.group = new THREE.Group();

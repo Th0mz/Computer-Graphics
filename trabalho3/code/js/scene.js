@@ -40,7 +40,7 @@ function createCameras () {
                                           0.1,
                                           500 );
 
-    frontalCamera.position.set(0, 0,  50);
+    frontalCamera.position.set(0, 2.5,  50);
     frontalCamera.lookAt(scene.position);
 
     // Set main camera
