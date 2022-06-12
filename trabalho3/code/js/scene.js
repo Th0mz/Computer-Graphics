@@ -151,6 +151,15 @@ function onKeyDown(e) {
         case 121: //y
             completeObject.updateNegRotation(-1);
             break;
+        case 65: //A
+        case 97: //a
+            initialObject.updateReflection();
+            intermediateObject.updateReflection();
+            completeObject.updateReflection();
+            break;
+        case 83: //S
+        case 115: //s
+            break;
     }
 }
 
@@ -215,9 +224,9 @@ function animate() {
     'use strict';
     
     var delta_time = clock.getDelta();
-    initialObject.update();
-    intermediateObject.update();
-    completeObject.update();
+    initialObject.update(delta_time);
+    intermediateObject.update(delta_time);
+    completeObject.update(delta_time);
     render();
 
     setTimeout( function() {

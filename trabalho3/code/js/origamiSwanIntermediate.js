@@ -1,7 +1,8 @@
 class OrigamiIntermediateSwan{
 
     constructor() {
-        this.movementData = {speed: 0.03, posDir: 0, negDir: 0};
+        this.movementData = {speed: 1, posDir: 0, negDir: 0};
+        this.materialChanged = false;
 
         var geometry = new THREE.BufferGeometry();
         geometry.clearGroups();
@@ -112,10 +113,16 @@ class OrigamiIntermediateSwan{
 
     }
 
-    update(){
+    update(delta_time){
 
-        this.object.rotateY(this.movementData.speed * (this.movementData.posDir + this.movementData.negDir));
-
+        this.object.rotateY(this.movementData.speed*delta_time * (this.movementData.posDir + this.movementData.negDir));
+        if(this.materialChanged) {
+            
+            this.object.geometry.groups[0].materialIndex = (this.object.geometry.groups[0].materialIndex + 3) % 6;
+            this.object.geometry.groups[1].materialIndex = (this.object.geometry.groups[1].materialIndex + 3) % 6;
+            this.object.geometry.groups[2].materialIndex = (this.object.geometry.groups[2].materialIndex + 3) % 6;
+            this.materialChanged = false;
+        }
     }
 
     updatePosRotation(value){
@@ -124,6 +131,10 @@ class OrigamiIntermediateSwan{
 
     updateNegRotation(value){
         this.movementData.negDir = value;
+    }
+
+    updateReflection(){
+        this.materialChanged = true;
     }
 
 }

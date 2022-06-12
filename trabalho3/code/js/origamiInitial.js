@@ -5,7 +5,8 @@
 class OrigamiInitial{
 
     constructor() {
-        this.movementData = {speed: 0.03, posDir: 0, negDir: 0};
+        this.movementData = {speed: 1, posDir: 0, negDir: 0};
+        this.materialChanged = false;
 
         var geometry = new THREE.BufferGeometry();
         geometry.clearGroups();
@@ -60,7 +61,7 @@ class OrigamiInitial{
             new THREE.MeshLambertMaterial({color: 0xffffff,  side: THREE.FrontSide}),
             new THREE.MeshLambertMaterial({color: 0x22ff10, /*map: texture, */ side: THREE.FrontSide}),
             new THREE.MeshPhongMaterial({color: 0x999999,  side: THREE.FrontSide}),
-            new THREE.MeshPhongMaterial({color: 0x999999, map: texture,  side: THREE.FrontSide}),
+            new THREE.MeshPhongMaterial({color: 0x999999, /*map: texture,*/  side: THREE.FrontSide}),
         ];
 
         geometry.addGroup(0, 6, 0);
@@ -83,10 +84,15 @@ class OrigamiInitial{
 
     }
 
-    update(){
-        console.log("chega ao origami");
-        this.object.rotateY(this.movementData.speed * (this.movementData.posDir + this.movementData.negDir));
-
+    update(delta_time){
+        
+        this.object.rotateY(this.movementData.speed*delta_time * (this.movementData.posDir + this.movementData.negDir));
+        if(this.materialChanged) {
+           
+            this.object.geometry.groups[0].materialIndex = (this.object.geometry.groups[0].materialIndex + 2) % 4;
+            this.object.geometry.groups[1].materialIndex = (this.object.geometry.groups[1].materialIndex + 2) % 4;
+            this.materialChanged = false;
+        }
     }
 
     updatePosRotation(value){
@@ -95,6 +101,10 @@ class OrigamiInitial{
 
     updateNegRotation(value){
         this.movementData.negDir = value;
+    }
+
+    updateReflection(){
+        this.materialChanged = true;
     }
 
 }
