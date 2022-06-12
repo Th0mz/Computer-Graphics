@@ -84,7 +84,7 @@ class OrigamiInitial{
     }
 
     update(){
-
+        console.log("chega ao origami");
         this.object.rotateY(this.movementData.speed * (this.movementData.posDir + this.movementData.negDir));
 
     }

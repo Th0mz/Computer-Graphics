@@ -6,7 +6,6 @@
 *
 */
 
-
 // Cameras
 var mainCamera;
 var frontalCamera, perspectiveCamera;
@@ -203,7 +202,8 @@ function init() {
     
     createScene();
     createCameras();
-
+    document.body.appendChild( VRButton.createButton( renderer ) );
+    renderer.xr.enabled = true;
     
     window.addEventListener("resize", onResize);
     window.addEventListener("keydown", onKeyDown);
@@ -220,6 +220,9 @@ function animate() {
     render();
 
     setTimeout( function() {
-        requestAnimationFrame( animate );
+        //requestAnimationFrame( animate );
+        // TODO CHECK THIS
+        renderer.setAnimationLoop( animate );
     }, 1000 / 60 );
+    
 }
