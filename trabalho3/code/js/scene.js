@@ -20,6 +20,7 @@ var viewSize;
 // Scene objects properties
 var side_size = 10;
 var completeObject;
+var intermediateObject;
 var initialObject;
 
 var stage;
@@ -73,6 +74,7 @@ function createScene () {
 
     stage = new Stage;
     initialObject = new OrigamiInitial;
+    intermediateObject = new OrigamiIntermediateSwan;
     completeObject = new OrigamiSwan;
      
 }
@@ -137,6 +139,14 @@ function onKeyDown(e) {
         case 119: //w
             initialObject.updateNegRotation(-1);
             break;
+        case 69: //E
+        case 101: //e
+            intermediateObject.updatePosRotation(1);
+            break;
+        case 82: //R
+        case 114: //r
+            intermediateObject.updateNegRotation(-1);
+            break;
         case 84: //T
         case 116: //t
             completeObject.updatePosRotation(1);
@@ -158,6 +168,14 @@ function onKeyUp(e){
         case 87: //W
         case 119: //w
             initialObject.updateNegRotation(0);
+            break;
+        case 69: //E
+        case 101: //e
+            intermediateObject.updatePosRotation(0);
+            break;
+        case 82: //R
+        case 114: //r
+            intermediateObject.updateNegRotation(0);
             break;
         case 84: //T
         case 116: //t
@@ -200,6 +218,7 @@ function animate() {
     
     var delta_time = clock.getDelta();
     initialObject.update();
+    intermediateObject.update();
     completeObject.update();
     render();
 
