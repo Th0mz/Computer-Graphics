@@ -96,9 +96,6 @@ function onResize() {
     if (window.innerHeight > 0 && window.innerWidth > 0) {
         perspectiveCamera.aspect = window.innerWidth / window.innerHeight;
         perspectiveCamera.updateProjectionMatrix();
-
-        spacecraft.getCamera().aspect= window.innerWidth / window.innerHeight;
-        spacecraft.getCamera().updateProjectionMatrix();
     }
 
     renderer.setSize(window.innerWidth, window.innerHeight);
