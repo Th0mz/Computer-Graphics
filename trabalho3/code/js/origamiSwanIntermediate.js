@@ -110,10 +110,10 @@ class OrigamiIntermediateSwan{
 
         this.object.rotateY(this.movementData.speed*delta_time * (this.movementData.posDir + this.movementData.negDir));
         if(this.materialChanged) {
-            
             this.object.geometry.groups[0].materialIndex = (this.object.geometry.groups[0].materialIndex + 3) % 6;
             this.object.geometry.groups[1].materialIndex = (this.object.geometry.groups[1].materialIndex + 3) % 6;
             this.object.geometry.groups[2].materialIndex = (this.object.geometry.groups[2].materialIndex + 3) % 6;
+            
             this.materialChanged = false;
         }
     }
@@ -132,6 +132,11 @@ class OrigamiIntermediateSwan{
 
     doReset() {
         // TODO
+        this.object.geometry.groups[0].materialIndex = 2;
+        this.object.geometry.groups[1].materialIndex = 0;
+        this.object.geometry.groups[2].materialIndex = 1;
+
+        this.object.rotation.set(0, 0, 0);
     }
 
 }

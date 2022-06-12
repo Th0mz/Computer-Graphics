@@ -84,7 +84,6 @@ class OrigamiInitial{
         
         this.object.rotateY(this.movementData.speed* delta_time * (this.movementData.posDir + this.movementData.negDir));
         if(this.materialChanged) {
-           
             this.object.geometry.groups[0].materialIndex = (this.object.geometry.groups[0].materialIndex + 2) % 4;
             this.object.geometry.groups[1].materialIndex = (this.object.geometry.groups[1].materialIndex + 2) % 4;
             this.materialChanged = false;
@@ -105,6 +104,10 @@ class OrigamiInitial{
 
     doReset() {
         // TODO
+        this.object.geometry.groups[0].materialIndex = 0;
+        this.object.geometry.groups[1].materialIndex = 1;
+
+        this.object.rotation.set(0, 0, 0);
     }
 
 }
