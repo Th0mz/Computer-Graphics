@@ -22,6 +22,7 @@ var side_size = 10;
 var completeObject;
 var initialObject;
 
+var stage;
 
 // Global clock
 var clock = new THREE.Clock();
@@ -51,16 +52,16 @@ function createScene () {
     
     scene = new THREE.Scene();
     scene.add(new THREE.AxesHelper(10));
-    const directionalLight = new THREE.DirectionalLight(0x404040, 0.5);
-    directionalLight.position.set(0,50, 15);
+    const directionalLight = new THREE.DirectionalLight(0x404040, 1);
+    directionalLight.position.set(10,50, 15);
     scene.add(directionalLight);
     const directionalLightHelper = new THREE.DirectionalLightHelper( directionalLight ); scene.add( directionalLightHelper )
 
     //temporary
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
-    scene.add(ambientLight)
+    //const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+    //scene.add(ambientLight)
 
-    new Stage;
+    stage = new Stage;
     initialObject = new OrigamiInitial;
     completeObject = new OrigamiSwan;
      
@@ -86,6 +87,19 @@ function onResize() {
 function onKeyDown(e) {
     'use strict';
     switch(e.keyCode) {
+
+        case 90: //Z
+        case 122: //z
+            stage.toggleLeft();
+            break;
+        case 88: //Y
+        case 120: //y 
+            stage.toggleCenter();
+            break;
+        case 67: //C
+        case 99: //c
+            stage.toggleRight();
+            break;
         case 81: //Q
         case 113: //q
             initialObject.updatePosRotation(1);
