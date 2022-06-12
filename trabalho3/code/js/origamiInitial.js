@@ -60,8 +60,8 @@ class OrigamiInitial{
         var material_list = [
             new THREE.MeshLambertMaterial({color: 0xffffff,  side: THREE.FrontSide}),
             new THREE.MeshLambertMaterial({color: 0x22ff10, /*map: texture, */ side: THREE.FrontSide}),
-            new THREE.MeshPhongMaterial({color: 0x999999,  side: THREE.FrontSide}),
-            new THREE.MeshPhongMaterial({color: 0x999999, /*map: texture,*/  side: THREE.FrontSide}),
+            new THREE.MeshPhongMaterial({color: 0xffffff,  side: THREE.FrontSide}),
+            new THREE.MeshPhongMaterial({color: 0x22ff10, /*map: texture,*/  side: THREE.FrontSide}),
         ];
 
         geometry.addGroup(0, 6, 0);
