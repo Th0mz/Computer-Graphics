@@ -20,6 +20,7 @@ var viewSize;
 // Scene objects properties
 var side_size = 10;
 var completeObject;
+var initialObject;
 
 
 // Global clock
@@ -27,7 +28,7 @@ var clock = new THREE.Clock();
 
 function createCameras () {
 
-    viewSize = 45;
+    viewSize = 75;
     var aspectRatio = window.innerWidth / window.innerHeight;
     originalAspect = window.innerWidth / window.innerHeight;
 
@@ -56,11 +57,12 @@ function createScene () {
     const directionalLightHelper = new THREE.DirectionalLightHelper( directionalLight ); scene.add( directionalLightHelper )
 
     //temporary
-    //const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-    //scene.add(ambientLight)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+    scene.add(ambientLight)
 
     new Stage;
-    completeObject = new OrigamiParrot;
+    //completeObject = new OrigamiSwan;
+    initialObject = new OrigamiInitial;
  
 }
 
@@ -84,6 +86,14 @@ function onResize() {
 function onKeyDown(e) {
     'use strict';
     switch(e.keyCode) {
+        case 81: //Q
+        case 113: //q
+            initialObject.updatePosRotation(1);
+            break;
+        case 87: //W
+        case 119: //w
+            initialObject.updateNegRotation(-1);
+            break;
         case 84: //T
         case 116: //t
             completeObject.updatePosRotation(1);
@@ -98,6 +108,14 @@ function onKeyDown(e) {
 function onKeyUp(e){
     'use strict';
     switch(e.keyCode) {
+        case 81: //Q
+        case 113: //q
+            initialObject.updatePosRotation(0);
+            break;
+        case 87: //W
+        case 119: //w
+            initialObject.updateNegRotation(0);
+            break;
         case 84: //T
         case 116: //t
             completeObject.updatePosRotation(0);
@@ -138,7 +156,8 @@ function animate() {
     'use strict';
     
     var delta_time = clock.getDelta();
-    completeObject.update();
+    initialObject.update();
+    //completeObject.update();
     render();
 
     setTimeout( function() {

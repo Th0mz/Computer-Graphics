@@ -1,7 +1,7 @@
 
 
 
-class OrigamiParrot{
+class OrigamiSwan{
 
     constructor() {
         this.movementData = {speed: 0.03, posDir: 0, negDir: 0};
@@ -12,6 +12,7 @@ class OrigamiParrot{
         var positions = [
 
             //########### GROUP ONE (HAS TEXTURE) #############
+            
             
             // ##### One side ####
             //TAIL GREEN
@@ -32,10 +33,6 @@ class OrigamiParrot{
             3.4, 2.5, 0,
             0, 0, -2,
             -9.3, 5.5, 0,
-
-
-            
-
 
             //side one
             //MID SECTON GREEN
@@ -78,9 +75,6 @@ class OrigamiParrot{
 
             // ##### OTHER side ####
 
-            
-
-            
 
             //MID SECTON GREEN
             -3.7, 4.3, -0.15,
@@ -120,9 +114,6 @@ class OrigamiParrot{
             -2, 3.75, 0,
             -3.8, 0, -2.5,
             0, 0, -2,
-            
-
-            
 
             //########### GROUP TWO (BACK OF PAPER AKA WHITE) #############
 
@@ -259,7 +250,7 @@ class OrigamiParrot{
         geometry.computeVertexNormals();
 
         this.object = new THREE.Mesh( geometry, material_list );
-        this.object.position.set(0 , 9 , 0);
+        this.object.position.set(0 , 8 , 0);
         scene.add(this.object);
         console.log(this.object)
         //object.geometry.groups[0].materialIndex = 1;
