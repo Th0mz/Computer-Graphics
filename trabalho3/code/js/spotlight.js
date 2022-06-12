@@ -1,7 +1,7 @@
 class SpotLight {
     constructor (x, y, z, color, intensity, direction) {
         console.log(direction);
-        
+
         var pyramidBase = createPyramid(0, 0, 0, 3, 4, 64, 0x000000, false, Math.PI/2);
         var sphere = createSphere(0, 0, -3.5, 3, 0x999900, false);
         
@@ -17,13 +17,7 @@ class SpotLight {
         var lightPosition = new THREE.Vector3(0,0,0);
         sphere.getWorldPosition(lightPosition);
         
-        console.log("prev");
-        console.log(direction);
-        console.log(lightPosition);
         direction.add(lightPosition);
-        console.log("next");
-        console.log(direction);
-        console.log(lightPosition);
 
         this.light.position.set(lightPosition.x, lightPosition.y, lightPosition.z);
         this.light.target.position.set(direction.x, direction.y, direction.z);
@@ -40,5 +34,9 @@ class SpotLight {
 
     toggleLight () {
         this.light.visible = !this.light.visible
+    }
+
+    setLight (visibility) {
+        this.light.visible = visibility;
     }
 }

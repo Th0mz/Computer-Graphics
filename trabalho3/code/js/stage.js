@@ -2,9 +2,7 @@
 
 class Stage{
 
-
     constructor(){
-
 
         //make floor plane
         var geometry = new THREE.PlaneGeometry(100,100);
@@ -32,8 +30,8 @@ class Stage{
 
     doReset () {
         // TODO : ligar / desligar luzes para recriar a cena inicial
-        this.actualLight.visible = true;
-        this.actualLightTwo.visible = true;
-        this.actualLightThree.visible = true;
+        this.spotlightOne.setLight(true);
+        this.spotlightTwo.setLight(true);
+        this.spotlightThree.setLight(true);
     }
 }
