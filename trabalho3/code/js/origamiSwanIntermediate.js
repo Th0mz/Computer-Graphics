@@ -130,4 +130,8 @@ class OrigamiIntermediateSwan{
         this.materialChanged = true;
     }
 
+    doReset() {
+        // TODO
+    }
+
 }

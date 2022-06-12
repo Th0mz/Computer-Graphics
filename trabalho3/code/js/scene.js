@@ -28,6 +28,7 @@ var initialObject;
 
 var stage;
 var directionalLight;
+var ambientLight;
 
 // Global clock
 var clock = new THREE.Clock();
@@ -85,11 +86,12 @@ function createScene () {
     directionalLight = new THREE.DirectionalLight(0x404040, 1);
     directionalLight.position.set(10,50, 15);
     scene.add(directionalLight);
+    // TODO : remove helpers
     directionalLightHelper = new THREE.DirectionalLightHelper( directionalLight ); scene.add( directionalLightHelper )
 
-    // TODO : to remove
-    //const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-    //scene.add(ambientLight)
+    ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    scene.add(ambientLight)
+    ambientLight.visible = false;
 
     // Objects
     stage = new Stage;
@@ -205,9 +207,6 @@ function onKeyDown(e) {
             intermediateObject.updateReflection();
             completeObject.updateReflection();
             break;
-        case 83: //S
-        case 115: //s
-            break;
     }
 }
 
@@ -229,6 +228,10 @@ function onKeyUp(e){
         case 82: //R
         case 114: //r
             intermediateObject.updateNegRotation(0);
+
+            // TODO : fazer reset aqui?? 2 funcionalidades para 1 botão?
+            if (pause) { reset = true; }
+
             break;
         case 84: //T
         case 116: //t
@@ -245,11 +248,8 @@ function onKeyUp(e){
 
             // TODO : verificar se se pode fazer este if na função de callback
             if (pause) { pauseFunctionality = true; clock.running = false; } 
-            else { clock.start(); mainCamera = lastCamera; }
+            else { clock.start(); mainCamera = lastCamera; ambientLight.visible = false; }
 
-            break;
-        case 82: //R
-            if (pause) { reset = true; }
             break;
     }
 
@@ -284,6 +284,10 @@ function init() {
 function animate() {
     'use strict';
     if (!pause) {
+        if (reset) {
+            doReset();
+        }
+
         var delta_time = clock.getDelta();
 
         initialObject.update(delta_time);
@@ -291,18 +295,14 @@ function animate() {
         completeObject.update(delta_time);
         
         render();
-    } else {
-        if (pauseFunctionality) {
-            lastCamera = mainCamera;
-            mainCamera = pauseCamera;
+    } else if (pauseFunctionality) {
+        lastCamera = mainCamera;
+        mainCamera = pauseCamera;
 
-            render();
-            pauseFunctionality = false;
-        }
+        ambientLight.visible = true;
 
-        if (reset) {
-            doReset();
-        }
+        render();
+        pauseFunctionality = false;
     }
 
     setTimeout( function() {
@@ -312,8 +312,15 @@ function animate() {
     }, 1000 / 60 );
 }
 
-// TODO 
 function doReset () {
+    // TODO : verificar se falta alguma cena para dar reset
+    mainCamera = frontalCamera
+    directionalLight.visible = true;
+    ambientLight.visible = false;
+    
+    stage.doReset();
+    completeObject.doReset();
+    intermediateObject.doReset();
+    initialObject.doReset();
     reset = false;
-    throw "doReset not implemented yet";
 }

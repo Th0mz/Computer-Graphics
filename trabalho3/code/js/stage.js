@@ -33,7 +33,6 @@ class Stage{
         this.spotlightOne.rotateX(Math.PI/7)
         
 
-        //lights
         this.actualLight = new THREE.SpotLight( 0xffffff, 0.7, 0, Math.PI/6, 0, 1);
 
         var position_aux = new THREE.Vector3(-23,0,0);
@@ -122,5 +121,9 @@ class Stage{
 
     toggleRight() {
         this.actualLightThree.visible = !this.actualLightThree.visible;
+    }
+
+    doReset () {
+        // TODO : ligar / desligar luzes para recriar a cena inicial
     }
 }

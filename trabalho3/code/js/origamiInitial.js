@@ -103,4 +103,8 @@ class OrigamiInitial{
         this.materialChanged = true;
     }
 
+    doReset() {
+        // TODO
+    }
+
 }

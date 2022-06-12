@@ -284,4 +284,7 @@ class OrigamiSwan{
         this.materialChanged = true;
     }
 
+    doReset() {
+        // TODO
+    }
 }
