@@ -9,10 +9,7 @@
 
 // Cameras 
 var mainCamera;
-var lastCamera;
-var frontalCamera, pauseCamera, perspectiveCamera;
-// TODO : pauseCamera é isto que eles querem dizer com 
-// "segunda projecção ortogonal e um segundo viewport"
+var frontalCamera, perspectiveCamera;
 
 // Render
 var scene, renderer;
@@ -28,12 +25,12 @@ var initialObject;
 
 var stage;
 var directionalLight;
-var ambientLight;
 
 // Global clock
 var clock = new THREE.Clock();
 var pause = false;
-var pauseFunctionality = false;
+var pausePromptFrontal;
+var pausePromptPerspective;
 
 var reset = false;
 
@@ -50,7 +47,7 @@ function createCameras () {
                                           0.1,
                                           500 );
 
-    frontalCamera.position.set(0, 2.5,  50);
+    frontalCamera.position.set(0, 2.5, 100);
     frontalCamera.lookAt(scene.position);
 
     // Perspective Camera
@@ -62,16 +59,6 @@ function createCameras () {
     perspectiveCamera.position.set(-20, 50, 50);
     perspectiveCamera.lookAt(scene.position);
 
-    // Pause camera
-    pauseCamera = new THREE.OrthographicCamera(-aspectRatio * viewSize / 2, 
-                                    aspectRatio * viewSize / 2,
-                                    viewSize / 2, 
-                                    -viewSize / 2,
-                                    0.1,
-                                    500 );
-
-    pauseCamera.position.set(0, 0, 50);
-    pauseCamera.lookAt(0, 0, 100);
 
     // Set main camera
     mainCamera = frontalCamera;
@@ -88,10 +75,6 @@ function createScene () {
     scene.add(directionalLight);
     // TODO : remove helpers
     directionalLightHelper = new THREE.DirectionalLightHelper( directionalLight ); scene.add( directionalLightHelper )
-
-    ambientLight = new THREE.AmbientLight(0xffffff, 1);
-    scene.add(ambientLight)
-    ambientLight.visible = false;
 
     // Objects
     stage = new Stage;
@@ -115,7 +98,12 @@ function createScene () {
     
     // Pause prompt
     var aspectRatio = window.innerWidth / window.innerHeight;
-    createRectangle(0, 0, 200, aspectRatio * viewSize, viewSize, 20, 0xffffff, false, 'assets/pause_screen.png');
+    pausePromptFrontal = createRectangle(0, 0, 80, aspectRatio * viewSize, viewSize, 20, 0xffffff, false, 'assets/pause_screen.png', true);
+    pausePromptFrontal.visible = false;
+
+    pausePromptPerspective = createRectangle(0,0,0, aspectRatio * viewSize, viewSize, 20, 0xffffff, false, 'assets/pause_screen.png', true);
+    pausePromptPerspective.lookAt(-20, 50, 50);
+    pausePromptPerspective.visible = false;
 
 }
 
@@ -244,8 +232,15 @@ function onKeyUp(e){
             pause = !pause;
 
             // TODO : verificar se se pode fazer este if na função de callback
-            if (pause) { pauseFunctionality = true; clock.running = false; } 
-            else { clock.start(); mainCamera = lastCamera; ambientLight.visible = false; }
+            if (pause) { 
+                clock.running = false;
+                pausePromptFrontal.visible = true;
+                pausePromptPerspective.visible = true;
+            } else { 
+                clock.start();
+                pausePromptFrontal.visible = false;
+                pausePromptPerspective.visible = false;
+            }
 
             break;
     }
@@ -292,14 +287,9 @@ function animate() {
         completeObject.update(delta_time);
         
         render();
-    } else if (pauseFunctionality) {
-        lastCamera = mainCamera;
-        mainCamera = pauseCamera;
-
-        ambientLight.visible = true;
+    } else {
 
         render();
-        pauseFunctionality = false;
     }
 
     setTimeout( function() {
@@ -313,7 +303,6 @@ function doReset () {
     // TODO : verificar se falta alguma cena para dar reset
     mainCamera = frontalCamera
     directionalLight.visible = true;
-    ambientLight.visible = false;
     
     stage.doReset();
     completeObject.doReset();

@@ -1,13 +1,17 @@
-function createObject (x, y, z, geometry, _color, rotX=0, rotY=0, rotZ=0, _wireframe=true, texturePath=null) {
+function createObject (x, y, z, geometry, _color, rotX=0, rotY=0, rotZ=0, _wireframe=true, texturePath=null, _transparent=false) {
     var object = new THREE.Object3D();
-    var materialData = { color: _color, wireframe: _wireframe }
+    var materialData = { color: _color, wireframe: _wireframe, transparent : _transparent }
     
     if (texturePath != null) {
         var texture = new THREE.TextureLoader().load(texturePath);
         materialData["map"] = texture;
     }
     
-    var material = new THREE.MeshStandardMaterial(materialData);
+    if (_transparent) {
+        var material = new THREE.MeshBasicMaterial(materialData);
+    } else {
+        var material = new THREE.MeshStandardMaterial(materialData);
+    }
     var mesh = new THREE.Mesh(geometry, material);
 
     object.add(mesh);
@@ -20,51 +24,51 @@ function createObject (x, y, z, geometry, _color, rotX=0, rotY=0, rotZ=0, _wiref
     return object;
 }
 
-function createSphere (x, y, z, diameter, _color, _wireframe=true, texture=null) {
+function createSphere (x, y, z, diameter, _color, _wireframe=true, texture=null, _transparent=false) {
     
     var geometry = new THREE.SphereGeometry((diameter / 2) , 32, 16);
-    var sphere = createObject(x, y, z, geometry, _color, 0, 0, 0, _wireframe, texture);
+    var sphere = createObject(x, y, z, geometry, _color, 0, 0, 0, _wireframe, texture, _transparent);
 
     return sphere;
 }
 
-function createCube(x, y, z, size, _color, _wireframe=true) {
+function createCube(x, y, z, size, _color, _wireframe=true, _transparent=false) {
 
     var geometry = new THREE.BoxGeometry(size , size , size );
-    var cube = createObject(x, y, z, geometry, _color, 0, 0, 0, _wireframe);
+    var cube = createObject(x, y, z, geometry, _color, 0, 0, 0, _wireframe, _transparent);
 
     return cube;
 }
 
-function createRectangle(x, y, z,  width, height, depth, _color, _wireframe=true, texture=null) {
+function createRectangle(x, y, z,  width, height, depth, _color, _wireframe=true, texture=null, _transparent=false) {
 
     var geometry = new THREE.BoxGeometry(width, height , depth);
-    var rectangle = createObject(x, y, z, geometry, _color, 0, 0, 0, _wireframe, texture);
+    var rectangle = createObject(x, y, z, geometry, _color, 0, 0, 0, _wireframe, texture, _transparent);
 
     return rectangle;
 }
 
-function createPyramid(x, y, z, diameter, height, base_polygon,  _color, _wireframe=true, rotX = 0, rotY = 0, rotZ = 0, texture=null) {
+function createPyramid(x, y, z, diameter, height, base_polygon,  _color, _wireframe=true, rotX = 0, rotY = 0, rotZ = 0, texture=null, _transparent=false) {
     
     var geometry = new THREE.ConeGeometry((diameter / 2) , height , base_polygon);
-    var pyramid = createObject(x, y, z, geometry, _color, rotX, rotY, rotZ, _wireframe, texture);
+    var pyramid = createObject(x, y, z, geometry, _color, rotX, rotY, rotZ, _wireframe, texture, _transparent);
     
     return pyramid;
 }
 
-function createCapsule (x, y, z, diameter, height, _color, _wireframe, rotX = 0, rotY = 0, rotZ = 0, texture=null) {
+function createCapsule (x, y, z, diameter, height, _color, _wireframe, rotX = 0, rotY = 0, rotZ = 0, texture=null, _transparent=false) {
     
     var geometry = new THREE.CapsuleGeometry( (diameter / 2) , height , 10, 10 ); 
-    var capsule = createObject(x, y, z, geometry, _color, rotX, rotY, rotZ, _wireframe, texture);
+    var capsule = createObject(x, y, z, geometry, _color, rotX, rotY, rotZ, _wireframe, texture, _transparent);
     
     return capsule;
 }
 
 
-function createCylinder (x, y, z, diameter, height, base_polygon, _color, _wireframe=true, rotX = 0, rotY = 0, rotZ = 0, texture=null) {
+function createCylinder (x, y, z, diameter, height, base_polygon, _color, _wireframe=true, rotX = 0, rotY = 0, rotZ = 0, texture=null, _transparent=false) {
     
     var geometry = new THREE.CylinderGeometry( (diameter / 2) , (diameter / 2) , height , base_polygon);
-    var cylinder = createObject(x, y, z, geometry, _color, rotX, rotY, rotZ, _wireframe, texture);
+    var cylinder = createObject(x, y, z, geometry, _color, rotX, rotY, rotZ, _wireframe, texture, _transparent);
     
     return cylinder;
 }
