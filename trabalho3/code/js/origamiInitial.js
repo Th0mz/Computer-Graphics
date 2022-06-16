@@ -7,6 +7,8 @@ class OrigamiInitial{
     constructor() {
         this.movementData = {speed: 1, posDir: 0, negDir: 0};
         this.materialChanged = false;
+        this.last_material = 0;
+        this.illuminationOn = true;
 
         var geometry = new THREE.BufferGeometry();
         geometry.clearGroups();
@@ -62,6 +64,8 @@ class OrigamiInitial{
             new THREE.MeshLambertMaterial({color: 0xffffff, map: texture,  side: THREE.FrontSide}),
             new THREE.MeshPhongMaterial({color: 0xffffff,  side: THREE.FrontSide}),
             new THREE.MeshPhongMaterial({color: 0xffffff, map: texture,  side: THREE.FrontSide}),
+            new THREE.MeshBasicMaterial({color: 0xffffff,  side: THREE.FrontSide}),
+            new THREE.MeshBasicMaterial({color: 0xffffff, map: texture,  side: THREE.FrontSide})
         ];
 
         geometry.addGroup(0, 6, 0);
@@ -83,10 +87,11 @@ class OrigamiInitial{
     update(delta_time){
         
         this.object.rotateY(this.movementData.speed* delta_time * (this.movementData.posDir + this.movementData.negDir));
-        if(this.materialChanged) {
+        if(this.materialChanged && this.illuminationOn) {
             this.object.geometry.groups[0].materialIndex = (this.object.geometry.groups[0].materialIndex + 2) % 4;
             this.object.geometry.groups[1].materialIndex = (this.object.geometry.groups[1].materialIndex + 2) % 4;
             this.materialChanged = false;
+            this.last_material = (this.last_material + 2) % 4;
         }
     }
 
@@ -99,7 +104,22 @@ class OrigamiInitial{
     }
 
     updateReflection(){
-        this.materialChanged = true;
+        if(this.illuminationOn){
+            this.materialChanged = true;
+        }
+    }
+
+    toggleIllumCalculation(){
+        if(this.illuminationOn){
+            this.object.geometry.groups[0].materialIndex = 4;
+            this.object.geometry.groups[1].materialIndex = 5;
+            this.illuminationOn = false; 
+        } else {
+            this.illuminationOn = true;
+            this.object.geometry.groups[0].materialIndex = this.last_material;
+            this.object.geometry.groups[1].materialIndex = this.last_material + 1;
+        }
+
     }
 
     doReset() {

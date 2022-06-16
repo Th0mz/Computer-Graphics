@@ -3,6 +3,8 @@ class OrigamiIntermediateSwan{
     constructor() {
         this.movementData = {speed: 1, posDir: 0, negDir: 0};
         this.materialChanged = false;
+        this.illuminationOn = true;
+        this.last_material = 0;
 
         var geometry = new THREE.BufferGeometry();
         geometry.clearGroups();
@@ -140,6 +142,9 @@ class OrigamiIntermediateSwan{
             new THREE.MeshPhongMaterial({color: 0xffffff,  side: THREE.FrontSide}),
             new THREE.MeshPhongMaterial({color: 0x999999, map: texture,  side: THREE.DoubleSide}),
             new THREE.MeshPhongMaterial({color: 0x999999, map: texture,  side: THREE.FrontSide}),
+            new THREE.MeshBasicMaterial({color: 0xffffff,  side: THREE.FrontSide}),
+            new THREE.MeshBasicMaterial({color: 0x999999,  map: texture,  side: THREE.DoubleSide}),
+            new THREE.MeshBasicMaterial({color: 0x999999, map: texture, side: THREE.FrontSide})
         ];
 
         geometry.addGroup(0, 4*3, 2);
@@ -161,11 +166,12 @@ class OrigamiIntermediateSwan{
     update(delta_time){
 
         this.object.rotateY(this.movementData.speed* delta_time * (this.movementData.posDir + this.movementData.negDir));
-        if(this.materialChanged) {
+        if(this.materialChanged && this.illuminationOn) {
             this.object.geometry.groups[0].materialIndex = (this.object.geometry.groups[0].materialIndex + 3) % 6;
             this.object.geometry.groups[1].materialIndex = (this.object.geometry.groups[1].materialIndex + 3) % 6;
             this.object.geometry.groups[2].materialIndex = (this.object.geometry.groups[2].materialIndex + 3) % 6;
             
+            this.last_material = (this.last_material + 3) % 6;
             this.materialChanged = false;
         }
     }
@@ -179,7 +185,24 @@ class OrigamiIntermediateSwan{
     }
 
     updateReflection(){
-        this.materialChanged = true;
+        if(this.illuminationOn){
+            this.materialChanged = true;
+        }
+    }
+
+    toggleIllumCalculation(){
+        if(this.illuminationOn){
+            this.object.geometry.groups[0].materialIndex = 8;
+            this.object.geometry.groups[1].materialIndex = 6;
+            this.object.geometry.groups[2].materialIndex = 7;
+            this.illuminationOn = false;
+        } else {
+            this.illuminationOn = true;
+            this.object.geometry.groups[0].materialIndex = this.last_material + 2;
+            this.object.geometry.groups[1].materialIndex = this.last_material;
+            this.object.geometry.groups[2].materialIndex = this.last_material + 1;
+        }
+
     }
 
     doReset() {
