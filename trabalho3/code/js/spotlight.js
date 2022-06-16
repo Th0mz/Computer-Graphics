@@ -27,9 +27,6 @@ class SpotLight {
         this.object = new THREE.Group();
         this.object.add(this.base, this.light);
 
-        // TODO : remove helpers
-        const spotLightHelper = new THREE.SpotLightHelper( this.light );
-        scene.add( spotLightHelper );
     }
 
     toggleLight () {

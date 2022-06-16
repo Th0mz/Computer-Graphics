@@ -132,7 +132,6 @@ class OrigamiIntermediateSwan{
 
           ])
 
-        //TODO ADD MATERIALS
         var texture = new THREE.TextureLoader().load('assets/origami_pattern.png');
 
         var material_list = [
@@ -166,6 +165,10 @@ class OrigamiIntermediateSwan{
     update(delta_time){
 
         this.object.rotateY(this.movementData.speed* delta_time * (this.movementData.posDir + this.movementData.negDir));
+        this.applyReflectionChange();
+    }
+
+    applyReflectionChange () {
         if(this.materialChanged && this.illuminationOn) {
             this.object.geometry.groups[0].materialIndex = (this.object.geometry.groups[0].materialIndex + 3) % 6;
             this.object.geometry.groups[1].materialIndex = (this.object.geometry.groups[1].materialIndex + 3) % 6;
@@ -206,7 +209,6 @@ class OrigamiIntermediateSwan{
     }
 
     doReset() {
-        // TODO
         this.object.geometry.groups[0].materialIndex = 2;
         this.object.geometry.groups[1].materialIndex = 0;
         this.object.geometry.groups[2].materialIndex = 1;

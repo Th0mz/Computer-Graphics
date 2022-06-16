@@ -56,7 +56,6 @@ class OrigamiInitial{
 
           ])
 
-        //TODO ADD MATERIALS
         var texture = new THREE.TextureLoader().load('assets/origami_pattern.png');
 
         var material_list = [
@@ -87,6 +86,10 @@ class OrigamiInitial{
     update(delta_time){
         
         this.object.rotateY(this.movementData.speed* delta_time * (this.movementData.posDir + this.movementData.negDir));
+        this.applyReflectionChange();
+    }
+
+    applyReflectionChange () {
         if(this.materialChanged && this.illuminationOn) {
             this.object.geometry.groups[0].materialIndex = (this.object.geometry.groups[0].materialIndex + 2) % 4;
             this.object.geometry.groups[1].materialIndex = (this.object.geometry.groups[1].materialIndex + 2) % 4;
@@ -123,7 +126,6 @@ class OrigamiInitial{
     }
 
     doReset() {
-        // TODO
         this.object.geometry.groups[0].materialIndex = 0;
         this.object.geometry.groups[1].materialIndex = 1;
 

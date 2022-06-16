@@ -1,5 +1,5 @@
 /*
-* Trabalho # 2
+* Trabalho # 3
 *   95535 - António Coelho
 *   95549 - Cristi Savin 
 *   95680 - Tomás Tavares 
@@ -62,7 +62,7 @@ function createCameras () {
    
 
     // Set main camera
-    mainCamera = frontalCamera;
+    mainCamera = perspectiveCamera;
 }
 
 function createScene () {
@@ -72,10 +72,8 @@ function createScene () {
     
     // lights
     directionalLight = new THREE.DirectionalLight(0x404040, 1.5);
-    directionalLight.position.set(10,50, 15);
+    directionalLight.position.set(10, 50, 15);
     scene.add(directionalLight);
-    // TODO : remove helpers
-    directionalLightHelper = new THREE.DirectionalLightHelper( directionalLight ); scene.add( directionalLightHelper )
 
     // Objects
     stage = new Stage;
@@ -198,8 +196,6 @@ function onKeyUp(e){
         case 82: //R
         case 114: //r
             intermediateObject.updateNegRotation(0);
-
-            // TODO : fazer reset aqui?? 2 funcionalidades para 1 botão?
             if (pause) { reset = true; }
 
             break;
@@ -248,7 +244,6 @@ function onKeyUp(e){
         case 32: // Space bar
             pause = !pause;
 
-            // TODO : verificar se se pode fazer este if na função de callback
             if (pause) { 
                 clock.running = false;
 
@@ -314,9 +309,15 @@ function animate() {
         intermediateObject.update(delta_time);
         completeObject.update(delta_time);
         
-        
-    } else if (reset) {
-        doReset();
+    } else {
+        if (reset) {
+            doReset();
+        }
+
+        initialObject.applyReflectionChange();
+        intermediateObject.applyReflectionChange();
+        completeObject.applyReflectionChange();
+
     }
     
     render();
@@ -328,7 +329,6 @@ function animate() {
 }
 
 function doReset () {
-    // TODO : verificar se falta alguma cena para dar reset
     directionalLight.visible = true;
     
     stage.doReset();
