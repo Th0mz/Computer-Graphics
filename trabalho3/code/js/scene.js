@@ -55,10 +55,10 @@ function createCameras () {
         window.innerWidth / window.innerHeight,
         1,
         1000);
-
     perspectiveCamera.position.set(-22, 55, 55);
-    perspectiveCamera.lookAt(scene.position);
-
+    perspectiveCamera.lookAt(scene.position); 
+    perspectiveCamera.position.set(0, 0, 0);
+    
    
 
     // Set main camera
@@ -287,12 +287,11 @@ function init() {
     cameraVRhelperCam1.add(frontalCamera);
     scene.add(cameraVRhelperCam1);
 
-    /*var cameraVRhelperCam2 = new THREE.Object3D();
+    var cameraVRhelperCam2 = new THREE.Object3D();
     cameraVRhelperCam2.position.set(-22, 55, 55);
     cameraVRhelperCam2.add(perspectiveCamera);
+    scene.add(cameraVRhelperCam2);
     
-    cameraVRhelperCam2.lookAt(scene.position);
-    scene.add(cameraVRhelperCam2);*/
     
     window.addEventListener("resize", onResize);
     window.addEventListener("keydown", onKeyDown);
