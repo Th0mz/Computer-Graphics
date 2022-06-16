@@ -59,7 +59,7 @@ function createCameras () {
     perspectiveCamera.position.set(-22, 55, 55);
     perspectiveCamera.lookAt(scene.position);
 
-   console.log(renderer.xr)
+   
 
     // Set main camera
     mainCamera = frontalCamera;
@@ -278,9 +278,21 @@ function init() {
     createScene();
     createCameras();
 
-
+    //SETUP VR
     document.body.appendChild( VRButton.createButton( renderer ) );
     renderer.xr.enabled = true;
+
+    var cameraVRhelperCam1 = new THREE.Object3D();
+    cameraVRhelperCam1.position.set(0, 15, 24);
+    cameraVRhelperCam1.add(frontalCamera);
+    scene.add(cameraVRhelperCam1);
+
+    /*var cameraVRhelperCam2 = new THREE.Object3D();
+    cameraVRhelperCam2.position.set(-22, 55, 55);
+    cameraVRhelperCam2.add(perspectiveCamera);
+    
+    cameraVRhelperCam2.lookAt(scene.position);
+    scene.add(cameraVRhelperCam2);*/
     
     window.addEventListener("resize", onResize);
     window.addEventListener("keydown", onKeyDown);
