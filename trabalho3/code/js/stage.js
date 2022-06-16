@@ -17,9 +17,9 @@ class Stage{
         createRectangle(0, 3, 0, 60, 2.5, 25, 0xaaaa00, false);
 
 
-        this.spotlightOne = new SpotLight(-23, 3.75 + 0.875, 21, 0xffffff, 0.7, new THREE.Vector3(0, 10, -10));
-        this.spotlightTwo = new SpotLight(0, 3.75 + 0.875, 21, 0xffffff, 0.7, new THREE.Vector3(0, 10, -10));
-        this.spotlightThree = new SpotLight(23, 3.75 + 0.875, 21, 0xffffff, 0.7, new THREE.Vector3(0, 8, -10));
+        this.spotlightOne = new SpotLight(-23, 3.75 + 0.875, 21, 0xffffff, 1, new THREE.Vector3(0, 10, -10));
+        this.spotlightTwo = new SpotLight(0, 3.75 + 0.875, 21, 0xffffff, 1, new THREE.Vector3(0, 10, -10));
+        this.spotlightThree = new SpotLight(23, 3.75 + 0.875, 21, 0xffffff, 1, new THREE.Vector3(0, 8, -10));
 
     }
 

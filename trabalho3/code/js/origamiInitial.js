@@ -37,20 +37,20 @@ class OrigamiInitial{
 
         var uvs = new Float32Array([
             0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
+            0.0, 0.0,
+            0.0, 0.0,
 
             0.0, 0.0,
+            0.0, 0.0,
+            0.0, 0.0,
+
             1.0, 0.0,
+            0.0, 0.0,
             1.0, 1.0,
 
-            0.0, 0.0,
-            1.0, 0.0,
+            0.0, 1.0,
             1.0, 1.0,
-
             0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
 
           ])
 
@@ -59,9 +59,9 @@ class OrigamiInitial{
 
         var material_list = [
             new THREE.MeshLambertMaterial({color: 0xffffff,  side: THREE.FrontSide}),
-            new THREE.MeshLambertMaterial({color: 0x22ff10, /*map: texture, */ side: THREE.FrontSide}),
+            new THREE.MeshLambertMaterial({color: 0xffffff, map: texture,  side: THREE.FrontSide}),
             new THREE.MeshPhongMaterial({color: 0xffffff,  side: THREE.FrontSide}),
-            new THREE.MeshPhongMaterial({color: 0x22ff10, /*map: texture,*/  side: THREE.FrontSide}),
+            new THREE.MeshPhongMaterial({color: 0xffffff, map: texture,  side: THREE.FrontSide}),
         ];
 
         geometry.addGroup(0, 6, 0);

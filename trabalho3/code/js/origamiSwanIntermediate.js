@@ -66,14 +66,66 @@ class OrigamiIntermediateSwan{
             -4, 17, 2,
             0, 0, 0,
             
-            
-
-            
-
-            
         ];
 
         var uvs = new Float32Array([
+
+            //GREEN FRONT FACE (R)
+            0, 0,
+            1, 1,
+            0, 1/3,
+            //GREEN FRONT FACE (L)
+            0, 0,
+            1/3, 0,
+            1, 1,
+
+            //BACK GREEN FACE (R)
+            0, 1,
+            0, 0.806,
+            1, 1, 
+            //BACK GREEN FACE (L)
+            0.806, 0,
+            1, 0,
+            1, 1,
+
+            //WHITE BACK FACE (R)
+            0, 0,
+            0, 0,
+            0, 0,
+            //WHITE BACK FACE (L)
+            0, 0,
+            0, 0,
+            0, 0,
+
+            //WHITE BACK OF BACK GREEN FACE (R)
+            0, 0,
+            0, 0,
+            0, 0,
+
+            //WHITE BACK OF BACK GREEN FACE (L)
+            0, 0,
+            0, 0,
+            0, 0,
+
+            //WHITE FRONT TRIANGLE (R)
+            0, 0,
+            0, 0,
+            0, 0,
+
+            //WHITE FRONT TRIANGLE (L)
+            0, 0,
+            0, 0,
+            0, 0,
+
+            //GREEN FRONT SMALL TRIANGLE TWOSIDED (R)
+            0, 0.806,
+            0, 0.583,
+            1, 1,
+
+            //GREEN FRONT SMALL TRIANGLE TWOSIDED (L)
+            0.583, 0,
+            0.806, 0,
+            1, 1,
           
 
           ])
@@ -83,11 +135,11 @@ class OrigamiIntermediateSwan{
 
         var material_list = [
             new THREE.MeshLambertMaterial({color: 0xffffff,  side: THREE.FrontSide}),
-            new THREE.MeshLambertMaterial({color: 0x22ff10, /*map: texture, */ side: THREE.DoubleSide}),
-            new THREE.MeshLambertMaterial({color: 0x22ff10, /*map: texture, */ side: THREE.FrontSide}),
+            new THREE.MeshLambertMaterial({color: 0x999999,  map: texture,  side: THREE.DoubleSide}),
+            new THREE.MeshLambertMaterial({color: 0x999999, map: texture, side: THREE.FrontSide}),
             new THREE.MeshPhongMaterial({color: 0xffffff,  side: THREE.FrontSide}),
-            new THREE.MeshPhongMaterial({color: 0x22ff10, /*map: texture,*/  side: THREE.DoubleSide}),
-            new THREE.MeshPhongMaterial({color: 0x22ff10, /*map: texture,*/  side: THREE.FrontSide}),
+            new THREE.MeshPhongMaterial({color: 0x999999, map: texture,  side: THREE.DoubleSide}),
+            new THREE.MeshPhongMaterial({color: 0x999999, map: texture,  side: THREE.FrontSide}),
         ];
 
         geometry.addGroup(0, 4*3, 2);

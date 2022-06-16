@@ -59,6 +59,7 @@ function createCameras () {
     perspectiveCamera.position.set(-22, 55, 55);
     perspectiveCamera.lookAt(scene.position);
 
+   console.log(renderer.xr)
 
     // Set main camera
     mainCamera = frontalCamera;
@@ -70,7 +71,7 @@ function createScene () {
     scene.add(new THREE.AxesHelper(10));
     
     // lights
-    directionalLight = new THREE.DirectionalLight(0x404040, 1);
+    directionalLight = new THREE.DirectionalLight(0x404040, 1.5);
     directionalLight.position.set(10,50, 15);
     scene.add(directionalLight);
     // TODO : remove helpers
@@ -295,6 +296,7 @@ function animate() {
         initialObject.update(delta_time);
         intermediateObject.update(delta_time);
         completeObject.update(delta_time);
+        
         
     } else if (reset) {
         doReset();
