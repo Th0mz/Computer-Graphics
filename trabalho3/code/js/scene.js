@@ -32,7 +32,7 @@ var pause = false;
 var pausePromptFrontal;
 var pausePromptPerspective;
 
-var reset = false;
+var reset = true;
 
 function createCameras () {
 
