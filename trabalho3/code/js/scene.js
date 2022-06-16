@@ -56,7 +56,7 @@ function createCameras () {
         1,
         1000);
 
-    perspectiveCamera.position.set(-20, 50, 50);
+    perspectiveCamera.position.set(-22, 55, 55);
     perspectiveCamera.lookAt(scene.position);
 
 
@@ -101,8 +101,8 @@ function createScene () {
     pausePromptFrontal = createRectangle(0, 0, 80, aspectRatio * viewSize, viewSize, 20, 0xffffff, false, 'assets/pause_screen.png', true);
     pausePromptFrontal.visible = false;
 
-    pausePromptPerspective = createRectangle(0,0,0, aspectRatio * viewSize, viewSize, 20, 0xffffff, false, 'assets/pause_screen.png', true);
-    pausePromptPerspective.lookAt(-20, 50, 50);
+    pausePromptPerspective = createRectangle(-6, 15, 15, aspectRatio * viewSize, viewSize, 20, 0xffffff, false, 'assets/pause_screen.png', true);
+    pausePromptPerspective.lookAt(-22, 55, 55);
     pausePromptPerspective.visible = false;
 
 }
@@ -133,32 +133,7 @@ function onResize() {
 function onKeyDown(e) {
     'use strict';
     switch(e.keyCode) {
-        // Cameras
-        case 49 : // number 1
-            mainCamera = frontalCamera
-            break;
-        case 50 : // number 2
-            mainCamera = perspectiveCamera
-            break;
-        
-        // Lights
-        case 68: //D
-        case 100: //d
-            directionalLight.visible = !directionalLight.visible;
-            break;
-        case 90: //Z
-        case 122: //z
-            stage.toggleLeft();
-            break;
-        case 88: //Y
-        case 120: //y 
-            stage.toggleCenter();
-            break;
-        case 67: //C
-        case 99: //c
-            stage.toggleRight();
-            break;
-        
+
         // Objects rotation
         case 81: //Q
         case 113: //q
@@ -184,20 +159,29 @@ function onKeyDown(e) {
         case 121: //y
             completeObject.updateNegRotation(-1);
             break;
-
-        // Object reflection
-        case 65: //A
-        case 97: //a
-            initialObject.updateReflection();
-            intermediateObject.updateReflection();
-            completeObject.updateReflection();
-            break;
     }
 }
 
 function onKeyUp(e){
     'use strict';
     switch(e.keyCode) {
+        // Cameras
+        case 49 : // number 1
+            mainCamera = frontalCamera
+            if (pause) {
+                pausePromptFrontal.visible = true;
+                pausePromptPerspective.visible = false; 
+            }
+            break;
+        case 50 : // number 2
+            mainCamera = perspectiveCamera
+            if (pause) {
+                pausePromptFrontal.visible = false;
+                pausePromptPerspective.visible = true; 
+            }
+            break;
+        
+        // Objects rotation
         case 81: //Q
         case 113: //q
             initialObject.updatePosRotation(0);
@@ -227,15 +211,43 @@ function onKeyUp(e){
             completeObject.updateNegRotation(0);
             break;
 
+        // Object reflection
+        case 65: //A
+        case 97: //a
+            initialObject.updateReflection();
+            intermediateObject.updateReflection();
+            completeObject.updateReflection();
+            break;
+
+        // Lights
+        case 68: //D
+        case 100: //d
+            directionalLight.visible = !directionalLight.visible;
+            break;
+        case 90: //Z
+        case 122: //z
+            stage.toggleLeft();
+            break;
+        case 88: //Y
+        case 120: //y 
+            stage.toggleCenter();
+            break;
+        case 67: //C
+        case 99: //c
+            stage.toggleRight();
+            break;
+
         // Pause
-        case 83: //S
+        case 32: // Space bar
             pause = !pause;
 
             // TODO : verificar se se pode fazer este if na função de callback
             if (pause) { 
                 clock.running = false;
-                pausePromptFrontal.visible = true;
-                pausePromptPerspective.visible = true;
+
+                var inFrontalCamera = mainCamera == frontalCamera;
+                pausePromptFrontal.visible = inFrontalCamera;
+                pausePromptPerspective.visible = !inFrontalCamera;
             } else { 
                 clock.start();
                 pausePromptFrontal.visible = false;
@@ -264,6 +276,8 @@ function init() {
     
     createScene();
     createCameras();
+
+
     document.body.appendChild( VRButton.createButton( renderer ) );
     renderer.xr.enabled = true;
     
@@ -276,22 +290,17 @@ function init() {
 function animate() {
     'use strict';
     if (!pause) {
-        if (reset) {
-            doReset();
-        }
-
         var delta_time = clock.getDelta();
 
         initialObject.update(delta_time);
         intermediateObject.update(delta_time);
         completeObject.update(delta_time);
         
-        render();
-    } else {
-
-        render();
+    } else if (reset) {
+        doReset();
     }
-
+    
+    render();
     setTimeout( function() {
         //requestAnimationFrame( animate );
         // TODO CHECK THIS
@@ -301,7 +310,6 @@ function animate() {
 
 function doReset () {
     // TODO : verificar se falta alguma cena para dar reset
-    mainCamera = frontalCamera
     directionalLight.visible = true;
     
     stage.doReset();

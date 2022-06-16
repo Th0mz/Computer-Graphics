@@ -11,7 +11,6 @@ class Stage{
         this.plane = new THREE.Mesh(geometry, material);
 
 
-
         //make first podium step
         createRectangle(0, 1.75, 0, 80, 2.5, 50, 0xaaaa00, false);
         //make second podium step
@@ -29,7 +28,6 @@ class Stage{
     toggleRight()  { this.spotlightThree.toggleLight(); }
 
     doReset () {
-        // TODO : ligar / desligar luzes para recriar a cena inicial
         this.spotlightOne.setLight(true);
         this.spotlightTwo.setLight(true);
         this.spotlightThree.setLight(true);

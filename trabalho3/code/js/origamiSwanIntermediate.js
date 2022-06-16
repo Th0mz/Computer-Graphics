@@ -108,7 +108,7 @@ class OrigamiIntermediateSwan{
 
     update(delta_time){
 
-        this.object.rotateY(this.movementData.speed*delta_time * (this.movementData.posDir + this.movementData.negDir));
+        this.object.rotateY(this.movementData.speed* delta_time * (this.movementData.posDir + this.movementData.negDir));
         if(this.materialChanged) {
             this.object.geometry.groups[0].materialIndex = (this.object.geometry.groups[0].materialIndex + 3) % 6;
             this.object.geometry.groups[1].materialIndex = (this.object.geometry.groups[1].materialIndex + 3) % 6;
