@@ -283,7 +283,7 @@ function init() {
     renderer.xr.enabled = true;
 
     var cameraVRhelperCam1 = new THREE.Object3D();
-    cameraVRhelperCam1.position.set(0, 15, 24);
+    cameraVRhelperCam1.position.set(0, 5, 30);
     cameraVRhelperCam1.add(frontalCamera);
     scene.add(cameraVRhelperCam1);
 
