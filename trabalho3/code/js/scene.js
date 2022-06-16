@@ -32,7 +32,7 @@ var pause = false;
 var pausePromptFrontal;
 var pausePromptPerspective;
 
-var reset = true;
+var reset = false;
 
 function createCameras () {
 
@@ -62,7 +62,7 @@ function createCameras () {
    
 
     // Set main camera
-    mainCamera = perspectiveCamera;
+    mainCamera = frontalCamera;
 }
 
 function createScene () {
@@ -98,11 +98,11 @@ function createScene () {
     // Pause prompt
     var aspectRatio = window.innerWidth / window.innerHeight;
     pausePromptFrontal = createRectangle(0, 0, 80, aspectRatio * viewSize, viewSize, 20, 0xffffff, false, 'assets/pause_screen.png', true);
-    pausePromptFrontal.visible = false;
+    pausePromptFrontal.visible = pause;
 
     pausePromptPerspective = createRectangle(-6, 15, 15, aspectRatio * viewSize, viewSize, 20, 0xffffff, false, 'assets/pause_screen.png', true);
     pausePromptPerspective.lookAt(-22, 55, 55);
-    pausePromptPerspective.visible = false;
+    pausePromptPerspective.visible = pause;
 
 }
 
