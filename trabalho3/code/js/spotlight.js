@@ -43,7 +43,7 @@ class SpotLight {
 
         this.light.position.set(lightPosition.x, lightPosition.y, lightPosition.z);
         this.light.target.position.set(direction.x, direction.y, direction.z);
-        this.light.castShadow = false;
+        this.light.castShadow = true;
         this.light.target.updateMatrixWorld();
 
         this.object = new THREE.Group();

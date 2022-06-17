@@ -72,6 +72,7 @@ class OrigamiInitial{
 
         this.object = new THREE.Mesh( geometry, material_list );
         this.object.position.set(-23, 8 , 0);
+        this.object.castShadow = true;
         
 
         this.group = new THREE.Group();

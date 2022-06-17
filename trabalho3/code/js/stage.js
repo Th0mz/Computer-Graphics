@@ -25,6 +25,8 @@ class Stage{
         var materialIndex = this.last_material * 2
         this.plane = new THREE.Mesh(geometry, this.materialList[materialIndex]);
 
+        //this.plane.castShadow = true;
+        this.plane.receiveShadow = true;
 
         //make first podium step
         var podiumLowInfo = createRectangle(0, 1.75, 0, 80, 2.5, 50, 0xaaaa00, false); 
@@ -32,7 +34,8 @@ class Stage{
         this.podiumLowMesh = podiumLowInfo[1];
 
         this.podiumLowMesh.material = this.materialList[materialIndex + 1];
-
+        //podiumLowInfo[1].castShadow = true;
+        podiumLowInfo[1].receiveShadow = true;
         console.log(this.podiumLowMesh);
 
         //make second podium step
@@ -41,6 +44,8 @@ class Stage{
         this.podiumHighMesh = podiumHighInfo[1];
 
         this.podiumHighMesh.material = this.materialList[materialIndex + 1];
+        //podiumHighInfo[1].castShadow = true;
+        podiumHighInfo[1].receiveShadow = true;
 
 
 
