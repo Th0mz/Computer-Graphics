@@ -73,6 +73,7 @@ function createScene () {
     // lights
     directionalLight = new THREE.DirectionalLight(0x404040, 1.5);
     directionalLight.position.set(10, 50, 15);
+    directionalLight.target = scene;
     scene.add(directionalLight);
 
     // Objects
