@@ -4,24 +4,26 @@ class Stage{
 
     constructor(){
 
-        //make floor plane
-        var geometry = new THREE.PlaneGeometry(100,100);
-        geometry.rotateX(Math.PI/2);
-        
-        this.materialList = [
-            new THREE.MeshBasicMaterial({color: 0x787878, side: THREE.DoubleSide}),
-            new THREE.MeshBasicMaterial({color: 0xAAAA00, side: THREE.DoubleSide}),
-            new THREE.MeshPhongMaterial({color: 0x787878, side: THREE.DoubleSide}),
-            new THREE.MeshPhongMaterial({color: 0xAAAA00, side: THREE.DoubleSide}),
-            new THREE.MeshLambertMaterial({color: 0x787878, side: THREE.DoubleSide}),
-            new THREE.MeshLambertMaterial({color: 0xAAAA00, side: THREE.DoubleSide})
-        ]  
-        
-
-        this.plane = new THREE.Mesh(geometry, this.materialList[2]);
-
+        // material change variables
         this.materialChanged = false;
         this.illuminationOn = true;
+        this.last_material = 0;
+
+        this.materialList = [
+            new THREE.MeshLambertMaterial({color: 0x787878, side: THREE.DoubleSide}),
+            new THREE.MeshLambertMaterial({color: 0xAAAA00, side: THREE.DoubleSide}),
+            new THREE.MeshPhongMaterial({color: 0x787878, side: THREE.DoubleSide}),
+            new THREE.MeshPhongMaterial({color: 0xAAAA00, side: THREE.DoubleSide}),
+            new THREE.MeshBasicMaterial({color: 0x787878, side: THREE.DoubleSide}),
+            new THREE.MeshBasicMaterial({color: 0xAAAA00, side: THREE.DoubleSide})
+        ]
+
+        //make floor plane
+        var geometry = new THREE.PlaneGeometry(100,100);
+        geometry.rotateX(Math.PI/2); 
+
+        var materialIndex = this.last_material * 2
+        this.plane = new THREE.Mesh(geometry, this.materialList[materialIndex]);
 
 
         //make first podium step
@@ -29,7 +31,7 @@ class Stage{
         this.podiumLow = podiumLowInfo[0];
         this.podiumLowMesh = podiumLowInfo[1];
 
-        this.podiumLowMesh.material = this.materialList[3];
+        this.podiumLowMesh.material = this.materialList[materialIndex + 1];
 
         console.log(this.podiumLowMesh);
 
@@ -38,7 +40,7 @@ class Stage{
         this.podiumHigh = podiumHighInfo[0];
         this.podiumHighMesh = podiumHighInfo[1];
 
-        this.podiumHighMesh.material = this.materialList[3];
+        this.podiumHighMesh.material = this.materialList[materialIndex + 1];
 
 
 
@@ -50,19 +52,51 @@ class Stage{
 
     applyReflectionChange () {
         if(this.materialChanged && this.illuminationOn) {
-            this.object.geometry.groups[0].materialIndex = (this.object.geometry.groups[0].materialIndex + 3) % 6;
-            this.object.geometry.groups[1].materialIndex = (this.object.geometry.groups[1].materialIndex + 3) % 6;
-            this.object.geometry.groups[2].materialIndex = (this.object.geometry.groups[2].materialIndex + 3) % 6;
+            var materialIndex = this.last_material * 2
+
+            this.podiumLowMesh.material = this.materialList[materialIndex + 1];
+            this.podiumHighMesh.material = this.materialList[materialIndex + 1];
+            this.plane.material = this.materialList[materialIndex]
+
             
-            this.last_material = (this.last_material + 3) % 6;
+            this.last_material = (this.last_material + 1) % 2;
             this.materialChanged = false;
         }
+
+        this.spotlightOne.applyReflectionChange();
+        this.spotlightTwo.applyReflectionChange();
+        this.spotlightThree.applyReflectionChange();
     }
 
     updateReflection(){
         if(this.illuminationOn){
             this.materialChanged = true;
         }
+
+        this.spotlightOne.updateReflection();
+        this.spotlightTwo.updateReflection();
+        this.spotlightThree.updateReflection();
+    }
+
+    toggleIllumCalculation(){
+        if(this.illuminationOn){
+            
+            this.podiumLowMesh.material = this.materialList[5];
+            this.podiumHighMesh.material = this.materialList[5];
+            this.plane.material = this.materialList[4]
+            this.illuminationOn = false; 
+        } else {
+            var materialIndex = this.last_material * 2
+
+            this.podiumLowMesh.material = this.materialList[materialIndex + 1];
+            this.podiumHighMesh.material = this.materialList[materialIndex + 1];
+            this.plane.material = this.materialList[materialIndex];
+            this.illuminationOn = true;
+        }
+
+        this.spotlightOne.toggleIllumCalculation();
+        this.spotlightTwo.toggleIllumCalculation();
+        this.spotlightThree.toggleIllumCalculation();
     }
 
     toggleLeft()   { this.spotlightOne.toggleLight(); } 

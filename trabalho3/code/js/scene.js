@@ -215,12 +215,15 @@ function onKeyUp(e){
             initialObject.updateReflection();
             intermediateObject.updateReflection();
             completeObject.updateReflection();
+            stage.updateReflection();
+
             break;
         case 83: //S
         case 115: //s
             initialObject.toggleIllumCalculation();
             intermediateObject.toggleIllumCalculation();
             completeObject.toggleIllumCalculation();
+            stage.toggleIllumCalculation();
             break;
 
         // Lights

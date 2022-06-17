@@ -1,7 +1,3 @@
-
-
-
-
 class OrigamiInitial{
 
     constructor() {
@@ -93,6 +89,7 @@ class OrigamiInitial{
         if(this.materialChanged && this.illuminationOn) {
             this.object.geometry.groups[0].materialIndex = (this.object.geometry.groups[0].materialIndex + 2) % 4;
             this.object.geometry.groups[1].materialIndex = (this.object.geometry.groups[1].materialIndex + 2) % 4;
+            
             this.materialChanged = false;
             this.last_material = (this.last_material + 2) % 4;
         }

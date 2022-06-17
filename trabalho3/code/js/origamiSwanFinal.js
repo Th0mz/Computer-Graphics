@@ -1,6 +1,3 @@
-
-
-
 class OrigamiSwan{
 
     constructor() {
@@ -309,7 +306,13 @@ class OrigamiSwan{
             this.materialChanged = false;
             
         }
-    }   
+    } 
+    
+    updateReflection(){
+        if(this.illuminationOn){
+            this.materialChanged = true;
+        }
+    }
 
     updatePosRotation(value){
         this.movementData.posDir = value;
