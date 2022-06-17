@@ -74,10 +74,6 @@ function createScene () {
     directionalLight = new THREE.DirectionalLight(0x404040, 2.5);
     directionalLight.position.set(10, 50, 15);
     directionalLight.target = scene;
-    directionalLight.castShadow = true;
-    //directionalLight.shadow = new THREE.DirectionalLightShadow();
-    directionalLight.shadowDarkness = 0.5;
-    directionalLight.shadowCameraVisible = true;
     scene.add(directionalLight);
 
     // Objects
@@ -291,7 +287,7 @@ function init() {
     //SETUP VR
     document.body.appendChild( VRButton.createButton( renderer ) );
     renderer.xr.enabled = true;
-    renderer.shadowMap.enabled = true;
+    
 
     var cameraVRhelperCam1 = new THREE.Object3D();
     cameraVRhelperCam1.position.set(0, 5, 30);
