@@ -68,7 +68,7 @@ function createCameras () {
 function createScene () {
     
     scene = new THREE.Scene();
-    scene.add(new THREE.AxesHelper(10));
+    
     
     // lights
     directionalLight = new THREE.DirectionalLight(0x404040, 1.5);
