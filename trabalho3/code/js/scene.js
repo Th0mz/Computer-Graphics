@@ -132,7 +132,6 @@ function onResize() {
 
 function onKeyDown(e) {
     'use strict';
-    console.log(e.keyCode)
     switch(e.keyCode) {
 
         // Objects rotation

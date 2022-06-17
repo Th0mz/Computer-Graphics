@@ -87,4 +87,13 @@ class SpotLight {
     setLight (visibility) {
         this.light.visible = visibility;
     }
+
+    doReset() {
+        this.setLight(true);
+        this.last_material = 0;
+        var materialIndex = this.last_material * 2
+
+        this.pyramidMesh.material = this.materialList[materialIndex];
+        this.sphereMesh.material = this.materialList[materialIndex + 1];
+    }
 }

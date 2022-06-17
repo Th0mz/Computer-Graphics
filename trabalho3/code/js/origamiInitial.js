@@ -124,6 +124,7 @@ class OrigamiInitial{
     }
 
     doReset() {
+        this.last_material = 0;
         this.object.geometry.groups[0].materialIndex = 0;
         this.object.geometry.groups[1].materialIndex = 1;
 

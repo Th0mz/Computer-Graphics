@@ -104,8 +104,16 @@ class Stage{
     toggleRight()  { this.spotlightThree.toggleLight(); }
 
     doReset () {
-        this.spotlightOne.setLight(true);
-        this.spotlightTwo.setLight(true);
-        this.spotlightThree.setLight(true);
+        this.last_material = 0;
+        this.spotlightOne.doReset();
+        this.spotlightTwo.doReset();
+        this.spotlightThree.doReset();
+
+        var materialIndex = this.last_material * 2
+
+        this.podiumLowMesh.material = this.materialList[materialIndex + 1];
+        this.podiumHighMesh.material = this.materialList[materialIndex + 1];
+        this.plane.material = this.materialList[materialIndex]
+
     }
 }

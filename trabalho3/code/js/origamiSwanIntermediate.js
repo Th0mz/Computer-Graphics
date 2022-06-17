@@ -210,6 +210,7 @@ class OrigamiIntermediateSwan{
     }
 
     doReset() {
+        this.last_material = 0;
         this.object.geometry.groups[0].materialIndex = 2;
         this.object.geometry.groups[1].materialIndex = 0;
         this.object.geometry.groups[2].materialIndex = 1;
