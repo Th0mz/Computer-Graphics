@@ -43,7 +43,7 @@ class OrigamiSwan{
             0, 0, 2,
             3.4, 2.5, 0, 
             //AND
-            -3.7, 4.3, 0,
+            -3.7, 4.3, 0.15,
             -3, 0, 2.5, 
             0, 0, 2,
 
@@ -84,7 +84,7 @@ class OrigamiSwan{
             0, 0, -2,
             3.4, 2.5, 0, 
             //AND
-            -3.7, 4.3, 0,
+            -3.7, 4.3, -0.15,
             -3, 0, -2.5, 
             0, 0, -2,
 
@@ -154,81 +154,110 @@ class OrigamiSwan{
         ];
 
         var uvs = new Float32Array([
+
+            //########### GROUP ONE (HAS TEXTURE) #############
+
+
+            // ##### One side ####
+            //TAIL GREEN
             0.0, 0.0,
-            1.0, 0.0,
+            6/18, 0.0,
+            10.5/18, 7/18,
+            //and
+            10.5/18, 7/18,
+            0.5,0.5,
+            0.0, 0.0,
+
+            // ### Other side ###
+            //TAIL GREEN
+            0.0, 6/18,
+            0.0, 0.0,
+            7/18, 10.5/18, 
+            //and
+            0.5,0.5,
+            7/18, 10.5/18,
+            0.0, 0.0,
+
+            //side one
+            //MID SECTON GREEN
+            10.5/18, 0.0,
+            15.5/18, 5/18,
+            13.5/18, 6.5/18,
+            //AND
+            10.5/18, 0.0,
+            14.5/18, 0.0,
+            15.5/18, 5/18,
+
+            //NECK LOWER
+            15.5/18, 5/18,
+            1.0, 5.5/18,
+            15.5/18, 5.5/18,
+
+            //NECK UPPER
+            15.5/18, 5.5/18,
+            1.0, 5.5/18,
+            1.0, 13.4/18,
+            //AND
+            15.5/18, 5.5/18,
+            1.0, 13.4/18,
+            17/18, 13.0/18,
+
+
+            //HEAD
+            16.3/18, 13.8/18,
+            17/18, 13.0/18,
             1.0, 1.0,
 
-            0.0, 0.0,
+            //UNDER SIDE GREEN
             1.0, 0.0,
+            1.0, 5.5/18,
+            15.5/18, 5/18,
+            //AND
+            1.0, 0.0,
+            15.5/18, 5/18,
+            14.5/18, 0.0,
+
+            // ##### OTHER side ####
+
+
+            //MID SECTON GREEN
+            0.0, 10.5/18,
+            5/18, 15.5/18,
+            6.5/18, 13.5/18,
+            //AND
+            0.0, 10.5/18,
+            0.0, 14.5/18,
+            5/18, 15.5/18,
+
+            //NECK LOWER
+            5/18, 15.5/18,
+            6.5/18, 1.0,
+            5.5/18, 15.5/18,
+
+            //NECK UPPER
+            5.5/18, 15.5/18,
+            6.5/18, 1.0,
+            13.4/18, 1.0, 
+            //AND
+            5.5/18, 15.5/18,
+            13.4/18, 1.0,
+            13.0/18, 17/18, 
+
+
+            //HEAD
+            13.8/18, 16.3/18,
+            13.0/18, 17/18,
             1.0, 1.0,
 
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
+            //UNDER SIDE GREEN
+            0.0, 1.0,
+            5/18, 15.5/18,
+            6.5/18, 1.0,
 
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
-
-            0.0, 0.0,
-            1.0, 0.0,
-            1.0, 1.0,
+            //AND
+            0.0, 1.0,
+            0.0, 14.5/18,
+            5/18, 15.5/18,
 
           ])
 
@@ -237,14 +266,14 @@ class OrigamiSwan{
 
         var material_list = [
             new THREE.MeshLambertMaterial({color: 0xffffff,  side: THREE.FrontSide}),
-            new THREE.MeshLambertMaterial({color: 0x22ff10, /*map: texture, */ side: THREE.DoubleSide}),
-            new THREE.MeshLambertMaterial({color: 0x22ff10, /*map: texture, */ side: THREE.FrontSide}),
+            new THREE.MeshLambertMaterial({color: 0x999999, map: texture, side: THREE.DoubleSide}),
+            new THREE.MeshLambertMaterial({color: 0x999999, map: texture, side: THREE.FrontSide}),
             new THREE.MeshPhongMaterial({color: 0xffffff,  side: THREE.FrontSide}),
-            new THREE.MeshPhongMaterial({color: 0x22ff10, /*map: texture,*/  side: THREE.DoubleSide}),
-            new THREE.MeshPhongMaterial({color: 0x22ff10, /*map: texture,*/  side: THREE.FrontSide}),
+            new THREE.MeshPhongMaterial({color: 0x999999, map: texture,  side: THREE.DoubleSide}),
+            new THREE.MeshPhongMaterial({color: 0x999999, map: texture,  side: THREE.FrontSide}),
             new THREE.MeshBasicMaterial({color: 0xffffff,  side: THREE.FrontSide}),
-            new THREE.MeshBasicMaterial({color: 0x22ff10, /*map: texture,*/  side: THREE.DoubleSide}),
-            new THREE.MeshBasicMaterial({color: 0x22ff10, /*map: texture,*/  side: THREE.FrontSide})
+            new THREE.MeshBasicMaterial({color: 0x999999, map: texture,  side: THREE.DoubleSide}),
+            new THREE.MeshBasicMaterial({color: 0x999999, map: texture,  side: THREE.FrontSide})
         ];
 
         geometry.addGroup(0, 4*3, 2);
