@@ -71,7 +71,7 @@ function createScene () {
     
     
     // lights
-    directionalLight = new THREE.DirectionalLight(0x404040, 1.5);
+    directionalLight = new THREE.DirectionalLight(0x404040, 2.5);
     directionalLight.position.set(10, 50, 15);
     directionalLight.target = scene;
     scene.add(directionalLight);
@@ -98,10 +98,10 @@ function createScene () {
     
     // Pause prompt
     var aspectRatio = window.innerWidth / window.innerHeight;
-    pausePromptFrontal = createRectangle(0, 0, 80, aspectRatio * viewSize, viewSize, 20, 0xffffff, false, 'assets/pause_screen.png', true);
+    pausePromptFrontal = createRectangle(0, 0, 80, aspectRatio * viewSize, viewSize, 20, 0xffffff, false, 'assets/pause_screen.png', true)[0];
     pausePromptFrontal.visible = pause;
 
-    pausePromptPerspective = createRectangle(-6, 15, 15, aspectRatio * viewSize, viewSize, 20, 0xffffff, false, 'assets/pause_screen.png', true);
+    pausePromptPerspective = createRectangle(-6, 15, 15, aspectRatio * viewSize, viewSize, 20, 0xffffff, false, 'assets/pause_screen.png', true)[0];
     pausePromptPerspective.lookAt(-22, 55, 55);
     pausePromptPerspective.visible = pause;
 
@@ -309,6 +309,7 @@ function animate() {
         initialObject.update(delta_time);
         intermediateObject.update(delta_time);
         completeObject.update(delta_time);
+        stage.applyReflectionChange();
         
     } else {
         if (reset) {

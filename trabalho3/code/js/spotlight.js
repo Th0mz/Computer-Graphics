@@ -1,9 +1,8 @@
 class SpotLight {
     constructor (x, y, z, color, intensity, direction) {
-        console.log(direction);
 
-        var pyramidBase = createPyramid(0, 0, 0, 3, 4, 64, 0x000000, false, Math.PI/2);
-        var sphere = createSphere(0, 0, -3.5, 3, 0x999900, false);
+        var pyramidBase = createPyramid(0, 0, 0, 3, 4, 64, 0x000000, false, Math.PI/2)[0];
+        var sphere = createSphere(0, 0, -3.5, 3, 0x999900, false)[0];
         
         this.base = new THREE.Group();
         this.base.add(pyramidBase, sphere);
