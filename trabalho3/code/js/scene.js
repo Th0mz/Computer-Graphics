@@ -136,6 +136,7 @@ function onResize() {
 
 function onKeyDown(e) {
     'use strict';
+    console.log(e.keyCode)
     switch(e.keyCode) {
 
         // Objects rotation
@@ -201,8 +202,6 @@ function onKeyUp(e){
         case 82: //R
         case 114: //r
             intermediateObject.updateNegRotation(0);
-            if (pause) { reset = true; }
-
             break;
         case 84: //T
         case 116: //t
@@ -265,6 +264,8 @@ function onKeyUp(e){
             }
 
             break;
+        case 51:
+            if (pause) { reset = true; }
     }
 
 }
